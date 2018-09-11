@@ -1,0 +1,21 @@
+:root {
+    --main-bg-color: #EEEEEE;
+  }
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--main-bg-color);
+}
+
+
+.index__logo {
+    display: block;
+    width: 50px;
+}
+
+pre {
+    font-size: 70% !important;
+    border: #999999 1px solid !important;
+    padding: 5px !important;
+    border-radius: 4px !important
+}
