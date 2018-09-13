@@ -7,6 +7,9 @@ body {
     background: var(--main-bg-color);
 }
 
+main {
+    height: 100vh;
+}
 
 .index__logo {
     display: block;
@@ -18,4 +21,15 @@ pre {
     border: #999999 1px solid !important;
     padding: 5px !important;
     border-radius: 4px !important;
+}
+
+.red {
+  color: #ffffff;
+  background-color: #8E0000;
+  border-color: #7C0000;
+}
+
+.red:hover {
+  background-color: #7C0000;
+  border-color: #8E0000;
 }

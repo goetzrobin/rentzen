@@ -1,20 +1,27 @@
 <?php
 
-function loginPeople($username, $password, $role_id)
+function loginPeople($username, $password
+// , $role_id
+)
 {
     //returns true if the username and password are a good match.  false if not
     global $db;
-    $statement = $db->prepare('select people_id from people where username=:username and password = :password and role_id=:role_id');
+    $statement = $db->prepare('select people_id, role_id from people where username=:username and password = :password '
+    // . 'role_id=:role_id'
+);
     $statement->bindValue(':username', $username);
     $statement->bindValue(':password', $password);
-    $statement->bindValue(':role_id', $role_id);
+    // $statement->bindValue(':role_id', $role_id);
     $statement->execute();
     $array = $statement->fetch();
     $statement->closeCursor();
     if (empty($array['people_id'])) {
         $result = false;
     } else {
-        $result = $array['people_id'];
+        $result = [
+            'people_id' => $array['people_id'],
+            'role_id' => $array['role_id']
+        ];
     }
     return $result;
 }
