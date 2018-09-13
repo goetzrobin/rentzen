@@ -143,3 +143,12 @@
   }
   
   .overflow-hidden { overflow: hidden; }
+
+  .white {
+    color: #fff;
+    border-color: #fff;
+  }
+
+  .navbar-nav li {
+    margin: 0 20px;
+  }

@@ -23,15 +23,15 @@ echo "<div class='container'>";
 // ***********************************************************
 // the feature model
 include 'feature_db.php';
-echo '<h1>Testting the feature functions ... </h1>';
+echo '<h1>Testing the feature functions ... </h1>';
 
-echo '<br><br> Get All Feature Test <br><br>';
+echo '<h4> Get All Feature Test </h4>';
 echoArr(getFeature());
 
-echo '<br><br> Get Feature By Id Test <br><br>';
+echo '<h4> Get Feature By Id Test </h4>';
 echoArr(getFeatureById(201));
 
-echo '<br><br> Insert Feature Test <br><br>';
+echo '<h4> Insert Feature Test </h4>';
 echoArr(
     insertFeature(
         "Rooftop Access",
@@ -39,18 +39,18 @@ echoArr(
         NULL
     ));
 
-echo '<br><br> Update Feature <br><br>';
+echo '<h4> Update Feature </h4>';
 
 echoArr(updateFeature(205,'description','Description Changed'));
 
-echo '<br><br> Delete Feature By Id Test <br><br>';
+echo '<h4> Delete Feature By Id Test </h4>';
 echoArr(deleteFeatureById(205));
 
 
 // ***********************************************************
 // the people model
 include 'people_db.php';
-echo '<h1>Testting the people functions ... </h1>';
+echo '<h1>Testing the people functions ... </h1>';
 
 echo '<h5>Login Test</h5>';
 echo "Login should succeed: " . (loginPeople('esmith@email.com', 'esmith123', 101) == true ? "Success" : "FAIL");
@@ -58,13 +58,13 @@ echo '<br>';
 echo "Login should fail: " . (loginPeople('esmith@email.com', 'esmith123', 102) == true ? "Success" : "FAIL");
 
 
-echo '<br><br> Get All People Test <br><br>';
+echo '<h4> Get All People Test </h4>';
 echoArr(getPeople());
 
-echo '<br><br> Get People By Id Test <br><br>';
+echo '<h4> Get People By Id Test </h4>';
 echoArr(getPeopleById(902));
 
-echo '<br><br> Insert People Test <br><br>';
+echo '<h4> Insert People Test </h4>';
 echoArr(
     insertPeople(
         "disdidsiom",
@@ -82,14 +82,14 @@ echoArr(
         120888
     ));
 
-echo '<br><br> Delete People By Id Test <br><br>';
+echo '<h4> Delete People By Id Test </h4>';
 // echoArr(deletePeopleById(931));
 
 
 // ***********************************************************
 // the property model
 include 'property_db.php';
-echo '<h1>Testting the property functions ... </h1>';
+echo '<h1>Testing the property functions ... </h1>';
 
 echo '<p>Get Properties</p>';
 echoArr(getProperties());
