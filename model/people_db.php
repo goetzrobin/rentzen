@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * returns people_id and role_id on success, false on fail
+ */
 function loginPeople($username, $password
 // , $role_id
 )

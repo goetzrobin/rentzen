@@ -38,10 +38,10 @@ echo '<h1 id="feature">Testing the feature functions ... </h1>';
 echo '<h4> Get All Feature Test </h4>';
 echoArr(getFeature());
 
-echo '<h4> Get Feature By Id Test </h4>';
+echo '<h4> Get Feature By Id Test (Id is 201) </h4>';
 echoArr(getFeatureById(201));
 
-echo '<h4> Insert Feature Test </h4>';
+echo '<h4> Insert Feature Test (returns inserted feature) </h4>';
 echoArr(
     insertFeature(
         "Rooftop Access",
@@ -49,12 +49,12 @@ echoArr(
         NULL
     ));
 
-echo '<h4> Update Feature </h4>';
+echo '<h4> Update Feature (return updated feature) </h4>';
 
-echoArr(updateFeature(205,'description','Description Changed'));
+echoArr(updateFeature(201,'description','Description Change'));
 
 echo '<h4> Delete Feature By Id Test </h4>';
-echoArr(deleteFeatureById(205));
+// echoArr(deleteFeatureById(205));
 
 
 // ***********************************************************
@@ -63,15 +63,17 @@ include 'people_db.php';
 echo '<h1 id="people">Testing the people functions ... </h1>';
 
 echo '<h5>Login Test</h5>';
-echo "Login should succeed: " . (loginPeople('esmith@email.com', 'esmith123', 101) == true ? "Success" : "FAIL");
+$result = loginPeople('esmith@email.com', 'esmith123');
+echo "Login should succeed: ";
+if ($result == true) { print_r($result); } else {echo ("FAIL"); }
 echo '<br>';
-echo "Login should fail: " . (loginPeople('esmith@email.com', 'esmith123', 102) == true ? "Success" : "FAIL");
+echo "Login should fail: " . (loginPeople('esmith@email.com', 'esmith3') == true ? "Success" : "FAIL");
 
 
 echo '<h4> Get All People Test </h4>';
 echoArr(getPeople());
 
-echo '<h4> Get People By Id Test </h4>';
+echo '<h4> Get People By Id Test (902) </h4>';
 echoArr(getPeopleById(902));
 
 echo '<h4> Insert People Test </h4>';
@@ -91,6 +93,12 @@ echoArr(
         670,
         120888
     ));
+
+echo '<h4> Update People (902 set firstname to Tester) </h4>';
+
+echoArr(updatePeople(902,'firstname','Tester'));
+
+updatePeople(902,'firstname','James');
 
 echo '<h4> Delete People By Id Test </h4>';
 // echoArr(deletePeopleById(931));
@@ -120,19 +128,21 @@ echoArr(getPropertiesBySearchParams($params));
 echo '<p>Get Properties</p>';
 echoArr(getProperties());
 
-echo '<p>Get Properties By Landloard ID</p>';
+echo '<p>Get Properties By Landloard ID 902</p>';
 echoArr(getPropertiesByLandlordId(902));
 
 
-echo '<p>Get Landlords By Property ID</p>';
+echo '<p>Get Landlords By Property ID 321</p>';
 echoArr(getLandlordsByPropertyId(321));
 
 
-echo '<p>Get Prop by Id</p>';
+echo '<p>Get Prop by Id 301</p>';
 echoArr(getPropertyById(301));
 
-echo '<p>Update Property</p>';
+echo '<p>Update Property (301 city to Birdtown)</p>';
 echoArr(updateProperty(301, "city", "Birdtown"));
+
+echoArr(updateProperty(301, "city", "Philadelphia"));
 
 echo '<p>Insert Property</p>';
 echoArr(insertProperty('123 N Broad', "Philadelphia", 38, 19145, 2, 1.5, 1100, 504, 403, 60000, 750, 1300, "Hello to Walnut", "../images/walnut.jpg"));
