@@ -18,12 +18,22 @@ function echoArr($arr)
 
 
 include '../view/header.php';
-echo "<div class='container'>";
 
+echo "<a href='#' style='position: fixed; right: 20px; bottom: 20px;'><button class='btn'>Up</button></a>";
+echo "<div class='container'>";
+echo "<h1>Model Test Page</h1>";
+echo '<nav>
+<a href="'.$base_path.'">Home</a>
+<a href="#feature">Feature functions</a>
+<a href="#people">People functions</a>
+<a href="#prop">Property functions</a>
+<a href="#rentapp">Rental Application functions</a>
+<a href="#rentprop">Renter Property functions</a>
+        </nav>';
 // ***********************************************************
 // the feature model
 include 'feature_db.php';
-echo '<h1>Testing the feature functions ... </h1>';
+echo '<h1 id="feature">Testing the feature functions ... </h1>';
 
 echo '<h4> Get All Feature Test </h4>';
 echoArr(getFeature());
@@ -50,7 +60,7 @@ echoArr(deleteFeatureById(205));
 // ***********************************************************
 // the people model
 include 'people_db.php';
-echo '<h1>Testing the people functions ... </h1>';
+echo '<h1 id="people">Testing the people functions ... </h1>';
 
 echo '<h5>Login Test</h5>';
 echo "Login should succeed: " . (loginPeople('esmith@email.com', 'esmith123', 101) == true ? "Success" : "FAIL");
@@ -89,7 +99,23 @@ echo '<h4> Delete People By Id Test </h4>';
 // ***********************************************************
 // the property model
 include 'property_db.php';
-echo '<h1>Testing the property functions ... </h1>';
+echo '<h1 id="prop">Testing the property functions ... </h1>';
+
+echo '<p>Get Properties By Params</p>';
+$params =     array(
+    'state_id' => 38,
+    'type_id' => 504, 
+    'status_id' => 403, 
+    'sqft_low' => 1100,
+    'sqft_high' => 1400, 
+    'credit_requirement_low' => 700,
+    'rental_fee_low' => 1500 ,
+);
+echo '<h4>Search Parameters</h4>';
+
+echoArr($params);
+
+echoArr(getPropertiesBySearchParams($params));
 
 echo '<p>Get Properties</p>';
 echoArr(getProperties());
@@ -116,7 +142,7 @@ echoArr(insertProperty('123 N Broad', "Philadelphia", 38, 19145, 2, 1.5, 1100, 5
 // the rental_app model
 
 include 'rental_app_db.php';
-echo '<h1>Testing the rental_app functions ... </h1>';
+echo '<h1 id="rentapp">Testing the rental_app functions ... </h1>';
 
 echo '<p>Get All Applications</p>';
 echoArr(getRentalApp());
@@ -141,7 +167,7 @@ echo '<p>Delete Property Renter Relationship</p>';
 // the renter_prop model
 
 include 'renter_property_db.php';
-echo '<h1>Testing the renter_property functions ... </h1>';
+echo '<h1 id="rentprop">Testing the renter_property functions ... </h1>';
 
 
 echo '<p>Get All Relationships</p>';

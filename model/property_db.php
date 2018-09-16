@@ -44,7 +44,7 @@ function getPropertiesByLandlordId($id)
     global $db;
     $statement = $db->prepare('select * '
         . ' from property, landlord_property WHERE landlord_property.property_id=property.property_id'
-        . ' and landlord_property.landlord_id = :landlord_id' );
+        . ' and landlord_property.landlord_id = :landlord_id');
     $statement->bindValue(':landlord_id', $id);
     $statement->execute();
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -61,7 +61,7 @@ function getLandlordsByPropertyId($id)
     global $db;
     $statement = $db->prepare('select * '
         . ' from people, landlord_property WHERE landlord_property.landlord_id=people.people_id'
-        . ' and landlord_property.property_id = :property_id' );
+        . ' and landlord_property.property_id = :property_id');
     $statement->bindValue(':property_id', $id);
     $statement->execute();
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -72,51 +72,239 @@ function getLandlordsByPropertyId($id)
     return $result;
 }
 
-function getPropertiesByState() {
+/** 
+ * Connects to DB and Filters Properties by Specificed Parameters
+ * 
+ * Possible parameters:
+ * 
+ * state_id
+ * 
+ * type_id
+ * 
+ * status_id
+ * 
+ * feature_id
+ * 
+ * feature_ids
+ * 
+ * zip
+ * 
+ * bed_low
+ * 
+ * bed_high
+ * 
+ * bath_low
+ * 
+ * bath_high
+ * 
+ * sqft_low
+ * 
+ * sqft_high
+ * 
+ * income_requirement_low
+ * 
+ * income_requirement_high
+ * 
+ * credit_requirement_low
+ * 
+ * credit_requirement_high
+ * 
+ * rental_fee_low
+ * 
+ * rental_fee_high
+ * 
+ */
+function getPropertiesBySearchParams($search_params)
+{
+
+    $state_id = isset($search_params['state_id']) ? $search_params['state_id'] : null;
+    $type_id = isset($search_params['type_id']) ? $search_params['type_id'] : null;
+    $status_id = isset($search_params['status_id']) ? $search_params['status_id'] : null;
+    $feature_id = isset($search_params['feature_id']) ? $search_params['feature_id'] : null;
+    $feature_ids = isset($search_params['feature_ids']) ? $search_params['feature_ids'] : null;
+    $zip = isset($search_params['zip']) ? $search_params['zip'] : null;
+    $bed_low = isset($search_params['bed_low']) ? $search_params['bed_low'] : null;
+    $bed_high = isset($search_params['bed_high']) ? $search_params['bed_high'] : null;
+    $bath_low = isset($search_params['bath_low']) ? $search_params['bath_low'] : null;
+    $bath_high = isset($search_params['bath_high']) ? $search_params['bath_high'] : null;
+    $sqft_low = isset($search_params['sqft_low']) ? $search_params['sqft_low'] : null;
+    $sqft_high = isset($search_params['sqft_high']) ? $search_params['sqft_high'] : null;
+    $income_requirement_low = isset($search_params['income_requirement_low']) ? $search_params['income_requirement_low'] : null;
+    $income_requirement_high = isset($search_params['income_requirement_high']) ? $search_params['income_requirement_high'] : null;
+    $credit_requirement_low = isset($search_params['credit_requirement_low']) ? $search_params['credit_requirement_low'] : null;
+    $credit_requirement_high = isset($search_params['credit_requirement_high']) ? $search_params['credit_requirement_high'] : null;
+    $rental_fee_low = isset($search_params['rental_fee_low']) ? $search_params['rental_fee_low'] : null;
+    $rental_fee_high = isset($search_params['rental_fee_high']) ? $search_params['rental_fee_high'] : null;
+  
+
+    global $db;
+
+    $sql = sprintf(
+        'SELECT * FROM property 
+    
+        WHERE property_id=property_id  %s %s  %s %s  %s %s  %s %s  %s %s  %s %s  %s %s  %s %s',
+
+
+        (isset($state_id) && !empty($state_id)) ? 'AND state_id   = :state_id' : null,
+
+        (isset($type_id) && !empty($type_id)) ? 'AND type_id   = :type_id' : null,
+
+        (isset($status_id) && !empty($status_id)) ? 'AND propstat_id   = :status_id' : null,
+        // !empty($feature_id)   ? 'AND feature_id   = :feature_id'   : null,
+        (isset($zip) && !empty($zip)) ? 'AND zip = :zip' : null,
+
+        (isset($bed_low) && !empty($bed_low)) ? 'AND beds   >= :bed_low' : null,
+        (isset($bed_high) && !empty($bed_high)) ? 'AND beds   <= :bed_high' : null,
+
+        (isset($bath_low) && !empty($bath_low)) ? 'AND baths   >= :bath_low' : null,
+        (isset($bath_high) && !empty($bath_high)) ? 'AND baths   <= :bath_high' : null,
+
+        (isset($sqft_low) && !empty($sqft_low)) ? 'AND sqft   >= :sqft_low' : null,
+        (isset($sqft_high) && !empty($sqft_high)) ? 'AND sqft   <= :sqft_high' : null,
+
+        (isset($income_requirement_low) && !empty($income_requirement_low)) ? 'AND income_requirement   >= :income_requirement_low' : null,
+        (isset($income_requirement_high) && !empty($income_requirement_high)) ? 'AND income_requirement   <= :income_requirement_high' : null,
+
+        (isset($credit_requirement_low) && !empty($credit_requirement_low)) ? 'AND credit_requirement   >= :credit_requirement_low' : null,
+        (isset($credit_requirement_high) && !empty($credit_requirement_high)) ? 'AND credit_requirement   <= :credit_requirement_high' : null,
+
+        (isset($rental_fee_low) && !empty($rental_fee_low)) ? 'AND rental_fee   >= :rental_fee_low' : null,
+        (isset($rental_fee_high) && !empty($rental_fee_high)) ? 'AND rental_fee   <= :rental_fee_high' : null
+
+    );
+
+    $statement = $db->prepare($sql);
+
+    if (isset($state_id) && !empty($state_id)) {
+        $statement->bindValue('state_id', $state_id);
+    }
+    if (isset($type_id) && !empty($type_id)) {
+        $statement->bindValue('type_id', $type_id);
+    }
+    if (isset($status_id) && !empty($status_id)) {
+        $statement->bindValue('status_id', $status_id);
+    }
+    if (isset($zip) && !empty($zip)) {
+        $statement->bindValue('zip', $zip);
+    }
+    if (isset($bed_low) && !empty($bed_low)) {
+        $statement->bindValue('bed_low', $bed_low);
+    }
+    if (isset($bed_high) && !empty($bed_high)) {
+        $statement->bindValue('bed_high', $bed_high);
+    }
+    if (isset($bath_low) && !empty($bath_low)) {
+        $statement->bindValue('bath_low', $bath_low);
+    }
+    if (isset($bath_high) && !empty($bath_high)) {
+        $statement->bindValue('bath_high', $bath_high);
+    }
+    if (isset($sqft_low) && !empty($sqft_low)) {
+        $statement->bindValue('sqft_low', $sqft_low);
+    }
+    if (isset($sqft_high) && !empty($sqft_high)) {
+        $statement->bindValue('sqft_high', $sqft_high);
+    }
+    if (isset($sqft_low) && !empty($sqft_low)) {
+        $statement->bindValue('sqft_low', $sqft_low);
+    }
+    if (isset($sqft_high) && !empty($sqft_high)) {
+        $statement->bindValue('sqft_high', $sqft_high);
+    }
+    if (isset($income_requirement_low) && !empty($income_requirement_low)) {
+        $statement->bindValue('income_requirement_low', $income_requirement_low);
+    }
+    if (isset($income_requirement_high) && !empty($income_requirement_high)) {
+        $statement->bindValue('income_requirement_high', $income_requirement_high);
+    }
+    if (isset($credit_requirement_low) && !empty($credit_requirement_low)) {
+        $statement->bindValue('credit_requirement_low', $credit_requirement_low);
+    }
+    if (isset($credit_requirement_high) && !empty($credit_requirement_high)) {
+        $statement->bindValue('credit_requirement_high', $credit_requirement_high);
+    }
+    if (isset($rental_fee_low) && !empty($rental_fee_low)) {
+        $statement->bindValue('rental_fee_low', $rental_fee_low);
+    }
+    if (isset($rental_fee_high) && !empty($rental_fee_high)) {
+        $statement->bindValue('rental_fee_low', $rental_fee_high);
+    }
+    if (isset($state_id) && !empty($state_id)) {
+        $statement->bindValue(':state_id', $state_id);
+    }
+    if (isset($state_id) && !empty($state_id)) {
+        $statement->bindValue(':state_id', $state_id);
+    }
+    if (isset($state_id) && !empty($state_id)) {
+        $statement->bindValue(':state_id', $state_id);
+    }
+
+    $statement->execute();
+    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+    $statement->closeCursor();
+    if (empty($result)) {
+        $result = false;
+    }
+    return $result;
+}
+
+function getPropertiesByState()
+{
 
 }
 
-function getPropertiesByType() {
+function getPropertiesByType()
+{
 
 }
 
-function getPropertiesByStatus() {
+function getPropertiesByStatus()
+{
 
 }
 
-function getPropertiesByFeature() {
+function getPropertiesByFeature()
+{
 
 }
 
-function getPropertiesByFeatures(){
+function getPropertiesByFeatures()
+{
 
 }
 
-function getPropertiesByZipRange(){
+function getPropertiesByZipRange()
+{
 
 }
 
-function getPropertiesByBedRange(){
+function getPropertiesByBedRange()
+{
 
 }
 
-function getPropertiesByBathRange(){
+function getPropertiesByBathRange()
+{
 
 }
 
-function getPropertiesBySQFTRange(){
+function getPropertiesBySQFTRange()
+{
 
 }
 
-function getPropertiesByIncomeReqRange(){
+function getPropertiesByIncomeReqRange()
+{
 
 }
 
-function getPropertiesByCreditRange(){
+function getPropertiesByCreditRange()
+{
 
 }
 
-function getPropertiesByRentalFee(){
+function getPropertiesByRentalFee()
+{
 
 }
 

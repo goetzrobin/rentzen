@@ -1,76 +1,231 @@
 <?php include '../common/configuration.php';
 session_start();
 if ((int)$_SESSION['ROLE_ID'] !== ROLE_ID_RENTER) {
-    header("Location: " . $base_path);
+  header("Location: " . $base_path);
 }
 ?>
 <?php include '../view/header.php' ?>
 <link href="./css/renter_map.css" rel="stylesheet">
 
 <div class='container-fluid'>
-  <div class='row'>
+  <div class='row search_row'>
     <div class='col mt-3 mb-3'>
       <div id="search">
-
+        <div class='search_form_mobile'>Show all filters 
+        <a class="icon fas fa-chevron-up" tabindex='0' data-trigger='focus'
+                data-container="body" data-toggle="popover" data-placement="top" data-content="Vivamus
+            sagittis lacus vel augue laoreet rutrum faucibus."></a>
+        </div>
         <form class='search_form'>
-        <div class='search_form_item'>
+          <div id='type' class='search_form_item'>
             <div class='search_form_description'>THIS IS</div>
-            <div class='search_form_data'>An Apartment</div>
+            <div class='search_form_data'><i class="fas fa-home mr-2"></i>An Apartment <a class="icon fas fa-chevron-up" tabindex='0' data-trigger='focus'
+                data-container="body" data-toggle="popover" data-placement="top" data-content="<h4>Vivamus
+            sagittis lacus vel augue laoreet rutrum faucibus.</h4"></a></div>
           </div>
 
-            <div class='search_form_item'>
+          <div id='location' class='search_form_item'>
             <div class='search_form_description'>LOCATED IN</div>
-            <div class='search_form_data'>Neighborhood</div>
+            <div class='search_form_data'><i class="fas fa-city mr-2"></i>Neighborhood <a class="icon  fas fa-chevron-up" tabindex='0' data-trigger='focus'
+                data-container="body" data-toggle="popover" data-placement="top" data-content="Vivamus
+            sagittis lacus vel augue laoreet rutrum faucibus."></a></div>
           </div>
 
-            <div class='search_form_item'>
+          <div id='bedbath' class='search_form_item'>
             <div class='search_form_description'>WITH</div>
-            <div class='search_form_data'>2 - Beds / 1 - Bath</div>
+            <div class='search_form_data'>2<i class="fas fa-bed mx-2"></i> / 1<i class="fas fa-bath ml-2"></i> <a class="icon fas fa-chevron-up" tabindex='0'
+                data-trigger='focus' data-container="body" data-toggle="popover" data-placement="top" data-content="Vivamus
+            sagittis lacus vel augue laoreet rutrum faucibus."></a></div>
           </div>
 
-          <div class='search_form_item'>
+          <div id='budget' class='search_form_item'>
             <div class='search_form_description'>MY BUDGET IS:</div>
-            <div class='search_form_data'>$100 - $1000</div>
+            <div class='search_form_data'>$100 - $1000 <a class="icon fas fa-chevron-up" tabindex='0' data-trigger='focus'
+                data-container="body" data-toggle="popover" data-placement="top" data-content="Vivamus
+            sagittis lacus vel augue laoreet rutrum faucibus."></a></div>
           </div>
 
-          <div class='search_form_item'>
-            <div class='search_form_data'>More Filters</div>
+          <div id='sqft' class='search_form_item'>
+            <div class='search_form_description'>IT SHOULD BE:</div>
+            <div class='search_form_data'>100 sqft - 2500 sqft <a class="icon fas fa-chevron-up" tabindex='0' data-trigger='focus'
+                data-container="body" data-toggle="popover" data-placement="top" data-content="Vivamus
+            sagittis lacus vel augue laoreet rutrum faucibus."></a></div>
           </div>
 
-          <div class='search_form_item'>
+          <div id='income' class='search_form_item'>
+            <div class='search_form_description'>I MAKE:</div>
+            <div class='search_form_data'>$10000 - $100000 <a class="icon fas fa-chevron-up" tabindex='0' data-trigger='focus'
+                data-container="body" data-toggle="popover" data-placement="top" data-content="Vivamus
+            sagittis lacus vel augue laoreet rutrum faucibus."></a></div>
+          </div>
+
+            <div id='credit' class='search_form_item'>
+            <div class='search_form_description'>CREDIT SCORE:</div>
+            <div class='search_form_data'>800 <a class="icon fas fa-chevron-up" tabindex='0' data-trigger='focus'
+                data-container="body" data-toggle="popover" data-placement="top" data-content="Vivamus
+            sagittis lacus vel augue laoreet rutrum faucibus."></a></div>
+          </div>
+
+          <div id='more' class='search_form_item'>
+            <div class='search_form_data'>More Filters <a class="icon fas fa-chevron-up" tabindex='0' data-trigger='focus'
+                data-container="body" data-toggle="popover" data-placement="top" data-content="Vivamus
+            sagittis lacus vel augue laoreet rutrum faucibus."></a></div>
+          </div>
+
+          <div id='button' class='search_form_item'>
             <button class='btn red'>Search</button>
           </div>
 
         </form>
 
-    </div> <!-- end searchbar -->
-  </div>
-</div>
-<div class='row'>
-  <div class='col-md-4 order-last'>
-    <div id="list">
-      <h4>Results</h4>
-      <div class='placeholder'>Placeholder</div>
-      <div class='placeholder'>Placeholder</div>
-      <div class='placeholder'>Placeholder</div>
-      <div class='placeholder'>Placeholder</div>
-      <div class='placeholder'>Placeholder</div>
-      <div class='placeholder'>Placeholder</div>
-      <div class='placeholder'>Placeholder</div>
-      <div class='placeholder'>Placeholder</div>
+      </div> <!-- end searchbar -->
     </div>
   </div>
-  <div class='col-md-8 mb-2'>
-    <div id="map"></div>
-  </div>
-</div>
-</div>
 
+  <div class='row'>
+    <div class='col mb-2 p-0'>
+      <div id="map"></div>
+    </div>
+  </div>
+
+  
+  <div class='row mt-3'>
+    <div class='col mt-3'>
+        <h4>Results</h4>
+        <div class='row'>
+        <div class='col-2'></div>
+          <div class='col-3 header_col_address'>Address</div>
+          <div class='col-1 header_col'>Price</div>
+          <div class='col-1 header_col'>Size</div>
+          <div class='col-1 header_col'>Beds</div>
+          <div class='col-1 header_col'>Baths</div>
+          <div class='col-1 header_col'>ZenScore</div>
+          <div class='col-2 header_col'></div>
+        </div>
+
+
+
+        <div class='row item'>
+        <div class='col-2 item_col'>
+          <img src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg" width='80%' height="60%">
+        </div>
+        <div class='col-3 item_col_address'>
+          <div>
+          <h5>1604 Willington</h5>
+          <small>19121 Philadelphia, PA</small>
+          </div>
+        </div>
+          <div class='col-1 item_col'>$625 <small>/month</small></div>
+          <div class='col-1 item_col'>300 <small> sqft</small></div>
+          <div class='col-1 item_col'>2</div>
+          <div class='col-1 item_col'>2.5</div>
+          <div class='col-1 item_col_score'>8.8</div>
+          <div class='col-2 item_col_icons'>
+            <i style='font-size: 30px;' class="far fa-calendar-check"></i>
+            <i style='font-size: 30px; color: #8E0000' class="fas fa-heart"></i>
+          </div>
+        </div>
+
+                <div class='row item'>
+        <div class='col-2 item_col'>
+          <img src="" width='80%' height="60%">
+        </div>
+        <div class='col-3 item_col_address'>
+          <div>
+          <h5>1604 Willington</h5>
+          <small>19121 Philadelphia, PA</small>
+          </div>
+        </div>
+          <div class='col-1 item_col'>$625 <small>/month</small></div>
+          <div class='col-1 item_col'>300 <small> sqft</small></div>
+          <div class='col-1 item_col'>2</div>
+          <div class='col-1 item_col'>2.5</div>
+          <div class='col-1 item_col_score'>8.8</div>
+          <div class='col-2 item_col_icons'>
+            <i style='font-size: 30px;' class="far fa-calendar-check"></i>
+            <i style='font-size: 30px; color: #8E0000' class="fas fa-heart"></i>
+          </div>
+        </div>
+
+                <div class='row item'>
+        <div class='col-2 item_col'>
+          <img src="" width='80%' height="60%">
+        </div>
+        <div class='col-3 item_col_address'>
+          <div>
+          <h5>1604 Willington</h5>
+          <small>19121 Philadelphia, PA</small>
+          </div>
+        </div>
+          <div class='col-1 item_col'>$625 <small>/month</small></div>
+          <div class='col-1 item_col'>300 <small> sqft</small></div>
+          <div class='col-1 item_col'>2</div>
+          <div class='col-1 item_col'>2.5</div>
+          <div class='col-1 item_col_score'>8.8</div>
+          <div class='col-2 item_col_icons'>
+            <i style='font-size: 30px;' class="far fa-calendar-check"></i>
+            <i style='font-size: 30px; color: #8E0000' class="fas fa-heart"></i>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  
+</div>
+<script>
+      function setSearchbar() {
+        if($(window).width() <= 1418) {
+              $('#credit').addClass('hidden');
+              $('#more * a').attr('data-content', "Test yolo");
+            } else {
+              $('#credit').removeClass('hidden');
+            }
+      
+            if($(window).width() <= 1293) {
+        $('#income').addClass('hidden');
+      } else {
+        $('#income').removeClass('hidden');
+      }
+
+            if($(window).width() <= 1118) {
+        $('#budget').addClass('hidden');
+      } else {
+        $('#budget').removeClass('hidden');
+      }
+
+    if($(window).width() <= 972) {
+        $('#bedbath').addClass('hidden');
+      } else {
+        $('#bedbath').removeClass('hidden');
+      }
+
+    if($(window).width() <= 824) {
+        $('.search_form').first().addClass('hidden');
+        $('.search_form_mobile').first().removeClass('hidden');
+    } else {
+      $('.search_form').first().removeClass('hidden');
+        $('.search_form_mobile').first().addClass('hidden');
+    }
+      }
+  
+  $(function () {
+    $('[data-toggle="popover"]').popover({
+      html: true,
+      trigger: 'focus'
+    });
+    $('.search_form').first().removeClass('hidden');
+    $('.search_form_mobile').first().addClass('hidden');
+    setSearchbar();   
+    $(window).on('resize', setSearchbar);
+  });
+</script>
 <script>
   var map;
 
   function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
+      fullscreenControl: false,
       center: {
         lat: -34.397,
         lng: 150.644

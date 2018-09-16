@@ -44,6 +44,14 @@ body {
   border-top-right-radius: 0;
 }
 
+a.back {
+  color: #8E0000 !important;
+}
+
+a.back:hover {
+  color: #8E0000 !important;
+}
+
 .error {
   display: flex;
   margin: 20px 0px;
