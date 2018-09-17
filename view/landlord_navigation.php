@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+<nav class="navbar navbar-expand-md navbar-light bg-light">
       <a class="navbar-brand" href="<?php echo $base_path . '/index.php'; ?>"><img src="<?php echo $base_path; ?>/images/rentzen_logo.svg" style="display: block; height: 40px;"></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
