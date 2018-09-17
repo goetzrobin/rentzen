@@ -19,7 +19,7 @@ function echoArr($arr)
 
 include '../view/header.php';
 
-echo "<a href='#' style='position: fixed; right: 20px; bottom: 20px;'><button class='btn'>Up</button></a>";
+echo "<a href='#' style='position: fixed; right: 20px; bottom: 20px; '><button class='btn'>Up</button></a>";
 echo "<div class='container'>";
 echo "<h1>Model Test Page</h1>";
 echo '<nav>
