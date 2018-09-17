@@ -11,7 +11,7 @@ include 'database.php';
 
 function echoArr($arr)
 {
-    echo '<pre>';
+    echo '<pre style="max-height: 500px; overflow: scroll;">';
     print_r($arr);
     echo '</pre>';
 }
@@ -23,13 +23,15 @@ echo "<a href='#' style='position: fixed; right: 20px; bottom: 20px;'><button cl
 echo "<div class='container'>";
 echo "<h1>Model Test Page</h1>";
 echo '<nav>
-<a href="'.$base_path.'">Home</a>
-<a href="#feature">Feature functions</a>
-<a href="#people">People functions</a>
-<a href="#prop">Property functions</a>
-<a href="#rentapp">Rental Application functions</a>
-<a href="#rentprop">Renter Property functions</a>
-        </nav>';
+        <a href="'.$base_path.'">Home</a>
+        <a href="#feature">Feature functions</a>
+        <a href="#people">People functions</a>
+        <a href="#prop">Property functions</a>
+        <a href="#rentapp">Rental Application functions</a>
+        <a href="#rentprop">Renter Property functions</a>
+                </nav>';
+
+
 // ***********************************************************
 // the feature model
 include 'feature_db.php';

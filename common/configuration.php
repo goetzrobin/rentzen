@@ -9,7 +9,7 @@
     $password = 'rentzen123';
     
     //this path can be used in place of relative references in HTML
-    // $base_path = 'http://misdemo.temple.edu/fall105';
+    // $base_path = 'http://misdemo.temple.edu/fall105/rentzen';
 
     $base_path = 'http://localhost/rentzen';
 

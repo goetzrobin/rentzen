@@ -226,6 +226,7 @@ if ((int)$_SESSION['ROLE_ID'] !== ROLE_ID_RENTER) {
   function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
       fullscreenControl: false,
+      zoomControl: false,
       center: {
         lat: -34.397,
         lng: 150.644
