@@ -146,7 +146,7 @@ function insertPeople(
     $result = $statement->execute();
     $id = $db->lastInsertId();
     $statement->closeCursor();
-    return $id;
+    return getPeople($id);
 }
 
 function updatePeople($id, $column, $value)
