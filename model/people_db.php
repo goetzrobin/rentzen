@@ -13,6 +13,7 @@ $statement = $db->prepare('select people_id, role_id from people where username=
     // . 'role_id=:role_id'
 );
     $statement->bindValue(':username', $username);
+    
     $statement->bindValue(':password', $password);
     // $statement->bindValue(':role_id', $role_id);
     $statement->execute();
