@@ -9,7 +9,7 @@ function loginPeople($username, $password
 {
     //returns true if the username and password are a good match.  false if not
     global $db;
-    $statement = $db->prepare('select people_id, role_id from people where username=:username and password = :password '
+$statement = $db->prepare('select people_id, role_id from people where username=:username and password = :password '
     // . 'role_id=:role_id'
 );
     $statement->bindValue(':username', $username);
