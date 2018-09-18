@@ -1,9 +1,11 @@
 <?php require_once '../common/configuration.php';?>
 <?php require_once "../model/database.php"; ?>
 <?php require_once "../model/people_db.php"; ?>
+<?php require_once "../model/renter_property_db.php"; ?>
 <?php
 
 $message = "";
+$state = getState();
 
 if (isset($_GET['sign_out'])){
     include '../util/logout.php';
@@ -60,6 +62,7 @@ if (isset($_POST['signup_button']) )
 {
     $email = filter_input(INPUT_POST,'email');
     $password = filter_input(INPUT_POST,'password');
+   
 
 
     $inserted_user = insertPeople();

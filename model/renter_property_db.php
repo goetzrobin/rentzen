@@ -119,4 +119,18 @@ function deleteRenterPropertyById($id)
     $statement->closeCursor();
     return $result;
 }
+
+function getState() {
+    //returns states
+    global $db;
+    $sql= "select * from state ";
+    $statement = $db->prepare($sql);
+    $statement->execute();
+    $result = $statement->fetchAll();
+    $statement->closeCursor();
+    if (empty($result)){
+        $result = false;
+    } 
+    return $result;
+}
 ?>
