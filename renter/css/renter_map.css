@@ -108,6 +108,25 @@
         object-fit: cover;
     }
 
+    .max-height-img {
+        max-height: 80px;
+        width: 100%;
+    }
+
+    .info {
+        text-align: center;
+    }
+    .info_small {
+        font-size: 9px;
+    }
+    .description {
+        font-size: 0.8rem;
+    }
+    .description h5 {
+        font-size: 1rem;
+        padding-bottom: 3px;
+        color: #8E0000;
+    }
     a {
         color: #aaa !important;
     }
