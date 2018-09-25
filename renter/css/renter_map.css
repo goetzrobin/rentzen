@@ -86,8 +86,8 @@
     }
 
     .item {
-        height: 100px;
         background-color: #fff;
+        padding: 5px;
         margin: 10px 0;
         border-radius: 4px;
         border: 1px #eee solid;
@@ -99,27 +99,8 @@
         box-shadow: 0 2px 6px rgba(0,0,0,0.25), 0 2px 4px rgba(0,0,0,0.22);
       }
 
-    .item_col {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .item_col_address {
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-    }
-
-    .item_col_icons {
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-    }
+   
     .item_col_score {
-        display: flex;
-        justify-content: center;
-        align-items: center;
         color: #8E0000;
     }
 

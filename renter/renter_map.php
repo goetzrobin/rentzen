@@ -92,83 +92,48 @@ if ((int)$_SESSION['ROLE_ID'] !== ROLE_ID_RENTER) {
   <div class='row mt-3'>
     <div class='col mt-3'>
         <h4>Results</h4>
-        <div class='row'>
+        <div class='row' id='result_header'>
         <div class='col-2'></div>
-          <div class='col-3 header_col_address'>Address</div>
-          <div class='col-1 header_col'>Price</div>
-          <div class='col-1 header_col'>Size</div>
-          <div class='col-1 header_col'>Beds</div>
-          <div class='col-1 header_col'>Baths</div>
-          <div class='col-1 header_col'>ZenScore</div>
-          <div class='col-2 header_col'></div>
+          <div class='col-3'>Address</div>
+          <div class='col-1'>Price</div>
+          <div class='col-1'>Size</div>
+          <div class='col-1'>Beds</div>
+          <div class='col-1'>Baths</div>
+          <div class='col-1'>ZenScore</div>
+          <div class='col-2'></div>
         </div>
 
 
-
-        <div class='row item'>
-        <div class='col-2 item_col'>
-          <img src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg" width='80%' height="60%">
-        </div>
-        <div class='col-3 item_col_address'>
-          <div>
-          <h5>1604 Willington</h5>
-          <small>19121 Philadelphia, PA</small>
+        <div class="row item">
+          <div class="col-sm-12 col-md-2" style="background-color: green">
+            Picture
           </div>
-        </div>
-          <div class='col-1 item_col'>$625 <small>/month</small></div>
-          <div class='col-1 item_col'>300 <small> sqft</small></div>
-          <div class='col-1 item_col'>2</div>
-          <div class='col-1 item_col'>2.5</div>
-          <div class='col-1 item_col_score'>8.8</div>
-          <div class='col-2 item_col_icons'>
-            <i style='font-size: 30px;' class="far fa-calendar-check"></i>
-            <i style='font-size: 30px; color: #8E0000' class="fas fa-heart"></i>
+          <div class="col-sm-12 col-md-3" style="background-color: yellow">
+            Address
           </div>
-        </div>
-
-                <div class='row item'>
-        <div class='col-2 item_col'>
-          <img src="" width='80%' height="60%">
-        </div>
-        <div class='col-3 item_col_address'>
-          <div>
-          <h5>1604 Willington</h5>
-          <small>19121 Philadelphia, PA</small>
+          <div class="col-6 col-sm-2 col-md-1" style="background-color: red">
+            Price
           </div>
-        </div>
-          <div class='col-1 item_col'>$625 <small>/month</small></div>
-          <div class='col-1 item_col'>300 <small> sqft</small></div>
-          <div class='col-1 item_col'>2</div>
-          <div class='col-1 item_col'>2.5</div>
-          <div class='col-1 item_col_score'>8.8</div>
-          <div class='col-2 item_col_icons'>
-            <i style='font-size: 30px;' class="far fa-calendar-check"></i>
-            <i style='font-size: 30px; color: #8E0000' class="fas fa-heart"></i>
+          <div class="col-6 col-sm-2 col-md-1" style="background-color: #110">
+            Size
+          </div>
+          <div class="col-6 col-sm-2 col-md-1" style="background-color: black">
+            Beds
+          </div>
+          <div class="col-6 col-sm-2 col-md-1" style="background-color: pink">
+            Baths
+          </div>
+          <div class="col-6 col-sm-2 col-md-1" style="background-color: white">
+            Zenscore
+          </div>
+          <div id='description' class="col-sm-12">
+            Description
+          </div>
+          <div class="col-sm-12 col-md-2" style="background-color: blue">
+            Action
           </div>
         </div>
 
-                <div class='row item'>
-        <div class='col-2 item_col'>
-          <img src="" width='80%' height="60%">
-        </div>
-        <div class='col-3 item_col_address'>
-          <div>
-          <h5>1604 Willington</h5>
-          <small>19121 Philadelphia, PA</small>
-          </div>
-        </div>
-          <div class='col-1 item_col'>$625 <small>/month</small></div>
-          <div class='col-1 item_col'>300 <small> sqft</small></div>
-          <div class='col-1 item_col'>2</div>
-          <div class='col-1 item_col'>2.5</div>
-          <div class='col-1 item_col_score'>8.8</div>
-          <div class='col-2 item_col_icons'>
-            <i style='font-size: 30px;' class="far fa-calendar-check"></i>
-            <i style='font-size: 30px; color: #8E0000' class="fas fa-heart"></i>
-          </div>
-        </div>
-
-      </div>
     </div>
   </div>
   
@@ -200,12 +165,16 @@ if ((int)$_SESSION['ROLE_ID'] !== ROLE_ID_RENTER) {
         $('#bedbath').removeClass('hidden');
       }
 
-    if($(window).width() <= 824) {
+    if($(window).width() <= 768) {
         $('.search_form').first().addClass('hidden');
         $('.search_form_mobile').first().removeClass('hidden');
+        $('#result_header').addClass('hidden');
+        $('#description').removeClass('hidden');
     } else {
       $('.search_form').first().removeClass('hidden');
         $('.search_form_mobile').first().addClass('hidden');
+        $('#result_header').removeClass('hidden');
+        $('#description').addClass('hidden');
     }
       }
   
@@ -227,10 +196,6 @@ if ((int)$_SESSION['ROLE_ID'] !== ROLE_ID_RENTER) {
     map = new google.maps.Map(document.getElementById('map'), {
       fullscreenControl: false,
       zoomControl: false,
-      center: {
-        lat: -34.397,
-        lng: 150.644
-      },
       zoom: 8,
       styles: [{
         "featureType": "water",
@@ -414,8 +379,36 @@ if ((int)$_SESSION['ROLE_ID'] !== ROLE_ID_RENTER) {
       infowindow.open(map, marker);
     });
 
+    if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
 
+            // infowindow.setPosition(pos);
+            // infowindow.setContent('Location found.');
+            // infowindow.open(map);
+            map.setCenter(pos);
+            map.setZoom(15);
+          }, function() {
+            handleLocationError(true, infowindow, map.getCenter());
+          });
+        } else {
+          // Browser doesn't support Geolocation
+          handleLocationError(false, infowindow, map.getCenter());
+        }
   }
+
+       function handleLocationError(browserHasGeolocation, infowindow, pos) {
+        infowindow.setPosition(pos);
+        infowindow.setContent(browserHasGeolocation ?
+                              'Error: The Geolocation service failed.' :
+                              'Error: Your browser doesn\'t support geolocation.');
+        infowindow.open(map);
+      }
+
+  
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBGe2Qu6G_eINiYN28_igiiifEKRmj8uw&callback=initMap"
   async defer></script>
