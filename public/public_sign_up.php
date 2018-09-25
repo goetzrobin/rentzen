@@ -3,9 +3,12 @@
 <div class="container">
 
       <div class="py-5 text-center">
-        <img class="d-block mx-auto mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
-        <h2>Checkout form</h2>
-        <p class="lead">Below is an example form built entirely with Bootstrap's form controls. Each required form group has a validation state that can be triggered by attempting to submit the form without completing it.</p>
+        <img class="d-block mx-auto mb-4" src="<?php echo $base_path; ?>/images/rentzen_logo.svg" alt="" width="72" height="72">
+        <h2>Sign Up Form</h2>
+        <p class="lead">
+          Sign up below and join the RentZen Community. Whether you are a renter or a landlord, RentZen will 
+          take the stress out of your property search. Sit back and relax. Your perfect match is out there.  
+        </p>
       </div>
 
       <div class="row">
@@ -13,7 +16,7 @@
 
         </div>
         <div class="col-md-8 order-md-1">
-          <h4 class="mb-3">Sign Up Form</h4>
+          <h4 class="mb-3">Personal Information</h4>
           <form class="needs-validation" novalidate>
             <div class="row">
               <div class="col-md-6 mb-3">
