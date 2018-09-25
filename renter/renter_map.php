@@ -103,34 +103,38 @@ if ((int)$_SESSION['ROLE_ID'] !== ROLE_ID_RENTER) {
           <div class='col-2'></div>
         </div>
 
+  
 
         <div class="row item">
-          <div class="col-sm-12 col-md-2" style="background-color: green">
-            Picture
+          <div class="col-sm-12 col-md-2">
+          <img src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg" width='80%' height="60%">
           </div>
           <div class="col-sm-12 col-md-3" style="background-color: yellow">
-            Address
+          <h5>1604 Willington</h5>
+          <small>19121 Philadelphia, PA</small>
           </div>
           <div class="col-6 col-sm-2 col-md-1" style="background-color: red">
-            Price
+           $675 <small>/month</small>
           </div>
           <div class="col-6 col-sm-2 col-md-1" style="background-color: #110">
-            Size
+            300 <small>sqft</small>
           </div>
           <div class="col-6 col-sm-2 col-md-1" style="background-color: black">
-            Beds
+            3
           </div>
           <div class="col-6 col-sm-2 col-md-1" style="background-color: pink">
-            Baths
+            2.4
           </div>
           <div class="col-6 col-sm-2 col-md-1" style="background-color: white">
-            Zenscore
+            10
           </div>
           <div id='description' class="col-sm-12">
-            Description
+            <Lorem></Lorem>
           </div>
           <div class="col-sm-12 col-md-2" style="background-color: blue">
-            Action
+          <i style='font-size: 30px;' class="far fa-calendar-check"></i>
+            <i style='font-size: 30px; color: #8E0000' class="fas fa-heart"></i>
+        
           </div>
         </div>
 
