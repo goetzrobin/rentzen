@@ -107,18 +107,45 @@ if ((int)$_SESSION['ROLE_ID'] !== ROLE_ID_RENTER) {
       </div>
 
 
-      <?php foreach($properties as $property) { ?>
+      <?php foreach ($properties as $property) { ?>
         <div class="row item justify-content-center">
-        <div class="col-sm-12 col-md-2 p-0 d-flex justify-content-center align-items-center">
+        <div class="result_image col-sm-12 col-md-2 p-0 d-flex justify-content-center align-items-center">
           <img class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
+          <div class='hidden thumbmails col-4 row' style='heigth: 100%; padding: 0'>
+          <div class='col-6 thumbmails__image'>
+          <img class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
+       
+          </div>
+          <div class='col-6 thumbmails__image'>
+          <img class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
+       
+          </div>
+          <div class='col-6 thumbmails__image'>
+          <img class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
+       
+          </div>
+          <div class='col-6 thumbmails__image'>
+          <img class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
+       
+          </div>
+          <div class='col-6 thumbmails__image'>
+          <img class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
+       
+          </div>
+          <div class='col-6 thumbmails__image'>
+          <img class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
+       
+          </div>
+          </div>
+         
         </div>
-        <div class="my-3 col-sm-12 col-md-3 d-flex align-items-center">
+        <div class="result_address my-3 col-sm-12 col-md-3 d-flex align-items-center">
           <div>
             <h5 class='mb-0'> <?php echo $property['street']; ?></h5>
             <small class='ml-1'> <?php echo $property['zip']; ?>  <?php echo $property['state_name']; ?>, PA</small>
           </div>
         </div>
-        <div class="quick_fact col-2 col-sm-2 col-md-1 d-flex justify-content-center align-items-baseline">
+        <div class="result_fee quick_fact col-2 col-sm-1 col-md-1 d-flex justify-content-center align-items-baseline">
           <div class='d-flex flex-column justify-content-center'>
             <p class="mb-0 info"><i class='fas fa-money-check-alt'></i></p>
             <div>
@@ -126,7 +153,7 @@ if ((int)$_SESSION['ROLE_ID'] !== ROLE_ID_RENTER) {
             </div>
           </div>
         </div>
-        <div class="quick_fact col-2 col-sm-2 col-md-1 d-flex justify-content-center align-items-baseline">
+        <div class="result_sqft quick_fact col-2 col-sm-1 col-md-1 d-flex justify-content-center align-items-baseline">
           <div class='d-flex flex-column justify-content-center'>
             <p class="mb-0 info"><i class='fas fa-arrows-alt'></i></p>
             <div>
@@ -136,19 +163,19 @@ if ((int)$_SESSION['ROLE_ID'] !== ROLE_ID_RENTER) {
             </div>
           </div>
         </div>
-        <div class="quick_fact col-2 col-sm-2 col-md-1 d-flex justify-content-center align-items-baseline">
+        <div class="result_beds quick_fact col-2 col-sm-1 col-md-1 d-flex justify-content-center align-items-baseline">
           <div class='d-flex flex-column justify-content-center'>
             <p class="mb-0 info"><i class='fas fa-bed'></i></p>
             <?php echo $property['beds']; ?>
           </div>
         </div>
-        <div class="quick_fact col-2 col-sm-2 col-md-1 d-flex justify-content-center align-items-baseline">
+        <div class="result_baths quick_fact col-2 col-sm-1 col-md-1 d-flex justify-content-center align-items-baseline">
           <div class='d-flex flex-column justify-content-center'>
             <p class="mb-0 info"><i class='fas fa-bath'></i></p>
             <?php echo $property['baths']; ?>
           </div>
         </div>
-        <div class="quick_fact col-2 col-sm- col-md-1 d-flex justify-content-center align-items-baseline">
+        <div class="result_match quick_fact col-2 col-sm-1 col-md-1 d-flex justify-content-center align-items-baseline">
           <div class='d-flex flex-column justify-content-center'>
             <p class="mb-0 info"><i class='fas fa-star'></i></p>
             10
@@ -164,7 +191,8 @@ if ((int)$_SESSION['ROLE_ID'] !== ROLE_ID_RENTER) {
 
         </div>
       </div>
-      <?php } ?>
+      <?php 
+    } ?>
      
 
 
@@ -175,42 +203,42 @@ if ((int)$_SESSION['ROLE_ID'] !== ROLE_ID_RENTER) {
 <script>
   function setSearchbar() {
     if ($(window).width() <= 1418) {
-      $('#credit').addClass('hidden');
+      $('#credit').hide();
       $('#more * a').attr('data-content', "Test yolo");
     } else {
-      $('#credit').removeClass('hidden');
+      $('#credit').show();
     }
 
     if ($(window).width() <= 1293) {
-      $('#income').addClass('hidden');
+      $('#income').hide();
     } else {
-      $('#income').removeClass('hidden');
+      $('#income').show();
     }
 
     if ($(window).width() <= 1118) {
-      $('#budget').addClass('hidden');
+      $('#budget').hide();
     } else {
-      $('#budget').removeClass('hidden');
+      $('#budget').show();
     }
 
     if ($(window).width() <= 972) {
-      $('#bedbath').addClass('hidden');
+      $('#bedbath').hide();
     } else {
-      $('#bedbath').removeClass('hidden');
+      $('#bedbath').show();
     }
 
     if ($(window).width() <= 768) {
-      $('.search_form').first().addClass('hidden');
+      $('.search_form').first().hide();
      
-      $('.search_form_mobile').first().removeClass('hidden');
-      $('#result_header').addClass('hidden');
+      $('.search_form_mobile').first().show();
+      $('#result_header').hide();
 
        $('.info').each(function (index) {
-        $(this).removeClass('hidden')
+        $(this).show()
       });
 
       $('.description').each(function (index) {
-        $(this).removeClass('hidden');
+        $(this).show();
       })
 
       $('img').each(function (index) {
@@ -223,16 +251,16 @@ if ((int)$_SESSION['ROLE_ID'] !== ROLE_ID_RENTER) {
       });
     
     } else {
-      $('.search_form').first().removeClass('hidden');
-      $('.search_form_mobile').first().addClass('hidden');
-      $('#result_header').removeClass('hidden');
+      $('.search_form').first().show();
+      $('.search_form_mobile').first().hide();
+      $('#result_header').show();
 
       $('.description').each(function (index) {
-        $(this).addClass('hidden');
+        $(this).hide();
       });
 
       $('.info').each(function (index) {
-        $(this).addClass('hidden')
+        $(this).hide()
       });
 
       $('img').each(function (index) {
@@ -247,15 +275,109 @@ if ((int)$_SESSION['ROLE_ID'] !== ROLE_ID_RENTER) {
     }
   }
 
+  function expand(el) {
+      $(el).find('.info').each(function (index) { $(this).show('slow') });
+
+      $(el).find('.description').first().show('slow');
+
+
+      $(el).find('.result_image').first().removeClass('justify-content-center');
+
+      $(el).find('.result_image img').first().removeClass('max-height-img');
+      $(el).find('.result_image img').first().addClass('col-8');
+      $(el).find('.result_image .thumbmails').first().removeClass('hidden');
+      $(el).find('.result_image .thumbmails img').removeClass('max-height-img');
+      $(el).find('.result_image .thumbmails img').addClass('h-100');
+      $(el).find('.result_image').first().removeClass('col-md-2');
+      $(el).find('.result_image').first().addClass('col-12');
+
+      $(el).find('.result_address').first().toggleClass('col-md-3');
+      $(el).find('.result_address').first().addClass('col-12');
+
+      $(el).find('.result_fee').first().removeClass('col-md-1');
+      $(el).find('.result_fee').first().addClass('col-2');
+
+      $(el).find('.result_baths').first().removeClass('col-md-1');
+      $(el).find('.result_baths').first().addClass('col-2');
+
+      $(el).find('.result_sqft').first().removeClass('col-md-1');
+      $(el).find('.result_sqft').first().addClass('col-2');
+
+      $(el).find('.result_beds').first().removeClass('col-md-1');
+      $(el).find('.result_beds').first().addClass('col-2');
+
+      $(el).find('.result_match').first().removeClass('col-md-1');
+      $(el).find('.result_match').first().addClass('col-2');
+
+  }
+
+  function minimize(el) {
+    $(el).find('.info').each(function (index) { $(this).hide('slow') });
+
+    $(el).find('.description').first().hide('slow');
+
+    $(el).find('.result_image').first().addClass('justify-content-center');
+
+    $(el).find('.result_image img').first().addClass('max-height-img');
+    $(el).find('.result_image img').first().removeClass('col-8');
+    $(el).find('.result_image .thumbmails').first().addClass('hidden');
+    $(el).find('.result_image').first().addClass('col-md-2');
+    $(el).find('.result_image').first().removeClass('col-12');
+
+    $(el).find('.result_address').first().addClass('col-md-3');
+    $(el).find('.result_address').first().removeClass('col-12');
+
+    $(el).find('.result_fee').first().addClass('col-md-1');
+    $(el).find('.result_fee').first().removeClass('col-2');
+
+    $(el).find('.result_baths').first().addClass('col-md-1');
+    $(el).find('.result_baths').first().removeClass('col-2');
+
+    $(el).find('.result_sqft').first().addClass('col-md-1');
+    $(el).find('.result_sqft').first().removeClass('col-2');
+
+    $(el).find('.result_beds').first().addClass('col-md-1');
+    $(el).find('.result_beds').first().removeClass('col-2');
+
+    $(el).find('.result_match').first().addClass('col-md-1');
+    $(el).find('.result_match').first().removeClass('col-2');
+
+  }
+
   $(function () {
     $('[data-toggle="popover"]').popover({
       html: true,
       trigger: 'focus'
     });
-    $('.search_form').first().removeClass('hidden');
-    $('.search_form_mobile').first().addClass('hidden');
+    $('.search_form').first().show();
+    $('.search_form_mobile').first().hide();
     setSearchbar();
     $(window).on('resize', setSearchbar);
+
+
+
+    $('.item').each( function (index) {
+      var counter = 0;
+      $(this).click( () => {
+        if($(window).width() > 768) {
+          if(counter % 2 == 0) {
+          
+          expand(this);
+        } else {
+         minimize(this);
+        }
+        console.log('round: ', counter);
+        counter++;}
+       
+        
+      });
+    });
+
+    
+    $('.fa-heart').each( function (index) {
+      $(this).click(function (index) { $(this).toggleClass('fas'); $(this).toggleClass('far')})
+    }
+      );
   });
 </script>
 <script>
