@@ -62,6 +62,27 @@ function getPropertiesByRenterId($renter_id) {
     return $result;
 }
 
+function getPropertyRelationshipByRenterIdByPropertyID($renter_id, $property_id) {
+    //returns an array of renter_property
+    global $db;
+    $statement = $db->prepare('select * '
+            . ' from renter_property,property,state ' 
+            . 'where renter_property.property_id=property.property_id '
+            . 'and property.state_id=state.state_id '
+            . 'and renter_property.renter_id=:id '
+            . 'and renter_property.property_id=:property_id'
+        );
+    $statement->bindValue(':id', $renter_id);
+    $statement->bindValue(':property_id', $property_id);
+    $statement->execute();
+    $result = $statement->fetch(PDO::FETCH_ASSOC);
+    $statement->closeCursor();
+    if (empty($result)){
+        $result = false;
+    } 
+    return $result;
+}
+
 
 function insertRenterProperty(
     $renter_id,

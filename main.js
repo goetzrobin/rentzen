@@ -1,0 +1,1 @@
+const base_path = 'http://localhost/rentzen/';

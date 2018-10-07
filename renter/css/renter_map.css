@@ -170,3 +170,19 @@
           opacity: 0.9;
           cursor: pointer;
       }
+
+      .icon__expand {
+        color: #8E0000;
+        margin-left: 5px;
+        cursor: pointer;
+      }
+
+      .icon__action {
+          cursor: pointer;
+      }
+
+      .match-score__data {
+          font-size: 30px;
+          color: #8E0000;
+          font-weight: bold;
+      }

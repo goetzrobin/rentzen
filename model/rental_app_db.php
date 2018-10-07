@@ -48,6 +48,7 @@ function getRentalAppByStatusId($status_id){
 
 
 function insertRentalApp(
+    $renter_property_id,
     $last_status_id,
     $move_in_date,
     $move_out_date,
@@ -55,13 +56,15 @@ function insertRentalApp(
 ) {
     global $db;
     $sql = "
-    INSERT INTO `rental_application`( 
+    INSERT INTO `rental_application`(
+        renterproperty_id,
         last_status_id,
         move_in_date,
         move_out_date,
         renter_message
         ) 
     VALUES ( 
+        :renterproperty_id,
         :last_status_id,
         :move_in_date,
         :move_out_date,
@@ -69,6 +72,7 @@ function insertRentalApp(
         )  ";
     $statement = $db->prepare($sql);
 
+    $statement->bindValue(":renterproperty_id", $renter_property_id);
     $statement->bindValue(":last_status_id", $last_status_id);
     $statement->bindValue(":move_in_date", $move_in_date);
     $statement->bindValue(":move_out_date", $move_out_date);

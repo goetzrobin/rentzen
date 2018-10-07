@@ -30,6 +30,11 @@ pre {
 }
 
 .red:hover {
-  background-color: #7C0000;
-  border-color: #8E0000;
-}
+    background-color: #7C0000;
+    border-color: #8E0000;
+  }
+
+  .red:active {
+    background-color: rgb(87, 1, 1) !important;
+    border-color: rgb(97, 0, 0) !important;
+  }
