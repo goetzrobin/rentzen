@@ -20,40 +20,40 @@
 </nav> -->
 
 <?php include '../view/public_navigation.php'; ?>
-<div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+<div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-phila">
   <div class="col-md-5 p-lg-5 mx-auto my-5">
-    <h1 class="display-4 font-weight-normal">In Development</h1>
-    <p class="lead font-weight-normal">We are still developing this page. The button bellow will take you to our model test page</p>
-    <a class="btn btn-outline-secondary" href="<?php echo $base_path; ?>/model/model_test.php">Test our Model</a>
+    <h1 class="display-4 font-weight-normal pt-3 mt-3">RentZen</h1>
+    <p class="lead font-weight-normal">Better Landlords. Better Tenants.</p>
+      <a class="btn btn-primary red" href="<?php echo $base_path; ?>/public/index.php?sign_up">Sign Up</a>
   </div>
-  <div class="product-device box-shadow d-none d-md-block"></div>
-  <div class="product-device product-device-2 box-shadow d-none d-md-block"></div>
 </div>
 <div class="container marketing">
 
 <!-- Three columns of text below the carousel -->
 
  <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-      <h1 class="display-4">Pricing</h1>
-      <p class="lead">Quickly build an effective pricing table for your potential customers with this Bootstrap example. It's built with default Bootstrap components and utilities with little customization.</p>
+      <h1 class="display-4">Our Mission</h1>
+      <p class="lead">Renting homes should be simple. That’s why we designed a centralized digital experience for landlords to find qualified tenants—and renters to find the home of their dreams without the hassles of in-person showings.
+
+</p>
     </div>
 
 <div class="row">
   <div class="col-lg-4">
     <img class="rounded-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-    <h2>Heading</h2>
+    <h2>MapView</h2>
     <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.</p>
     <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
   </div><!-- /.col-lg-4 -->
   <div class="col-lg-4">
     <img class="rounded-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-    <h2>Heading</h2>
+    <h2>Easy Application</h2>
     <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.</p>
     <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
   </div><!-- /.col-lg-4 -->
   <div class="col-lg-4">
     <img class="rounded-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-    <h2>Heading</h2>
+    <h2>ZensSore</h2>
     <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
     <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
   </div><!-- /.col-lg-4 -->
@@ -66,7 +66,7 @@
 
 <div class="row featurette">
   <div class="col-md-7">
-    <h2 class="featurette-heading">First featurette heading. <span class="text-muted">It'll blow your mind.</span></h2>
+    <h2 class="featurette-heading">Completely Responsive<span class="text-muted">Anywhere.</span></h2>
     <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
   </div>
   <div class="col-md-5">
@@ -78,7 +78,7 @@
 
 <div class="row featurette">
   <div class="col-md-7 order-md-2">
-    <h2 class="featurette-heading">Oh yeah, it's that good. <span class="text-muted">See for yourself.</span></h2>
+    <h2 class="featurette-heading">Personal and fast.<span class="text-muted">See for yourself.</span></h2>
     <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
   </div>
   <div class="col-md-5 order-md-1">
@@ -90,7 +90,7 @@
 
 <div class="row featurette">
   <div class="col-md-7">
-    <h2 class="featurette-heading">And lastly, this one. <span class="text-muted">Checkmate.</span></h2>
+    <h2 class="featurette-heading">Apply within seconds<span class="text-muted">Checkmate.</span></h2>
     <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
   </div>
   <div class="col-md-5">
@@ -104,7 +104,7 @@
 
 </div><!-- /.container -->
  <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-      <h1 class="display-4">Pricing</h1>
+      <h1 class="display-4">Sign Up</h1>
       <p class="lead">Quickly build an effective pricing table for your potential customers with this Bootstrap example. It's built with default Bootstrap components and utilities with little customization.</p>
     </div>
 
@@ -112,7 +112,7 @@
       <div class="card-deck mb-3 text-center">
         <div class="card mb-4 box-shadow">
           <div class="card-header">
-            <h4 class="my-0 font-weight-normal">Free</h4>
+            <h4 class="my-0 font-weight-normal">Tenants</h4>
           </div>
           <div class="card-body">
             <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1>
@@ -127,7 +127,7 @@
         </div>
         <div class="card mb-4 box-shadow">
           <div class="card-header">
-            <h4 class="my-0 font-weight-normal">Pro</h4>
+            <h4 class="my-0 font-weight-normal">Landlord</h4>
           </div>
           <div class="card-body">
             <h1 class="card-title pricing-card-title">$15 <small class="text-muted">/ mo</small></h1>
@@ -138,21 +138,6 @@
               <li>Help center access</li>
             </ul>
             <button type="button" class="btn btn-lg btn-block btn-primary">Get started</button>
-          </div>
-        </div>
-        <div class="card mb-4 box-shadow">
-          <div class="card-header">
-            <h4 class="my-0 font-weight-normal">Enterprise</h4>
-          </div>
-          <div class="card-body">
-            <h1 class="card-title pricing-card-title">$29 <small class="text-muted">/ mo</small></h1>
-            <ul class="list-unstyled mt-3 mb-4">
-              <li>30 users included</li>
-              <li>15 GB of storage</li>
-              <li>Phone and email support</li>
-              <li>Help center access</li>
-            </ul>
-            <button type="button" class="btn btn-lg btn-block btn-primary">Contact us</button>
           </div>
         </div>
       </div>

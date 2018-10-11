@@ -143,7 +143,7 @@ if ((int)$_SESSION['ROLE_ID'] !== ROLE_ID_RENTER) {
           <div>
             <input type='hidden' class='property_id' value='<?php echo $property['property_id'] ?>'</div>
             <h5 class='mb-0'> <?php echo $property['street']; ?> <i class="fas fa-chevron-down icon__expand"></i></h5>
-            <small class='ml-1'> <?php echo $property['zip']; ?>  <?php echo $property['state_name']; ?>, PA</small>
+            <small class='ml-1'> <?php echo $property['zip']; ?>  <?php echo $property['city'];?>, <?php echo $property['state_name']; ?></small>
           </div>
           
         </div>
