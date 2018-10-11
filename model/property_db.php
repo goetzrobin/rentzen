@@ -1,5 +1,9 @@
 <?php
 
+define("VACANT_ID",401);
+define("OCCUPIED_ID",402);
+define("LISTED",403);
+
 function getProperties()
 {
     //returns an array of people
@@ -43,8 +47,12 @@ function getPropertiesByLandlordId($id)
     //returns an array of people
     global $db;
     $statement = $db->prepare('select * '
-        . ' from property, landlord_property WHERE landlord_property.property_id=property.property_id'
-        . ' and landlord_property.landlord_id = :landlord_id');
+        . ' from property, property_status, property_type, state, landlord_property '
+        .  ' WHERE landlord_property.property_id=property.property_id'
+        .  ' and property.propstat_id = property_status.propstat_id'
+        .  ' and property.type_id = property_type.propertytype_id'
+        .  ' and property.state_id = state.state_id'
+        . '  and landlord_property.landlord_id = :landlord_id');
     $statement->bindValue(':landlord_id', $id);
     $statement->execute();
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -248,65 +256,6 @@ function getPropertiesBySearchParams($search_params)
     return $result;
 }
 
-function getPropertiesByState()
-{
-
-}
-
-function getPropertiesByType()
-{
-
-}
-
-function getPropertiesByStatus()
-{
-
-}
-
-function getPropertiesByFeature()
-{
-
-}
-
-function getPropertiesByFeatures()
-{
-
-}
-
-function getPropertiesByZipRange()
-{
-
-}
-
-function getPropertiesByBedRange()
-{
-
-}
-
-function getPropertiesByBathRange()
-{
-
-}
-
-function getPropertiesBySQFTRange()
-{
-
-}
-
-function getPropertiesByIncomeReqRange()
-{
-
-}
-
-function getPropertiesByCreditRange()
-{
-
-}
-
-function getPropertiesByRentalFee()
-{
-
-}
 
 function insertProperty(
     $street = null,
@@ -405,6 +354,29 @@ function deletePropertyById($id)
     $statement = $db->prepare($sql);
     $statement->bindValue('property_id', $id);
     $result = $statement->execute();
+    $statement->closeCursor();
+    return $result;
+}
+
+
+function getPropertyTypes() {
+        //returns an array of rental_application
+        global $db;
+        $statement = $db->prepare('select * '
+            . ' from property_type');
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $statement->closeCursor();
+        return $result;
+}
+
+function getPropertyStatus() {
+    //returns an array of rental_application
+    global $db;
+    $statement = $db->prepare('select * '
+            . ' from property_status');
+    $statement->execute();
+    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
     $statement->closeCursor();
     return $result;
 }

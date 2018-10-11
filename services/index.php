@@ -2,6 +2,8 @@
 <?php require_once "../model/database.php"; ?>
 <?php require_once "../model/renter_property_db.php"; ?>
 <?php require_once "../model/rental_app_db.php"; ?>
+<?php require_once "../model/util_db.php"; ?>
+<?php require_once "../model/property_db.php"; ?>
 <?php
     session_start();
 
@@ -15,6 +17,28 @@
 
     if ($_GET['type'] === 'get_session_data') {
         echo json_encode($_SESSION);
+    }
+
+    if ($_GET['type'] === 'get_states') {
+        echo json_encode(getStates());
+    }
+    
+    if ($_GET['type'] === 'get_property_type') {
+        echo json_encode(getPropertyTypes());
+    }
+
+    if ($_GET['type'] === 'get_property_status') {
+        echo json_encode(getPropertyStatus());
+    }
+
+    if ($_GET['type'] === 'set_property_status_occupied' && isset($_GET['prop_id'])) {
+        $id = $_GET['prop_id'];
+        $updated_property = updateProperty($id,"propstat_id",OCCUPIED_ID);
+        if($updated_property){
+            echo json_encode($updated_property);
+        } else {
+            echo 'Error while updating. Please try again.';
+        }
     }
 
     if( $_GET['type'] === 'post_app_form' && !empty($_POST)){
