@@ -1,5 +1,9 @@
 <?php
 
+define("VACANT_ID",401);
+define("OCCUPIED_ID",402);
+define("LISTED",403);
+
 function getProperties()
 {
     //returns an array of people
@@ -43,8 +47,12 @@ function getPropertiesByLandlordId($id)
     //returns an array of people
     global $db;
     $statement = $db->prepare('select * '
-        . ' from property, landlord_property WHERE landlord_property.property_id=property.property_id'
-        . ' and landlord_property.landlord_id = :landlord_id');
+    . ' from property, property_status, property_type, state, landlord_property '
+    .  ' WHERE landlord_property.property_id=property.property_id'
+    .  ' and property.propstat_id = property_status.propstat_id'
+    .  ' and property.type_id = property_type.propertytype_id'
+    .  ' and property.state_id = state.state_id'
+    . '  and landlord_property.landlord_id = :landlord_id');
     $statement->bindValue(':landlord_id', $id);
     $statement->execute();
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -248,65 +256,6 @@ function getPropertiesBySearchParams($search_params)
     return $result;
 }
 
-function getPropertiesByState()
-{
-
-}
-
-function getPropertiesByType()
-{
-
-}
-
-function getPropertiesByStatus()
-{
-
-}
-
-function getPropertiesByFeature()
-{
-
-}
-
-function getPropertiesByFeatures()
-{
-
-}
-
-function getPropertiesByZipRange()
-{
-
-}
-
-function getPropertiesByBedRange()
-{
-
-}
-
-function getPropertiesByBathRange()
-{
-
-}
-
-function getPropertiesBySQFTRange()
-{
-
-}
-
-function getPropertiesByIncomeReqRange()
-{
-
-}
-
-function getPropertiesByCreditRange()
-{
-
-}
-
-function getPropertiesByRentalFee()
-{
-
-}
 
 function insertProperty(
     $street = null,
@@ -322,7 +271,8 @@ function insertProperty(
     $credit_requirement = null,
     $rental_fee = null,
     $description = null,
-    $picture = null
+    $picture = null,
+    $landlord_id = null
 ) {
     global $db;
     $sql = "
@@ -375,9 +325,90 @@ function insertProperty(
     $statement->bindValue(':picture', $picture);
 
     $result = $statement->execute();
-    $id = $db->lastInsertId();
+    $property_id = $db->lastInsertId();
     $statement->closeCursor();
-    return $id;
+
+    if (createLandlordPropertyRelationship($landlord_id, $property_id)) {
+        return $property_id;
+    } else {
+        return false;
+    }
+    
+}
+
+function updatePropertyComplete(
+    $property_id = null,
+    $street = null,
+    $city = null,
+    $state_id = null,
+    $zip = null,
+    $beds = null,
+    $baths = null,
+    $sqft = null,
+    $type_id = null,
+    $propstat_id = null,
+    $income_requirement = null,
+    $credit_requirement = null,
+    $rental_fee = null,
+    $description = null
+) {
+    global $db;
+    $sql = "
+    UPDATE `property` SET 
+        street = :street,
+        city = :city,
+        state_id = :state_id,
+        zip = :zip,
+        beds = :beds,
+        baths = :baths,
+        sqft = :sqft,
+        type_id = :type_id,
+        propstat_id = :propstat_id,
+        income_requirement = :income_requirement,
+        credit_requirement = :credit_requirement,
+        rental_fee = :rental_fee,
+        description = :description 
+    WHERE property_id = :property_id  ";
+    $statement = $db->prepare($sql);
+    $statement->bindValue(':property_id', $property_id);
+    $statement->bindValue(':street', $street);
+    $statement->bindValue(':city', $city);
+    $statement->bindValue(':state_id', $state_id);
+    $statement->bindValue(':zip', $zip);
+    $statement->bindValue(':beds', $beds);
+    $statement->bindValue(':baths', $baths);
+    $statement->bindValue(':sqft', $sqft);
+    $statement->bindValue(':type_id', $type_id);
+    $statement->bindValue(':propstat_id', $propstat_id);
+    $statement->bindValue(':income_requirement', $income_requirement);
+    $statement->bindValue(':credit_requirement', $credit_requirement);
+    $statement->bindValue(':rental_fee', $rental_fee);
+    $statement->bindValue(':description', $description);
+
+    $result = $statement->execute();
+    $statement->closeCursor();
+    if (empty($result)) {
+        $result = false;
+    } else {
+        return getPropertyById($id);
+    }
+    
+}
+
+function createLandlordPropertyRelationship($landlord_id, $property_id)
+{
+    global $db;
+    $sql = 'INSERT INTO `landlord_property`(`landlord_id`, `property_id`) VALUES (:landlord_id, :property_id)';
+    $statement = $db->prepare($sql);
+    $statement->bindValue(':landlord_id', $landlord_id);
+    $statement->bindValue(':property_id', $property_id);
+    $result = $statement->execute();
+    $statement->closeCursor();
+    if (empty($result)) {
+        $result = false;
+    } else {
+        return true;
+    }
 }
 
 function updateProperty($id, $column, $value)
@@ -405,6 +436,29 @@ function deletePropertyById($id)
     $statement = $db->prepare($sql);
     $statement->bindValue('property_id', $id);
     $result = $statement->execute();
+    $statement->closeCursor();
+    return $result;
+}
+
+
+function getPropertyTypes() {
+        //returns an array of rental_application
+        global $db;
+        $statement = $db->prepare('select * '
+            . ' from property_type');
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $statement->closeCursor();
+        return $result;
+}
+
+function getPropertyStatus() {
+    //returns an array of rental_application
+    global $db;
+    $statement = $db->prepare('select * '
+            . ' from property_status');
+    $statement->execute();
+    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
     $statement->closeCursor();
     return $result;
 }

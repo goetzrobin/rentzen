@@ -38,3 +38,13 @@ pre {
     background-color: rgb(87, 1, 1) !important;
     border-color: rgb(97, 0, 0) !important;
   }
+
+  .icon_red_40 {
+      color: #8E0000;
+      font-size: 40px;
+  }
+
+  .nav_logo {
+    display: block; 
+    width: 40px
+  }

@@ -1,4 +1,8 @@
 
+.bg-phila {
+  background-image: url(../../images/public/phila_large.jpg);
+  background-size: cover;
+}
 
 /* MARKETING CONTENT
 -------------------------------------------------- */
