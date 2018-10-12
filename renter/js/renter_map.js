@@ -28,11 +28,11 @@ $(function () {
   var current_prop_id  = null;
   var current_renter_id = null;
   $(document).on("click", ".icon__action", function () {
-    $.getJSON("http://localhost/rentzen/services/?type=get_session_data").done((session_data) => {
+    $.getJSON(base_path+ "/services/?type=get_session_data").done((session_data) => {
       current_prop_id = $(this).parents('.item').find('.property_id').val();
       current_renter_id = (session_data.PEOPLE_ID);
       console.log(current_renter_id, current_prop_id);
-      var url = "http://localhost/rentzen/services/?type=get_renter_prop&renter_id="+current_renter_id+"&property_id="+current_prop_id;
+      var url = base_path + "/services/?type=get_renter_prop&renter_id="+current_renter_id+"&property_id="+current_prop_id;
       console.log(url);
       $.getJSON(url).done((renter_prop_data) => {
         console.log(renter_prop_data);
@@ -68,7 +68,7 @@ $(function () {
        app_status
      };
 
-     var url = "http://localhost/rentzen/services/index.php?type=post_app_form"
+     var url = base_path + "/services/index.php?type=post_app_form"
      $.ajax({
         type: "POST",
         url: url,

@@ -8,7 +8,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
+    <script src="../main.js"></script>
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
@@ -29,7 +29,7 @@
         $('.modal-btn__optional').hide();
         
         var states_option_html = "<option selected>Choose...</option>";
-        $.getJSON('http://localhost/rentzen/services/index.php?type=get_states').done( (states) => {
+        $.getJSON(base_path + '/services/index.php?type=get_states').done( (states) => {
           for(var i=0; i < states.length; i++){
             var current_state = states[i];
             states_option_html += ('<option value="'+current_state['state_id']+'">'+current_state['state_name']+"</option>");
@@ -41,7 +41,7 @@
         });
 
         var type_option_html = "<option selected>Choose...</option>";
-        $.getJSON('http://localhost/rentzen/services/index.php?type=get_property_type').done( (types) => {
+        $.getJSON(base_path + '/services/index.php?type=get_property_type').done( (types) => {
           for(var i=0; i < types.length; i++){
             var current_type = types[i];
             type_option_html += ('<option value="'+current_type['propertytype_id']+'">'+current_type['typename']+"</option>");
@@ -53,7 +53,7 @@
         });
 
         var status_option_html = "<option selected>Choose...</option>";
-        $.getJSON('http://localhost/rentzen/services/index.php?type=get_property_status').done( (status) => {
+        $.getJSON(base_path + '/services/index.php?type=get_property_status').done( (status) => {
           for(var i=0; i < status.length; i++){
             var current_status = status[i];
             status_option_html += ('<option value="'+current_status['propstat_id']+'">'+current_status['propertystat']+"</option>");
@@ -67,7 +67,7 @@
           $form = $('#addPropertyModal form');
           event.preventDefault();
           console.log($form.serializeArray());
-          $.post("http://localhost/rentzen/services/index.php?type=post_new_prop_form", $form.serializeArray())
+          $.post(base_path + "/services/index.php?type=post_new_prop_form", $form.serializeArray())
           .done((res) => {
             $('#addPropertyModal .btn-primary').hide();
             // $('#addPropertyModal .modal-body').html(`
@@ -84,7 +84,7 @@
           current_id = prop_id;
         });
         $('#removeFromMarketModal .btn-primary').click((event) => {
-          $.getJSON('http://localhost/rentzen/services/index.php?type=set_property_status_occupied&prop_id='+current_id).done( (response) => {
+          $.getJSON(base_path + '/services/index.php?type=set_property_status_occupied&prop_id='+current_id).done( (response) => {
             console.log('reloading data necessary');
             $('#removeFromMarketModal').modal('hide');
             location.reload();
@@ -92,7 +92,7 @@
         });
         
         $('#editPropertyModal').on('show.bs.modal', function (event) {
-          element_opened_modal = $(event.relatedTarget);
+          element_opened_modal =  $(event.relatedTarget);
           element_opened_modal.data('');
           data_propid = element_opened_modal.data('propid')
           data_street= element_opened_modal.data('street');
@@ -129,7 +129,7 @@
           $form = $('#editPropertyModal form');
           event.preventDefault();
           console.log($form.serializeArray());
-          $.post("http://localhost/rentzen/services/index.php?type=post_edit_prop_form", $form.serializeArray())
+          $.post(base_path + "/services/index.php?type=post_edit_prop_form", $form.serializeArray())
           .done((res) => {
             $('#editPropertyModal .btn-primary').hide();
             // $('#addPropertyModal .modal-body').html(`
