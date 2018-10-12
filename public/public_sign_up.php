@@ -17,8 +17,36 @@
         </div>
         <div class="col-md-8 order-md-1">
           <h4 class="mb-3">Personal Information</h4>
+          
           <form class="needs-validation" novalidate>
-            <div class="row">
+        <div class="row">
+            <div class="col-md-5 mb-3">
+              <label for="email">Email <span class="text-muted"></span></label>
+              <input type="email" name="email" class="form-control" id="email" placeholder="you@example.com">
+              <div class="invalid-feedback">
+                Please enter a valid email address for shipping updates.
+              </div>
+            </div>
+            </div>
+            <div class="input-group">
+            <div class="col-md-5 mb-3">
+             
+            <label for="username">Username</label>
+              <input type="text" name="username" class="form-control" id="username" placeholder="Username" required>
+                <div class="invalid-feedback" style="width: 100%;">
+                  Your username is required.
+                </div>
+            </div>
+
+             <div class="col-md-5 mb-3">
+              <label for="password">Password</label>
+              <input type="text" name="password" class="form-control" id="password" placeholder="Password" required>
+                  <div class="invalid-feedback" style="width: 100%;">
+                  Your Password is required.
+                  </div>
+            </div>
+            </div>
+              <div class="input-group">
               <div class="col-md-6 mb-3">
                 <label for="firstName">First name</label>
                 <input type="text" name="firstname" class="form-control" id="firstName" placeholder="" value="" required>
@@ -28,58 +56,32 @@
               </div>
               <div class="col-md-6 mb-3">
                 <label for="lastName">Last name</label>
-                <input type="text" name="lastname" class="form-control" id="lastName" placeholder="" value="" required>
+                <input type="text" name="lastName" class="form-control" id="lastName" placeholder="" value="" required>
                 <div class="invalid-feedback">
                   Valid last name is required.
                 </div>
               </div>
             </div>
 
-            <div class="mb-3">
-              <label for="username">Username</label>
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">@</span>
-                </div>
-                <input type="text" name="username" class="form-control" id="username" placeholder="Username" required>
-                <div class="invalid-feedback" style="width: 100%;">
-                  Your username is required.
-                </div>
-              </div>
-            </div>
-
-            <div class="mb-3">
-              <label for="email">Email <span class="text-muted">(Optional)</span></label>
-              <input type="email" name="email" class="form-control" id="email" placeholder="you@example.com">
+               
+             <div class="mb-3">
+              <label for="phone">Phone</label>
+              <input type="" name="phone" class="form-control" id="phone"  
+              placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
               <div class="invalid-feedback">
-                Please enter a valid email address for shipping updates.
+                Please enter your phone number.
               </div>
             </div>
-
+                
             <div class="mb-3">
-              <label for="address">Address</label>
-              <input type="text" name="address" class="form-control" id="address" placeholder="1234 Main St" required>
+              <label for="address">City</label>
+              <input type="text" name="city" class="form-control" id="city" placeholder="1234 Main St" required>
               <div class="invalid-feedback">
                 Please enter your shipping address.
               </div>
             </div>
 
-            <div class="mb-3">
-              <label for="address2">Address 2 <span class="text-muted">(Optional)</span></label>
-              <input type="text" name="address2" class="form-control" id="address2" placeholder="Apartment or suite">
-            </div>
-
             <div class="row">
-              <div class="col-md-5 mb-3">
-                <label for="country">Country</label>
-                <select name="country" class="custom-select d-block w-100" id="country" required>
-                  <option value="">Choose...</option>
-                  <option>United States</option>
-                </select>
-                <div class="invalid-feedback">
-                  Please select a valid country.
-                </div>
-              </div>
 
               <div class="col-md-4 mb-3">
                 <label for="state">State</label>
@@ -102,70 +104,37 @@
                 <div class="invalid-feedback">
                   Zip code required.
                 </div>
-              </div>
+              </div>          
             </div>
-            <hr class="mb-4">
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="same-address">
-              <label class="custom-control-label" for="same-address">Shipping address is the same as my billing address</label>
-            </div>
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="save-info">
-              <label class="custom-control-label" for="save-info">Save this information for next time</label>
-            </div>
-            <hr class="mb-4">
 
-            <h4 class="mb-3">Payment</h4>
+            <div class="col-md-3 mb-3">
+                <label for="role_id">Role</label>
+                <select type="select" name="role_id" class="form-control" id="role_id" placeholder="" required>
+                <option value="volvo">Choose one</option>
+                    <option value="101">Renter</option>
+                    <option value="102">Owner</option>
+                </select>
+                <div class="invalid-feedback">
+                  Role code required.
+                </div>
+              </div> 
 
-            <div class="d-block my-3">
-              <div class="custom-control custom-radio">
-                <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked required>
-                <label class="custom-control-label" for="credit">Credit card</label>
-              </div>
-              <div class="custom-control custom-radio">
-                <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required>
-                <label class="custom-control-label" for="debit">Debit card</label>
-              </div>
-              <div class="custom-control custom-radio">
-                <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required>
-                <label class="custom-control-label" for="paypal">Paypal</label>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6 mb-3">
-                <label for="cc-name">Name on card</label>
-                <input type="text" class="form-control" id="cc-name" placeholder="" required>
-                <small class="text-muted">Full name as displayed on card</small>
-                <div class="invalid-feedback">
-                  Name on card is required
-                </div>
-              </div>
-              <div class="col-md-6 mb-3">
-                <label for="cc-number">Credit card number</label>
-                <input type="text" class="form-control" id="cc-number" placeholder="" required>
-                <div class="invalid-feedback">
-                  Credit card number is required
-                </div>
-              </div>
-            </div>
-            <div class="row">
               <div class="col-md-3 mb-3">
-                <label for="cc-expiration">Expiration</label>
-                <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
+                <label for="credit_rating">Credit Rating</label>
+                <input type="text" name="credit_rating" class="form-control" id="credit_rating" placeholder="" required>
                 <div class="invalid-feedback">
-                  Expiration date required
+                  Credit Rating code required.
                 </div>
-              </div>
+              </div> 
+
               <div class="col-md-3 mb-3">
-                <label for="cc-expiration">CVV</label>
-                <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
+                <label for="income">Income</label>
+                <input type="text" name="income" class="form-control" id="income" placeholder="" required>
                 <div class="invalid-feedback">
-                  Security code required
+                  Zip code required.
                 </div>
-              </div>
-            </div>
-            <hr class="mb-4">
-            <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+              </div>                                
+            <button class="btn btn-primary btn-lg btn-block" name="SignUp" value="" type="submit">Sign Up</button> 
           </form>
         </div>
       </div>
