@@ -40,3 +40,10 @@
     justify-content: center;
     align-items: center;
 }
+
+.rotate {
+    transform: rotate(360deg);
+    transition-duration: 500ms;
+    -webkit-transform:rotate(360deg);
+    -webkit-transition-duration: 500ms;
+  }

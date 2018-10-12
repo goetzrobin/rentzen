@@ -136,5 +136,5 @@
     </div>
     </div>
 </div>'
-
+<script src='./js/landlord_dashboard.js'></script>
 <?php include '../view/footer.php' ?>
