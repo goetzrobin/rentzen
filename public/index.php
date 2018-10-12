@@ -58,7 +58,7 @@ if (isset($_POST['go_button']) )
     }
 } 
 
-if (isset($_POST['signup_button']) )
+if (isset($_POST['signin_button']) )
 {
     $email = filter_input(INPUT_POST,'email');
     $password = filter_input(INPUT_POST,'password');
@@ -83,6 +83,30 @@ if (isset($_POST['signup_button']) )
         exit();
     }
 
+}
+
+//validate Sign up page
+
+if (isset($_POST['SignUp'])){
+    if (empty($firstName)  || empty($lastName) || empty($username) || empty($email)  || empty($password)  || empty($phone) 
+    || empty($city) || empty($state_id)  || empty($zip)  || empty($role_id)  || empty($credit_rating) || empty($income)){
+        $message = "* One or more required fields are missing.";
+        include 'public_sign_up.php'; //something is empty, go back to sign up page
+        exit();
+    } else
+    {
+        $confirmation = insertPeople($email,$username,$password,$firstName,$lastName,$phone,$city,$state_id,$zip,$role_id,$credit_rating,$income);
+        if ($confirmation !== false)
+            {
+            include 'public_sign_in.php';
+            exit();
+            } else {
+            $message = "An unexpected error occurred.";
+            include 'public_sign_up.php';
+            exit();
+            }
+        
+    }
 }
 
 //if all else fails
