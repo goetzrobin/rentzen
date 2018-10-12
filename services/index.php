@@ -4,6 +4,7 @@
 <?php require_once "../model/rental_app_db.php"; ?>
 <?php require_once "../model/util_db.php"; ?>
 <?php require_once "../model/property_db.php"; ?>
+<?php require_once "../model/renter_property_db.php"; ?>
 <?php
     session_start();
 
@@ -38,6 +39,18 @@
             echo json_encode($updated_property);
         } else {
             echo 'Error while updating. Please try again.';
+        }
+    }
+
+    if ($_GET['type'] === 'set_property_renter_relationship' && isset($_GET['prop_id'])) {
+        $prop_id = $_GET['prop_id'];
+        $renter_id = $_SESSION['PEOPLE_ID'];
+        $match_score = 9.7; // needs to be calculated
+        $result = insertRenterProperty($renter_id,$prop_id, $match_score);
+        if($result){
+            echo json_encode(["result" => true, "messgage" => "Sucessfully established relationship"]);
+        } else {
+            echo json_encode(["result" => false, "messgage" => "Error. Could not establish relationship"]);
         }
     }
 
