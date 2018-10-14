@@ -90,6 +90,34 @@
             location.reload();
           });
         });
+
+        $('#approveApplicationModal').on('show.bs.modal', function (event) {
+          element_opened_modal = $(event.relatedTarget);
+          var application_id  = element_opened_modal.data('id');
+          current_id = application_id;
+        });
+        $('#approveApplicationModal .btn-primary').click((event) => {
+          console.log(current_id);
+          $.getJSON(base_path + '/services/index.php?type=set_application_status_approved&app_id='+current_id).done( (response) => {
+            console.log('reloading data necessary');
+            $('#approveApplicationModal').modal('hide');
+            location.reload();
+          });
+        });
+
+        $('#rejectApplicationModal').on('show.bs.modal', function (event) {
+          element_opened_modal = $(event.relatedTarget);
+          var application_id  = element_opened_modal.data('id');
+          current_id = application_id;
+        });
+        $('#rejectApplicationModal .btn-primary').click((event) => {
+          console.log(current_id);
+          $.getJSON(base_path + '/services/index.php?type=set_application_status_rejected&app_id='+current_id).done( (response) => {
+            console.log('reloading data necessary');
+            $('#approveApplicationModal').modal('hide');
+            location.reload();
+          });
+        });
         
         $('#editPropertyModal').on('show.bs.modal', function (event) {
           element_opened_modal =  $(event.relatedTarget);
@@ -156,13 +184,13 @@
   <div style="min-width: 60%;" class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel"></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        ...
+        <div class="spinner"></div>
       </div>
       <div class="modal-footer">
       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -191,6 +219,46 @@
       <div class="modal-footer">
       <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
         <button type="button" class="btn btn-primary red modal-btn">Delete Property</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="approveApplicationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Approve Application</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to approve this application?
+      </div>
+      <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary red modal-btn">Approve Application</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="rejectApplicationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Reject Application</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to reject this application?
+      </div>
+      <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary red modal-btn">Reject Application</button>
       </div>
     </div>
   </div>

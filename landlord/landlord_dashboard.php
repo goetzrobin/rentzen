@@ -1,5 +1,6 @@
 <?php include '../view/header.php' ?>
 <link href="./css/landlord_dashboard.css" rel="stylesheet">
+<script src='./js/landlord_dashboard.js'></script>
 <div class="container-fluid">
     <div class='row mt-3'>
     <div class="col-md-8">
@@ -118,23 +119,37 @@
             <i class="prop__action__icon fas fa-sync"></i>
             </div>
         </div>
-        <div class='row db_item'>
+        <div class='row'>
             <div class='container-fluid'>
-        <?php for($i =0; $i<10; $i++){
-        echo '<div class="row my-2">';
-        echo "<div class='col-sm-2' style='background-color: red; height: 40px; width:40px;'>";
-        echo  "</div>";
-        echo "<div class='col-sm-7'> 
-                Application " . $i;
-        echo  "</div>";
-        echo "<div class='col-sm-'>10/20/2018";
-        echo  "</div>";
-        echo  "</div>";
-        } ?>
+         
+        <?php foreach ($applications as $application){ ?>
+                        <div class="card my-2">
+            <div class="card-header">
+                <?php echo $application['street']; ?>
+            </div>
+            <div class="card-header">
+                <?php echo $application['app_status_name']; ?>
+            </div>
+            <div class="card-body">
+                <div class=""><?php echo $application['firstname'] . " " . $application['lastname'];?></div>
+                <div class=""><?php echo $application['renter_message'] ?></div>
+                <div class=''>
+                    <div>Match Score</div>
+                    <div><?php echo $application['renter_match_score'] ? $application['renter_match_score'] : "?.?" ; ?></div>
+                </div>
+            </div>
+            <div class="card-footer d-flex justify-content-around">
+            <a href="#" class="btn btn-secondary" style='width: 40px;' data-toggle="modal" data-target="#rejectApplicationModal" data-id='<?php echo $application['rental_application_id'];?>'><i class='fa-icon fas fa-times'></i></a>
+            <!-- <a href="#" class="btn btn-secondary" style='border-color: #eee; width: 40px; background-color: white'><i style='color: #8E0000' class='fa-icon fas fa-edit'></i></a> -->
+            <a href="#" class="btn btn-secondary red" style='width: 40px;' data-toggle="modal" data-target="#approveApplicationModal" data-id='<?php echo $application['rental_application_id'];?>'><i class='fa-icon fas fa-check'></i></a>
+            </div>
+            </div>
+        <?php } ?>
+     
     </div>
     </div>
     </div>
     </div>
 </div>'
-<script src='./js/landlord_dashboard.js'></script>
+
 <?php include '../view/footer.php' ?>

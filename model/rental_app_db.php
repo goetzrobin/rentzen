@@ -1,11 +1,16 @@
 <?php
 
+define("SUBMITTED_ID",1);
+define("REJECTED_ID",2);
+define("DRAFT_ID",1);
+define("APPROVED_ID",4);
+
 function getRentalApp(){
     //returns an array of rental_application
     global $db;
     $statement = $db->prepare('select * '
-            . ' from rental_application '
-            . 'ORDER BY move_in_date DESC');
+            . ' from rental_application,rental_app_status '
+            . 'WHERE last_status_id = app_status_id ORDER BY move_in_date DESC');
     $statement->execute();
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
     $statement->closeCursor();
@@ -28,6 +33,30 @@ function getRentalAppById($id){
     } 
     return $result;
 }
+
+function getRentalAppsByLandlordId($landlord_id){
+    //returns an array of rental_application
+    global $db;
+    $sql = "SELECT * FROM rental_application, renter_property, property, landlord_property, rental_app_status, people, people as renters
+     WHERE rental_application.renterproperty_id = renter_property.renterproperty_id 
+     AND last_status_id = app_status_id
+     AND renter_property.property_id = property.property_id 
+     AND property.property_id = landlord_property.property_id 
+     AND people.people_id = landlord_property.landlord_id  
+    AND renters.people_id = renter_property.renter_id 
+    AND people.people_id = :landlord_id
+    ORDER BY app_status_id ASC";
+    $statement = $db->prepare($sql);
+    $statement->bindValue(':landlord_id', $landlord_id);
+    $statement->execute();
+    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+    $statement->closeCursor();
+    if (empty($result)){
+        $result = false;
+    } 
+    return $result;
+}
+
 
 function getRentalAppByStatusId($status_id){
     //returns an array of rental_application
@@ -97,7 +126,7 @@ function updateRentalApp($id, $column, $value)
     if (empty($result)) {
         $result = false;
     } else {
-        return getRentalApp($id);
+        return getRentalAppById($id);
     }
 }
 
