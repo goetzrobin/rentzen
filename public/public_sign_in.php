@@ -5,9 +5,11 @@
 
   <div class="test text-center">
     <form class="form-signin" action="<?php echo $base_path; ?>/public/index.php" method="post">
-    <a href='<?php echo $base_path; ?>/public/index.php'><img class="mb-4" src="<?php echo $base_path; ?>/images/rentzen_logo.svg" alt="" width="72" height="72"></a>
+    <a href='<?php echo $base_path; ?>/public/index.php'><img class="mb-4" src="<?php echo $base_path; ?>/images/rentzen_logo.svg" alt="RentZen Logo" width="72" height="72"></a>
        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-       <?php if(!empty($message)) { echo '<div class="error form-control"><small>'. $message . '</small></div>' ;} ?>
+       <?php if (!empty($message)) {
+        echo '<div class="error form-control"><small>' . $message . '</small></div>';
+      } ?>
       <label for="inputEmail" class="sr-only">Email address</label>
       <input name='email' type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
       <label for="inputPassword" class="sr-only">Password</label>

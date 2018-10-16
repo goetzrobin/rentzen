@@ -110,30 +110,30 @@ if ((int)$_SESSION['ROLE_ID'] !== ROLE_ID_RENTER) {
       <?php foreach ($properties as $property) { ?>
         <div class="row item justify-content-center">
         <div class="result_image col-sm-12 col-md-2 p-0 d-flex justify-content-center align-items-center">
-          <img class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
+          <img alt='Placeholder Image' class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
           <div class='hidden thumbmails col-4 row' style='heigth: 100%; padding: 0'>
           <div class='col-6 thumbmails__image'>
-          <img class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
+          <img alt='Placeholder Image' class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
        
           </div>
           <div class='col-6 thumbmails__image'>
-          <img class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
+          <img alt='Placeholder Image' class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
        
           </div>
           <div class='col-6 thumbmails__image'>
-          <img class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
+          <img alt='Placeholder Image' class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
        
           </div>
           <div class='col-6 thumbmails__image'>
-          <img class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
+          <img alt='Placeholder Image' class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
        
           </div>
           <div class='col-6 thumbmails__image'>
-          <img class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
+          <img alt='Placeholder Image' class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
        
           </div>
           <div class='col-6 thumbmails__image'>
-          <img class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
+          <img alt='Placeholder Image' class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
        
           </div>
           </div>
@@ -188,7 +188,7 @@ if ((int)$_SESSION['ROLE_ID'] !== ROLE_ID_RENTER) {
           <?php echo $property['description']; ?>
         </div>
         <div class="col-sm-12 col-md-2 p-3 d-flex justify-content-around align-items-center">
-          <button style='background-color: transparent; border: 0; font-size: 30px;' class="far fa-calendar-check icon__action" id='icon__action--calendar' data-toggle="modal" data-target="#exampleModal" data-id='1234'></button>
+          <span style='background-color: transparent; border: 0; font-size: 30px;' class="far fa-calendar-check icon__action" id='icon__action--calendar' data-toggle="modal" data-target="#exampleModal" data-id='1234'></span>
           <i style='font-size: 30px; color: #8E0000' class="far fa-heart icon__action" id='icon__action--heart'></i>
 
         </div>
