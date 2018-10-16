@@ -18,29 +18,43 @@
                 $data['landlord_state_text'] = $landlord_state['state_name'];
             }
             echo json_encode($data);
+        } else {
+            echo 'No Property Id provided.';
+            exit();
         }
 
     }
 
     if ($_GET['type'] === 'get_session_data') {
         echo json_encode($_SESSION);
+        exit();
     }
 
     if ($_GET['type'] === 'get_states') {
         echo json_encode(getStates());
+        exit();
     }
     
     if ($_GET['type'] === 'get_property_type') {
         echo json_encode(getPropertyTypes());
+        exit();
     }
 
     if ($_GET['type'] === 'get_property_status') {
         echo json_encode(getPropertyStatus());
+        exit();
     }
 
     if ($_GET['type'] === 'get_application_data') {
-        // print_r($_SESSION);
-        echo json_encode(getRentalAppsByLandlordId($_SESSION['PEOPLE_ID']));
+        $id = $_SESSION['PEOPLE_ID'];
+        if($id){
+            echo json_encode(getRentalAppsByLandlordId($id));
+            exit();
+        } else {
+            echo 'No id set.';
+            exit();
+        }
+        
     }
 
     if ($_GET['type'] === 'set_property_status_occupied' && isset($_GET['prop_id'])) {
@@ -76,6 +90,10 @@
     if ($_GET['type'] === 'set_property_renter_relationship' && isset($_GET['prop_id'])) {
         $prop_id = $_GET['prop_id'];
         $renter_id = $_SESSION['PEOPLE_ID'];
+        if(empty($renter_id)) {
+            echo json_encode(["result" => false, "message" => "No renter id provided."]);
+            exit();
+        }
         $renter_match_score = rand(5,10) + rand(0,10)/10; // needs to be calculated
 
         $rel_data = getPropertyRelationshipByRenterIdByPropertyID($renter_id, $prop_id);
@@ -96,9 +114,29 @@
 
     if( $_GET['type'] === 'post_app_form' && !empty($_POST)){
 
-        //ENTER VALIDATION HERE
+        
+         $app_status = $_POST["app_status"];
+         $app_move_in_date = $_POST["app_move_in_date"];
+         $app_move_out_date = $_POST["app_move_out_date"];
+         $app_message = $_POST["app_message"];
+         $renter_id = $_SESSION["PEOPLE_ID"];
+         $app_prop_id = $_POST["app_prop_id"];
 
-        $renterpoperty_data =  getPropertyRelationshipByRenterIdByPropertyID($_SESSION["PEOPLE_ID"], $_POST["app_prop_id"]);
+        if( !isset($app_status) || !isset($app_move_in_date) || !isset($renter_id) || !isset($app_prop_id) ||
+            empty($app_status) || empty($app_move_in_date) || empty($renter_id) || empty($app_prop_id)) {
+                echo 'Not all necessary data provided. Check inputs';
+                exit();
+        }
+        
+        $renterpoperty_data =  getPropertyRelationshipByRenterIdByPropertyID($renter_id,$app_prop_id);
+
+        $renterproperty_id = $renterpoperty_data['renterproperty_id'];
+
+        if (!isset($renterproperty_id) || empty($renterproperty_id)) {
+            echo 'Cannot find Relationship.';
+            exit();
+        }
+
         $inserted_id = insertRentalApp(
             $renterpoperty_data['renterproperty_id'], 
             $_POST["app_status"],
@@ -109,9 +147,11 @@
     
         if($inserted_id){
             echo 'Application submitted! Come back soon for updates.';
+            exit();
         } else {
             http_response_code(401);
             echo 'Cannot submit application. Please try again!';
+            exit();
         }
     }
 
@@ -132,6 +172,25 @@
         $picture = null;
 
         $landlord_id = $_SESSION['PEOPLE_ID'];
+
+        if( !isset($inputAddress) || empty($inputAddress) ||
+            !isset($inputCity) || empty($inputCity) ||
+            !isset($inputState) || empty($inputState) ||
+            !isset($inputZip) || empty($inputZip) ||
+            !isset($beds) || empty($beds) ||
+            !isset($baths) || empty($baths) ||
+            !isset($sqft) || empty($sqft) ||
+            !isset($type) || empty($type) ||
+            !isset($status) || empty($status) ||
+            !isset($income_req) || empty($income_req) ||
+            !isset($credit_score) || empty($credit_score) ||
+            !isset($rental_fee) || empty($rental_fee) ||
+            !isset($description) || empty($description) ||
+            !isset($picture) || empty($picture) ||
+            !isset($landlord_id) || empty($landlord_id) ) {
+                echo "Not all data provided.";
+                exit();
+            }
         
         $result = insertProperty(
             $inputAddress,
@@ -175,6 +234,29 @@
         $rental_fee = filter_input(INPUT_POST,"rental_fee",FILTER_VALIDATE_INT);
         $description = filter_input(INPUT_POST,"description");
 
+        if(!isset($property_id)) {
+            echo "No id provided. Cannot update.";
+            exit();
+        }
+        
+        if( !isset($inputAddress) || empty($inputAddress) ||
+            !isset($inputCity) || empty($inputCity) ||
+            !isset($inputState) || empty($inputState) ||
+            !isset($inputZip) || empty($inputZip) ||
+            !isset($beds) || empty($beds) ||
+            !isset($baths) || empty($baths) ||
+            !isset($sqft) || empty($sqft) ||
+            !isset($type) || empty($type) ||
+            !isset($status) || empty($status) ||
+            !isset($income_req) || empty($income_req) ||
+            !isset($credit_score) || empty($credit_score) ||
+            !isset($rental_fee) || empty($rental_fee) ||
+            !isset($description) || empty($description) ||
+            !isset($picture) || empty($picture) ||
+            !isset($landlord_id) || empty($landlord_id) ) {
+                echo "Not all data provided.";
+                exit();
+            }
         
         $result = updatePropertyComplete(
             $property_id,

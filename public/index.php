@@ -58,32 +58,32 @@ if (isset($_POST['go_button']) )
     }
 } 
 
-if (isset($_POST['signin_button']) )
-{
-    $email = filter_input(INPUT_POST,'email');
-    $password = filter_input(INPUT_POST,'password');
+// if (isset($_POST['signin_button']) )
+// {
+//     $email = filter_input(INPUT_POST,'email');
+//     $password = filter_input(INPUT_POST,'password');
    
 
 
-    $inserted_user = insertPeople();
+//     $inserted_user = insertPeople();
 
 
-    if($role_id ==  ROLE_ID_RENTER ) // tenant
-    {
-        header('Location: ../renter/index.php');
-        exit();
-    }
-    if($role_id == ROLE_ID_LANDLORD ) 
-    {
-        header('Location: ../landlord/index.php');
-        exit();
-    } else {
-        $message = "Login failed. Please try again.";
-        include 'public_sign_up.php';
-        exit();
-    }
+//     if($role_id ==  ROLE_ID_RENTER ) // tenant
+//     {
+//         header('Location: ../renter/index.php');
+//         exit();
+//     }
+//     if($role_id == ROLE_ID_LANDLORD ) 
+//     {
+//         header('Location: ../landlord/index.php');
+//         exit();
+//     } else {
+//         $message = "Login failed. Please try again.";
+//         include 'public_sign_up.php';
+//         exit();
+//     }
 
-}
+// }
 
 //validate Sign up page
 

@@ -337,7 +337,7 @@ function insertProperty(
     $property_id = $db->lastInsertId();
     $statement->closeCursor();
     
-    mkdir(PROPERT_BASE_PATH ."/".$property_id,0777,true);
+    mkdir(PROPERTY_BASE_PATH ."/".$property_id,0777,true);
 
     if (createLandlordPropertyRelationship($landlord_id, $property_id)) {
         return $property_id;
