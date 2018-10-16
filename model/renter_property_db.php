@@ -65,11 +65,9 @@ function getPropertiesByRenterId($renter_id) {
 function getPropertyRelationshipByRenterIdByPropertyID($renter_id, $property_id) {
     //returns an array of renter_property
     global $db;
-    $statement = $db->prepare('select * '
-            . ' from renter_property,property,state ' 
-            . 'where renter_property.property_id=property.property_id '
-            . 'and property.state_id=state.state_id '
-            . 'and renter_property.renter_id=:id '
+    $statement = $db->prepare('select renterproperty_id, renter_id, property_id, renter_match_score '
+            . ' from renter_property '
+            . 'where renter_property.renter_id=:id '
             . 'and renter_property.property_id=:property_id'
         );
     $statement->bindValue(':id', $renter_id);
@@ -91,7 +89,7 @@ function insertRenterProperty(
 ) {
     global $db;
     $sql = "
-    INSERT INTO `renter_property`( 
+    INSERT INTO renter_property( 
         renter_id,
         property_id,
         renter_match_score
@@ -108,9 +106,8 @@ function insertRenterProperty(
     $statement->bindValue(':renter_match_score', $renter_match_score);
 
     $result = $statement->execute();
-    $id = $db->lastInsertId();
     $statement->closeCursor();
-    return $id;
+    return $result;
 }
 
 function updateRenterProperty($id, $column, $value)

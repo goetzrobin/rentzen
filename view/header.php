@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang='en'>
 <head>
     <title>RentZen</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+   
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
+    <script src="../main.js"></script>
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
@@ -29,37 +29,37 @@
         $('.modal-btn__optional').hide();
         
         var states_option_html = "<option selected>Choose...</option>";
-        $.getJSON('http://localhost/rentzen/services/index.php?type=get_states').done( (states) => {
+        $.getJSON(base_path + '/services/index.php?type=get_states').done( (states) => {
           for(var i=0; i < states.length; i++){
             var current_state = states[i];
             states_option_html += ('<option value="'+current_state['state_id']+'">'+current_state['state_name']+"</option>");
           }
 
           $('#addPropertyModal #inputState').html(states_option_html);
-          $('#editPropertyModal #inputState').html(states_option_html);
+          $('#editPropertyModal #edit_inputState').html(states_option_html);
 
         });
 
         var type_option_html = "<option selected>Choose...</option>";
-        $.getJSON('http://localhost/rentzen/services/index.php?type=get_property_type').done( (types) => {
+        $.getJSON(base_path + '/services/index.php?type=get_property_type').done( (types) => {
           for(var i=0; i < types.length; i++){
             var current_type = types[i];
             type_option_html += ('<option value="'+current_type['propertytype_id']+'">'+current_type['typename']+"</option>");
           }
           console.log(type_option_html);
           $('#addPropertyModal #type').html(type_option_html);
-          $('#editPropertyModal #type').html(type_option_html);
+          $('#editPropertyModal #edit_type').html(type_option_html);
 
         });
 
         var status_option_html = "<option selected>Choose...</option>";
-        $.getJSON('http://localhost/rentzen/services/index.php?type=get_property_status').done( (status) => {
+        $.getJSON(base_path + '/services/index.php?type=get_property_status').done( (status) => {
           for(var i=0; i < status.length; i++){
             var current_status = status[i];
             status_option_html += ('<option value="'+current_status['propstat_id']+'">'+current_status['propertystat']+"</option>");
           }
           $('#addPropertyModal #status').html(status_option_html);
-              $('#editPropertyModal #status').html(status_option_html);
+              $('#editPropertyModal #edit_status').html(status_option_html);
 
         });
 
@@ -67,7 +67,7 @@
           $form = $('#addPropertyModal form');
           event.preventDefault();
           console.log($form.serializeArray());
-          $.post("http://localhost/rentzen/services/index.php?type=post_new_prop_form", $form.serializeArray())
+          $.post(base_path + "/services/index.php?type=post_new_prop_form", $form.serializeArray())
           .done((res) => {
             $('#addPropertyModal .btn-primary').hide();
             // $('#addPropertyModal .modal-body').html(`
@@ -84,15 +84,43 @@
           current_id = prop_id;
         });
         $('#removeFromMarketModal .btn-primary').click((event) => {
-          $.getJSON('http://localhost/rentzen/services/index.php?type=set_property_status_occupied&prop_id='+current_id).done( (response) => {
+          $.getJSON(base_path + '/services/index.php?type=set_property_status_occupied&prop_id='+current_id).done( (response) => {
             console.log('reloading data necessary');
             $('#removeFromMarketModal').modal('hide');
             location.reload();
           });
         });
+
+        $('#approveApplicationModal').on('show.bs.modal', function (event) {
+          element_opened_modal = $(event.relatedTarget);
+          var application_id  = element_opened_modal.data('id');
+          current_id = application_id;
+        });
+        $('#approveApplicationModal .btn-primary').click((event) => {
+          console.log(current_id);
+          $.getJSON(base_path + '/services/index.php?type=set_application_status_approved&app_id='+current_id).done( (response) => {
+            console.log('reloading data necessary');
+            $('#approveApplicationModal').modal('hide');
+            location.reload();
+          });
+        });
+
+        $('#rejectApplicationModal').on('show.bs.modal', function (event) {
+          element_opened_modal = $(event.relatedTarget);
+          var application_id  = element_opened_modal.data('id');
+          current_id = application_id;
+        });
+        $('#rejectApplicationModal .btn-primary').click((event) => {
+          console.log(current_id);
+          $.getJSON(base_path + '/services/index.php?type=set_application_status_rejected&app_id='+current_id).done( (response) => {
+            console.log('reloading data necessary');
+            $('#approveApplicationModal').modal('hide');
+            location.reload();
+          });
+        });
         
         $('#editPropertyModal').on('show.bs.modal', function (event) {
-          element_opened_modal = $(event.relatedTarget);
+          element_opened_modal =  $(event.relatedTarget);
           element_opened_modal.data('');
           data_propid = element_opened_modal.data('propid')
           data_street= element_opened_modal.data('street');
@@ -110,26 +138,26 @@
           data_description= element_opened_modal.data('description');
           data_picture= element_opened_modal.data('picture');
   
-          $('#editPropertyModal #property_id').val(data_propid);
-          $('#editPropertyModal #inputAddress').val(data_street);
-          $('#editPropertyModal #inputCity').val(data_city);
-          $('#editPropertyModal #inputState').val(data_state_id);
-          $('#editPropertyModal #inputZip').val(data_zip);
-          $('#editPropertyModal #beds').val(data_beds);
-          $('#editPropertyModal #baths').val(data_baths);
-          $('#editPropertyModal #sqft').val(data_sqft);
-          $('#editPropertyModal #type').val(data_type_id);
-          $('#editPropertyModal #status').val(data_propstat_id);
-          $('#editPropertyModal #income_req').val(data_income_requirement);
-          $('#editPropertyModal #credit_score').val(data_credit_requirement);
-          $('#editPropertyModal #rental_fee').val(data_rental_fee);
-          $('#editPropertyModal #description').val(data_description);
+          $('#editPropertyModal #edit_property_id').val(data_propid);
+          $('#editPropertyModal #edit_inputAddress').val(data_street);
+          $('#editPropertyModal #edit_inputCity').val(data_city);
+          $('#editPropertyModal #edit_inputState').val(data_state_id);
+          $('#editPropertyModal #edit_inputZip').val(data_zip);
+          $('#editPropertyModal #edit_beds').val(data_beds);
+          $('#editPropertyModal #edit_baths').val(data_baths);
+          $('#editPropertyModal #edit_sqft').val(data_sqft);
+          $('#editPropertyModal #edit_type').val(data_type_id);
+          $('#editPropertyModal #edit_status').val(data_propstat_id);
+          $('#editPropertyModal #edit_income_req').val(data_income_requirement);
+          $('#editPropertyModal #edit_credit_score').val(data_credit_requirement);
+          $('#editPropertyModal #edit_rental_fee').val(data_rental_fee);
+          $('#editPropertyModal #edit_description').val(data_description);
         });
         $('#editPropertyModal .btn-primary').click((event) => {
           $form = $('#editPropertyModal form');
           event.preventDefault();
           console.log($form.serializeArray());
-          $.post("http://localhost/rentzen/services/index.php?type=post_edit_prop_form", $form.serializeArray())
+          $.post(base_path + "/services/index.php?type=post_edit_prop_form", $form.serializeArray())
           .done((res) => {
             $('#editPropertyModal .btn-primary').hide();
             // $('#addPropertyModal .modal-body').html(`
@@ -156,13 +184,13 @@
   <div style="min-width: 60%;" class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Loading...</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        ...
+        <div class="spinner"></div>
       </div>
       <div class="modal-footer">
       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -191,6 +219,46 @@
       <div class="modal-footer">
       <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
         <button type="button" class="btn btn-primary red modal-btn">Delete Property</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="approveApplicationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Approve Application</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to approve this application?
+      </div>
+      <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary red modal-btn">Approve Application</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="rejectApplicationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Reject Application</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to reject this application?
+      </div>
+      <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary red modal-btn">Reject Application</button>
       </div>
     </div>
   </div>
@@ -229,8 +297,8 @@
       <form>
           
           <div class="form-group">
-            <label for="inputAddress">Address</label>
-            <input type="text" class="form-control" id="inputAddress" name="inputAddress" placeholder="1234 Main St">
+            <label for="addinputAddress">Address</label>
+            <input type="text" class="form-control" id="addinputAddress" name="inputAddress" placeholder="1234 Main St">
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
@@ -321,42 +389,42 @@
       <form>
           <input type="hidden" id='property_id' name="property_id" type='number'>
           <div class="form-group">
-            <label for="inputAddress">Address</label>
-            <input type="text" class="form-control" id="inputAddress" name="inputAddress" placeholder="1234 Main St">
+            <label for="edit_inputAddress">Address</label>
+            <input type="text" class="form-control" id="edit_inputAddress" name="inputAddress" placeholder="1234 Main St">
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
-              <label for="inputCity">City</label>
-              <input type="text" class="form-control" id="inputCity" name="inputCity">
+              <label for="edit_inputCity">City</label>
+              <input type="text" class="form-control" id="edit_inputCity" name="inputCity">
             </div>
             <div class="form-group col-md-4">
-              <label for="inputState">State</label>
-              <select id="inputState" name="inputState" class="form-control">
+              <label for="edit_inputState">State</label>
+              <select id="edit_inputState" name="inputState" class="form-control">
               </select>
             </div>
             <div class="form-group col-md-2">
-              <label for="inputZip">Zip</label>
-              <input type="text" class="form-control" id="inputZip" name="inputZip">
+              <label for="edit_inputZip">Zip</label>
+              <input type="text" class="form-control" id="edit_inputZip" name="inputZip">
             </div>
           </div>
 
 
           <div class="form-row">
             <div class="form-group col-sm-3">
-              <label for="beds">Beds</label>
-              <input type="number" class="form-control" id="beds" name="beds" min='0' value='0'>
+              <label for="edit_beds">Beds</label>
+              <input type="number" class="form-control" id="edit_beds" name="beds" min='0' value='0'>
             </div>
             <div class="form-group col-sm-3">
-              <label for="baths">Baths</label>
-              <input type="number" class="form-control" id="baths" name="baths" min='0' value='0' step='0.5'>
+              <label for="edit_baths">Baths</label>
+              <input type="number" class="form-control" id="edit_baths" name="baths" min='0' value='0' step='0.5'>
             </div>
             <div class="form-group col-sm-3">
-              <label for="sqft">Square Feet</label>
-              <input type="number" class="form-control" id="sqft" name="sqft"  min='0' value='0'>
+              <label for="edit_sqft">Square Feet</label>
+              <input type="number" class="form-control" id="edit_sqft" name="sqft"  min='0' value='0'>
             </div>
             <div class="form-group col-sm-3">
-            <label for="type">Type</label>
-              <select id="type" name="type" class="form-control">
+            <label for="edit_type">Type</label>
+              <select id="edit_type" name="type" class="form-control">
                 <option selected>Choose...</option>
                 <option>...</option>
               </select>   </div>
@@ -364,29 +432,29 @@
 
            <div class="form-row">
             <div class="form-group col-sm-3">
-            <label for="status">Status</label>
-              <select id="status" name="status" class="form-control">
+            <label for="edit_status">Status</label>
+              <select id="edit_status" name="status" class="form-control">
                 <option selected>Choose...</option>
                 <option>...</option>
               </select>
             </div>
             <div class="form-group col-sm-3">
-              <label for="income_req">Income Req.</label>
-              <input type="number" class="form-control" id="income_req" name="income_req" min='0' value='0' step='0.01'>
+              <label for="edit_income_req">Income Req.</label>
+              <input type="number" class="form-control" id="edit_income_req" name="income_req" min='0' value='0' step='0.01'>
             </div>
             <div class="form-group col-sm-3">
-              <label for="credit_score">Credit Score</label>
-                <input type="number" class="form-control" id="credit_score" name="credit_score" min='0' max='800' value='0' step='1'>
+              <label for="edit_credit_score">Credit Score</label>
+                <input type="number" class="form-control" id="edit_credit_score" name="credit_score" min='0' max='800' value='0' step='1'>
             </div>
             <div class="form-group col-sm-3">
-              <label for="rental_fee">Rental Fee</label>
-              <input type="number" class="form-control" id="rental_fee" name="rental_fee" min='0' value='0' step='0.01'>
+              <label for="edit_rental_fee">Rental Fee</label>
+              <input type="number" class="form-control" id="edit_rental_fee" name="rental_fee" min='0' value='0' step='0.01'>
             </div>
           </div>
 
             <div class="form-group">
-              <label for="description">Description</label>
-              <textarea class="form-control" id="description" name='description' rows="3"></textarea>
+              <label for="edit_description">Description</label>
+              <textarea class="form-control" id="edit_description" name='description' rows="3"></textarea>
             </div>
 
           
