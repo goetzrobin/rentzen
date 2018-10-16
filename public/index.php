@@ -87,15 +87,46 @@ if (isset($_POST['signin_button']) )
 
 //validate Sign up page
 
-if (isset($_POST['SignUp'])){
-    if (empty($firstName)  || empty($lastName) || empty($username) || empty($email)  || empty($password)  || empty($phone) 
-    || empty($city) || empty($state_id)  || empty($zip)  || empty($role_id)  || empty($credit_rating) || empty($income)){
+if (isset($_POST['SignUp'])) {
+
+    $firstname = filter_input(INPUT_POST, "firstname");
+    $lastname = filter_input(INPUT_POST, "lastname");
+    $username = filter_input(INPUT_POST, "username");
+    $email= filter_input(INPUT_POST, "email");
+    $password = filter_input(INPUT_POST, "password");
+    $phone = filter_input(INPUT_POST, "phone");
+    $street = filter_input(INPUT_POST, "street");
+    $city = filter_input(INPUT_POST, "city");
+    $state_id = filter_input(INPUT_POST, "state_id");
+    $zip = filter_input(INPUT_POST, "zip");
+    $role_id = filter_input(INPUT_POST, "role_id");
+    $credit_rating = filter_input(INPUT_POST, "credit_rating");
+    $income = filter_input(INPUT_POST, "income");
+
+echo $firstname . '<br>';
+echo $lastname . '<br>';
+echo $username . '<br>';
+echo $email . '<br>';
+echo $password . '<br>';
+echo $phone . '<br>';
+echo $city . '<br>';
+echo $state_id . '<br>';
+echo $zip . '<br>';
+echo $role_id . '<br>';
+echo $credit_rating . '<br>';
+echo $income . '<br>';
+
+     print_r($_POST);
+    if (empty($firstname)  || empty($lastname) || empty($username) || empty($email)  || empty($password)  || empty($phone) 
+    || empty($city)|| empty($street) || empty($state_id)  || empty($zip)  || empty($role_id)  || empty($credit_rating) || empty($income)){
         $message = "* One or more required fields are missing.";
         include 'public_sign_up.php'; //something is empty, go back to sign up page
         exit();
     } else
     {
-        $confirmation = insertPeople($email,$username,$password,$firstName,$lastName,$phone,$city,$state_id,$zip,$role_id,$credit_rating,$income);
+        $confirmation = insertPeople($email,$username,$password,$firstname,$lastname,
+        $phone,$street,$city,$state_id,$zip,$role_id,$credit_rating,$income);
+
         if ($confirmation !== false)
             {
             include 'public_sign_in.php';
