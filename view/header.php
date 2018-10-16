@@ -36,7 +36,7 @@
           }
 
           $('#addPropertyModal #inputState').html(states_option_html);
-          $('#editPropertyModal #inputState').html(states_option_html);
+          $('#editPropertyModal #edit_inputState').html(states_option_html);
 
         });
 
@@ -48,7 +48,7 @@
           }
           console.log(type_option_html);
           $('#addPropertyModal #type').html(type_option_html);
-          $('#editPropertyModal #type').html(type_option_html);
+          $('#editPropertyModal #edit_type').html(type_option_html);
 
         });
 
@@ -59,7 +59,7 @@
             status_option_html += ('<option value="'+current_status['propstat_id']+'">'+current_status['propertystat']+"</option>");
           }
           $('#addPropertyModal #status').html(status_option_html);
-              $('#editPropertyModal #status').html(status_option_html);
+              $('#editPropertyModal #edit_status').html(status_option_html);
 
         });
 
