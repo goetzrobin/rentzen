@@ -139,9 +139,9 @@
                 </div>
             </div>
             <div class="card-footer d-flex justify-content-around">
-            <a href="#" class="btn btn-secondary" style='width: 40px;' data-toggle="modal" data-target="#rejectApplicationModal" data-id='<?php echo $application['rental_application_id'];?>'><i class='fa-icon fas fa-times'></i></a>
+            <a href="#" class="btn btn-secondary" style='width: 40px;' data-toggle="modal" data-target="#rejectApplicationModal" data-id='<?php echo $application['rental_application_id'];?>'><span hidden>Reject Application</span><i class='fa-icon fas fa-times'></i></a>
             <!-- <a href="#" class="btn btn-secondary" style='border-color: #eee; width: 40px; background-color: white'><i style='color: #8E0000' class='fa-icon fas fa-edit'></i></a> -->
-            <a href="#" class="btn btn-secondary red" style='width: 40px;' data-toggle="modal" data-target="#approveApplicationModal" data-id='<?php echo $application['rental_application_id'];?>'><i class='fa-icon fas fa-check'></i></a>
+            <a href="#" class="btn btn-secondary red" style='width: 40px;' data-toggle="modal" data-target="#approveApplicationModal" data-id='<?php echo $application['rental_application_id'];?>'><span hidden>Accept Application</span><i class='fa-icon fas fa-check'></i></a>
             </div>
             </div>
         <?php } ?>

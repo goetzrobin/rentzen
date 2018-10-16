@@ -13,7 +13,7 @@
 <?php include 'view/header.php'?>
    <div class='container '>
        <div class='row d-flex justify-content-center'>
-           <img class='index__logo' src='<?php echo $base_path;?>/images/rentzen_logo.svg'>
+           <img class='index__logo' src='<?php echo $base_path;?>/images/rentzen_logo.svg' alt='RentZen Logo'>
        </div>
        <div class='row d-flex justify-content-center'>
        Development Mode

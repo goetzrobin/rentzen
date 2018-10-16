@@ -3,7 +3,7 @@
 <div class="container">
 
       <div class="py-5 text-center">
-        <img class="d-block mx-auto mb-4" src="<?php echo $base_path; ?>/images/rentzen_logo.svg" alt="" width="72" height="72">
+        <img class="d-block mx-auto mb-4" src="<?php echo $base_path; ?>/images/rentzen_logo.svg" alt="RentZen Logo" width="72" height="72">
         <h2>Sign Up Form</h2>
         <p class="lead">
           Sign up below and join the RentZen Community. Whether you are a renter or a landlord, RentZen will 
