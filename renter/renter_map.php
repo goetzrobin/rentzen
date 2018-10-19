@@ -16,7 +16,7 @@ if ((int)$_SESSION['ROLE_ID'] !== ROLE_ID_RENTER) {
             data-placement="top" data-content="Vivamus
             sagittis lacus vel augue laoreet rutrum faucibus."></a>
         </div>
-        <form class='search_form'>
+        <form novalidate class='search_form'>
           <div id='type' class='search_form_item'>
             <div class='search_form_description'>THIS IS</div>
             <div class='search_form_data'><i class="fas fa-home mr-2"></i>An Apartment <a class="icon fas fa-chevron-up"
@@ -111,38 +111,40 @@ if ((int)$_SESSION['ROLE_ID'] !== ROLE_ID_RENTER) {
         <div class="row item justify-content-center">
         <div class="result_image col-sm-12 col-md-2 p-0 d-flex justify-content-center align-items-center">
           <img alt='Placeholder Image' class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
-          <div class='hidden thumbmails col-4 row' style='heigth: 100%; padding: 0'>
-          <div class='col-6 thumbmails__image'>
-          <img alt='Placeholder Image' class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
-       
-          </div>
-          <div class='col-6 thumbmails__image'>
-          <img alt='Placeholder Image' class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
-       
-          </div>
-          <div class='col-6 thumbmails__image'>
-          <img alt='Placeholder Image' class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
-       
-          </div>
-          <div class='col-6 thumbmails__image'>
-          <img alt='Placeholder Image' class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
-       
-          </div>
-          <div class='col-6 thumbmails__image'>
-          <img alt='Placeholder Image' class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
-       
-          </div>
-          <div class='col-6 thumbmails__image'>
-          <img alt='Placeholder Image' class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
-       
-          </div>
-          </div>
+          <!-- <div class='hidden thumbmails col-4 row' style='heigth: 100%; padding: 0'>
+            <div class='col-6 thumbmails__image'>
+            <img alt='Placeholder Image' class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
+        
+            </div>
+            <div class='col-6 thumbmails__image'>
+            <img alt='Placeholder Image' class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
+        
+            </div>
+            <div class='col-6 thumbmails__image'>
+            <img alt='Placeholder Image' class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
+        
+            </div>
+            <div class='col-6 thumbmails__image'>
+            <img alt='Placeholder Image' class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
+        
+            </div>
+            <div class='col-6 thumbmails__image'>
+            <img alt='Placeholder Image' class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
+        
+            </div>
+            <div class='col-6 thumbmails__image'>
+            <img alt='Placeholder Image' class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
+        
+            </div>
+          </div> -->
          
         </div>
         <div class="result_address my-3 col-sm-12 col-md-3 d-flex align-items-center">
           <div>
             <input type='hidden' class='property_id' value='<?php echo $property['property_id'] ?>'</div>
-            <h5 class='mb-0'> <?php echo $property['street']; ?> <i class="fas fa-chevron-down icon__expand"></i></h5>
+            <h5 class='mb-0'> <?php echo $property['street']; ?>
+             <!-- <i class="fas fa-chevron-down icon__expand"></i> -->
+            </h5>
             <small class='ml-1'> <?php echo $property['zip']; ?>  <?php echo $property['city'];?>, <?php echo $property['state_name']; ?></small>
           </div>
           

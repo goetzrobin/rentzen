@@ -1,4 +1,11 @@
 <?php
+
+
+if(!defined("VACANT_ID")) define("VACANT_ID",401);
+if(!defined("OCCUPIED_ID")) define("OCCUPIED_ID",402);
+if(!defined("LISTED")) define("LISTED",403);
+
+
 function getRenterPropertyRelationships(){
     //returns an array of Renter_Property
     global $db;
@@ -51,6 +58,60 @@ function getPropertiesByRenterId($renter_id) {
     $statement = $db->prepare('select * '
             . ' from renter_property,property ' 
             . 'where renter_property.property_id=property.property_id '
+            . 'and renter_property.renter_id=:id');
+    $statement->bindValue(':id', $renter_id);
+    $statement->execute();
+    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+    $statement->closeCursor();
+    if (empty($result)){
+        $result = false;
+    } 
+    return $result;
+}
+
+function getOccupiedPropertiesByRenterId($renter_id) {
+    //returns an array of renter_property
+    global $db;
+    $statement = $db->prepare('select * '
+            . ' from renter_property,property ' 
+            . 'where renter_property.property_id=property.property_id '
+            . 'and property.propstat_id = '.OCCUPIED_ID
+            . 'and renter_property.renter_id=:id');
+    $statement->bindValue(':id', $renter_id);
+    $statement->execute();
+    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+    $statement->closeCursor();
+    if (empty($result)){
+        $result = false;
+    } 
+    return $result;
+}
+
+function getListedPropertiesByRenterId($renter_id) {
+    //returns an array of renter_property
+    global $db;
+    $statement = $db->prepare('select * '
+            . ' from renter_property,property ' 
+            . 'where renter_property.property_id=property.property_id '
+            . 'and property.propstat_id = '.LISTED
+            . 'and renter_property.renter_id=:id');
+    $statement->bindValue(':id', $renter_id);
+    $statement->execute();
+    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+    $statement->closeCursor();
+    if (empty($result)){
+        $result = false;
+    } 
+    return $result;
+}
+
+function getVacantPropertiesByRenterId($renter_id) {
+    //returns an array of renter_property
+    global $db;
+    $statement = $db->prepare('select * '
+            . ' from renter_property,property ' 
+            . 'where renter_property.property_id=property.property_id '
+            . 'and property.propstat_id = '.VACANT_ID
             . 'and renter_property.renter_id=:id');
     $statement->bindValue(':id', $renter_id);
     $statement->execute();

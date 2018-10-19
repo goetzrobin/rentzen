@@ -8,7 +8,9 @@
         header("Location: ".$base_path."/public");
     }
     $user_id = $_SESSION['PEOPLE_ID'];
-    $properties = getPropertiesByLandlordId($user_id);
+    $listed_properties = getListedPropertiesByLandlordId($user_id);
+    $vacant_properties = getVacantPropertiesByLandlordId($user_id);
+    $occupied_properties = getOccupiedPropertiesByLandlordId($user_id);
     $applications = getRentalAppsByLandlordId($user_id);
     include 'landlord_dashboard.php';
 ?>
