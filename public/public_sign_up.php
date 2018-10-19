@@ -123,8 +123,7 @@ return result;
 
 
 <div class="container">
-  <?php echo $message ?>
-<form class="needs-validation" method='post' id="SignUpPage" action='index.php'> 
+<form novalidate class="needs-validation" method='post' id="SignUpPage" action='index.php'> 
       <div class="py-5 text-center">
         <img class="d-block mx-auto mb-4" src="<?php echo $base_path; ?>/images/rentzen_logo.svg" alt="RentZen Logo" width="72" height="72">
         <h2>Sign Up Form</h2>
@@ -135,9 +134,9 @@ return result;
       </div>
 
       <div class="row">
-        <div class="col-md-4 order-md-2 mb-4">
 
-        </div>
+        <div class="col-md-4 order-md-2 mb-4"></div>
+
         <div class="col-md-8 order-md-1">
           <h4 class="mb-3">Personal Information</h4>
           
@@ -148,16 +147,17 @@ return result;
               <div class="invalid-feedback" id="email">
                 Please enter a valid email address for shipping updates.
               </div>
-            </div>
+            </div> <!-- end email -->
             </div>
             <div class="input-group">
-            <div class="col-md-6 mb-3">
-             <label for="username">Username</label>
-              <input type="text" name="username" class="form-control" id="username" placeholder="Username" required>
-                <div class="invalid-feedback" style="width: 100%;">
-                  Your username is required.
-                </div>
-            </div>
+              <div class="col-md-6 mb-3">
+              <label for="username">Username</label>
+                <input type="text" name="username" class="form-control" id="username" placeholder="Username" required>
+                  <div class="invalid-feedback" style="width: 100%;">
+                    Your username is required.
+                  </div>
+              </div> <!-- end username -->
+            </div> <!-- end input group -->
 
              <div class="col-md-6 mb-3">
               <label for="password">Password</label>
@@ -165,8 +165,8 @@ return result;
                   <div class="invalid-feedback" style="width: 100%;">
                   Your Password is required.
                   </div>
-            </div>
-            </div>
+            </div> <!-- end password -->
+            
               <div class="input-group">
               <div class="col-md-6 mb-3">
                 <label for="firstName">First name</label>
@@ -174,15 +174,15 @@ return result;
                 <div class="invalid-feedback">
                   Valid first name is required.
                 </div>
-              </div>
+              </div> <!-- end first name -->
               <div class="col-md-6 mb-3">
                 <label for="lastName">Last name</label>
                 <input type="text" name="lastname" class="form-control" id="lastname" placeholder="" value="" required>
                 <div class="invalid-feedback">
                   Valid last name is required.
                 </div>
-              </div>
-            </div>
+              </div> <!-- end last name -->
+            </div> <!-- end input group -->
 
                
              <div class="mb-3">
@@ -192,7 +192,7 @@ return result;
               <div class="invalid-feedback">
                 Please enter your phone number.
               </div>
-            </div>
+            </div> <!-- phone group -->
                 
             <div class="mb-3">
               <label for="address">Street</label>
@@ -200,7 +200,7 @@ return result;
               <div class="invalid-feedback">
                 Please enter your shipping address.
               </div>
-            </div>
+            </div> <!-- end street -->
               
 
             <div class="mb-3">
@@ -209,7 +209,7 @@ return result;
               <div class="invalid-feedback">
                 Please enter your shipping address.
               </div>
-            </div>
+            </div> <!-- end city -->
 
             <div class="row">
 
@@ -217,11 +217,12 @@ return result;
                 <label for="state">State</label>
                 <select name="state_id" class="custom-select d-block w-100" id="state_id" required>
                   <option value="">Choose...</option>
-                  <?php foreach ($state as $s){ ?>
+                  <?php foreach ($state as $s) { ?>
                   <option value="<?php echo $s['state_id']; ?>">
                           <?php echo $s['state_name']; ?>
                   </option>
-                  <?php } ?>
+                  <?php 
+                } ?>
                 </select>
                 <div class="invalid-feedback">
                   Please provide a valid state.
@@ -237,17 +238,19 @@ return result;
               </div>          
             </div>
 
-            <div class="col-md-6 mb-3">
-                <label for="role_id">Role</label>
-                <select type="select" name="role_id" class="form-control" id="role_id" placeholder="" required>
-                <option value="volvo">Choose one</option>
-                    <option value="101">Renter</option>
-                    <option value="102">Owner</option>
-                </select>
-                <div class="invalid-feedback">
-                  Role code required.
-                </div>
+            <div class='row'>
+              <div class="col-md-6 mb-3">
+                  <label for="role_id">Role</label>
+                  <select type="select" name="role_id" class="form-control" id="role_id" placeholder="" required>
+                  <option value="volvo">Choose one</option>
+                      <option value="101">Renter</option>
+                      <option value="102">Owner</option>
+                  </select>
+                  <div class="invalid-feedback">
+                    Role code required.
+                  </div>
               </div> 
+              </div>
 
               <div class="col-md-6 mb-3">
                 <label for="credit_rating">Credit Rating</label>
@@ -256,15 +259,26 @@ return result;
                   Credit Rating code required.
                 </div>
               </div> 
+            </div> <!-- end row -->
 
+              <div class='row'>
               <div class="col-md-6 mb-3">
                 <label for="income">Income</label>
                 <input type="text" name="income" class="form-control" id="income" placeholder="" required>
                 <div class="invalid-feedback">
                   Income required.
                 </div>
-              </div>                                
-            <button class="btn btn-primary btn-lg btn-block" name="SignUp" id="SignUp" value="submit" type="submit">Sign Up</button> 
+              </div>   <!-- end income --> 
+              </div> <!-- end row -->
+
+            <?php if (!empty($message)) {
+        echo '<div class="error form-control"><small>' . $message . '</small></div>';
+      } ?>
+
+            <button class="btn btn-primary btn-lg btn-block red" name="SignUp" id="SignUp" value="submit" type="submit">Sign Up</button> 
+
+              </div>
+        </div>
           </form>
         </div>
       </div>

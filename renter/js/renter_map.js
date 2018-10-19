@@ -328,23 +328,23 @@ function addExpandMinimizeFunctionality() {
     var counter = 0;
     var window_width = $(window).width();
 
-    $(this).find('i').first().click(() => {
+    // $(this).find('i').first().click(() => {
 
-      $(this).find('i').first().toggleClass('fa-chevron-up');
-      $(this).find('i').first().toggleClass('fa-chevron-down');
+    //   $(this).find('i').first().toggleClass('fa-chevron-up');
+    //   $(this).find('i').first().toggleClass('fa-chevron-down');
 
-      if (window_width > 768) {
-        if (counter % 2 == 0) {
-          expand(this);
-        } else {
-          minimize(this);
-        }
-        console.log('round: ', counter);
-        counter++;
-      }
+    //   if (window_width > 768) {
+    //     if (counter % 2 == 0) {
+    //       expand(this);
+    //     } else {
+    //       minimize(this);
+    //     }
+    //     console.log('round: ', counter);
+    //     counter++;
+    //   }
 
 
-    });
+    // });
   });
 }
 

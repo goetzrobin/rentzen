@@ -1,9 +1,9 @@
 <?php
 
-define("PROPERTY_BASE_PATH","../user_data/properties");
-define("VACANT_ID",401);
-define("OCCUPIED_ID",402);
-define("LISTED",403);
+if(!defined("PROPERTY_BASE_PATH")) define("PROPERTY_BASE_PATH","../user_data/properties");
+if(!defined("VACANT_ID")) define("VACANT_ID",401);
+if(!defined("OCCUPIED_ID")) define("OCCUPIED_ID",402);
+if(!defined("LISTED")) define("LISTED",403);
 
 function getProperties()
 {
@@ -13,7 +13,8 @@ function getProperties()
         . ' from property, property_status, property_type, state '
         . 'where property.propstat_id = property_status.propstat_id
                 and property.type_id = property_type.propertytype_id
-                and property.state_id = state.state_id');
+                and property.state_id = state.state_id
+                and property.propstat_id = '.LISTED);
     $statement->execute();
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
     $statement->closeCursor();
@@ -59,6 +60,71 @@ function getPropertiesByLandlordId($id)
     . ' from property, property_status, property_type, state, landlord_property '
     .  ' WHERE landlord_property.property_id=property.property_id'
     .  ' and property.propstat_id = property_status.propstat_id'
+    .  ' and property.type_id = property_type.propertytype_id'
+    .  ' and property.state_id = state.state_id'
+    . '  and landlord_property.landlord_id = :landlord_id');
+    $statement->bindValue(':landlord_id', $id);
+    $statement->execute();
+    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+    $statement->closeCursor();
+    if (empty($result)) {
+        $result = false;
+    }
+    return $result;
+}
+
+function getOccupiedPropertiesByLandlordId($id)
+{
+    //returns an array of people
+    global $db;
+    $statement = $db->prepare('select * '
+    . ' from property, property_status, property_type, state, landlord_property '
+    .  ' WHERE landlord_property.property_id=property.property_id'
+    .  ' and property.propstat_id = property_status.propstat_id'
+    .  ' and property.propstat_id = '. OCCUPIED_ID
+    .  ' and property.type_id = property_type.propertytype_id'
+    .  ' and property.state_id = state.state_id'
+    . '  and landlord_property.landlord_id = :landlord_id');
+    $statement->bindValue(':landlord_id', $id);
+    $statement->execute();
+    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+    $statement->closeCursor();
+    if (empty($result)) {
+        $result = false;
+    }
+    return $result;
+}
+
+function getListedPropertiesByLandlordId($id)
+{
+    //returns an array of people
+    global $db;
+    $statement = $db->prepare('select * '
+    . ' from property, property_status, property_type, state, landlord_property '
+    .  ' WHERE landlord_property.property_id=property.property_id'
+    .  ' and property.propstat_id = property_status.propstat_id'
+    .  ' and property.propstat_id = '. LISTED
+    .  ' and property.type_id = property_type.propertytype_id'
+    .  ' and property.state_id = state.state_id'
+    . '  and landlord_property.landlord_id = :landlord_id');
+    $statement->bindValue(':landlord_id', $id);
+    $statement->execute();
+    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+    $statement->closeCursor();
+    if (empty($result)) {
+        $result = false;
+    }
+    return $result;
+}
+function getVacantPropertiesByLandlordId($id)
+{
+    //returns an array of people
+    global $db;
+    $statement = $db->prepare('select * '
+    . ' from property, property_status, property_type, state, landlord_property '
+    .  ' WHERE landlord_property.property_id=property.property_id'
+    .  ' and property.propstat_id = property_status.propstat_id'
+    .  ' and property.propstat_id = '. VACANT_ID
     .  ' and property.type_id = property_type.propertytype_id'
     .  ' and property.state_id = state.state_id'
     . '  and landlord_property.landlord_id = :landlord_id');
@@ -337,7 +403,7 @@ function insertProperty(
     $property_id = $db->lastInsertId();
     $statement->closeCursor();
     
-    mkdir(PROPERTY_BASE_PATH ."/".$property_id,0777,true);
+    // (PROPERTY_BASE_PATH ."/".$property_id,0777,true);
 
     if (createLandlordPropertyRelationship($landlord_id, $property_id)) {
         return $property_id;
@@ -401,7 +467,7 @@ function updatePropertyComplete(
     if (empty($result)) {
         $result = false;
     } else {
-        return getPropertyById($id);
+        return getPropertyById($property_id);
     }
     
 }

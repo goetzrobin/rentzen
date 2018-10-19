@@ -161,13 +161,13 @@
         $inputState = filter_input(INPUT_POST,"inputState",FILTER_VALIDATE_INT);
         $inputZip = filter_input(INPUT_POST,"inputZip",FILTER_VALIDATE_INT);
         $beds = filter_input(INPUT_POST,"beds",FILTER_VALIDATE_INT);
-        $baths = filter_input(INPUT_POST,"baths",FILTER_VALIDATE_INT);
+        $baths = filter_input(INPUT_POST,"baths",FILTER_VALIDATE_FLOAT);
         $sqft = filter_input(INPUT_POST,"sqft",FILTER_VALIDATE_INT);
         $type = filter_input(INPUT_POST,"type",FILTER_VALIDATE_INT);
         $status = filter_input(INPUT_POST,"status",FILTER_VALIDATE_INT);
-        $income_req = filter_input(INPUT_POST,"income_req",FILTER_VALIDATE_INT);
+        $income_req = filter_input(INPUT_POST,"income_req",FILTER_VALIDATE_FLOAT);
         $credit_score = filter_input(INPUT_POST,"credit_score",FILTER_VALIDATE_INT);
-        $rental_fee = filter_input(INPUT_POST,"rental_fee",FILTER_VALIDATE_INT);
+        $rental_fee = filter_input(INPUT_POST,"rental_fee",FILTER_VALIDATE_FLOAT);
         $description = filter_input(INPUT_POST,"description");
         $picture = null;
 
@@ -186,7 +186,6 @@
             !isset($credit_score) || empty($credit_score) ||
             !isset($rental_fee) || empty($rental_fee) ||
             !isset($description) || empty($description) ||
-            !isset($picture) || empty($picture) ||
             !isset($landlord_id) || empty($landlord_id) ) {
                 echo "Not all data provided.";
                 exit();
@@ -225,11 +224,11 @@
         $inputState = filter_input(INPUT_POST,"inputState",FILTER_VALIDATE_INT);
         $inputZip = filter_input(INPUT_POST,"inputZip",FILTER_VALIDATE_INT);
         $beds = filter_input(INPUT_POST,"beds",FILTER_VALIDATE_INT);
-        $baths = filter_input(INPUT_POST,"baths",FILTER_VALIDATE_INT);
+        $baths = filter_input(INPUT_POST,"baths",FILTER_VALIDATE_FLOAT);
         $sqft = filter_input(INPUT_POST,"sqft",FILTER_VALIDATE_INT);
         $type = filter_input(INPUT_POST,"type",FILTER_VALIDATE_INT);
         $status = filter_input(INPUT_POST,"status",FILTER_VALIDATE_INT);
-        $income_req = filter_input(INPUT_POST,"income_req",FILTER_VALIDATE_INT);
+        $income_req = filter_input(INPUT_POST,"income_req",FILTER_VALIDATE_FLOAT);
         $credit_score = filter_input(INPUT_POST,"credit_score",FILTER_VALIDATE_INT);
         $rental_fee = filter_input(INPUT_POST,"rental_fee",FILTER_VALIDATE_INT);
         $description = filter_input(INPUT_POST,"description");
@@ -251,9 +250,7 @@
             !isset($income_req) || empty($income_req) ||
             !isset($credit_score) || empty($credit_score) ||
             !isset($rental_fee) || empty($rental_fee) ||
-            !isset($description) || empty($description) ||
-            !isset($picture) || empty($picture) ||
-            !isset($landlord_id) || empty($landlord_id) ) {
+            !isset($description) || empty($description) ) {
                 echo "Not all data provided.";
                 exit();
             }
@@ -276,9 +273,9 @@
         );
 
         if($result) {
-            echo "Sucessfully inserted Property with id: ".$result;
+            echo "Sucessfully updated Property with id: ".$result['property_id'];
         } else {
-            echo "Error when inserting.";
+            echo "Error when updating.";
         }
         //ENTER VALIDATION HERE
     }

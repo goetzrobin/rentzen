@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
    
-    <link rel="stylesheet" type="text/css" href="<?php echo $base_path;?>/main.css"/>
+    <link rel="stylesheet" type="text/css" href="<?php echo $base_path; ?>/main.css"/>
   
   <style>   
             .navbar-nav li {
@@ -25,6 +25,10 @@
     $(function () {
       var current_id;
       var element_opened_modal;
+      var add_default;
+      var edit_default;
+
+      
         $('#notification__badge').hide();
         $('.modal-btn__optional').hide();
         
@@ -59,8 +63,9 @@
             status_option_html += ('<option value="'+current_status['propstat_id']+'">'+current_status['propertystat']+"</option>");
           }
           $('#addPropertyModal #status').html(status_option_html);
-              $('#editPropertyModal #edit_status').html(status_option_html);
-
+          $('#editPropertyModal #edit_status').html(status_option_html);
+          add_default = $('#addPropertyModal .modal-body').html();
+          edit_default = $('#editPropertyModal .modal-body').html();
         });
 
         $('#addPropertyModal .btn-primary').click((event) => {
@@ -70,13 +75,21 @@
           $.post(base_path + "/services/index.php?type=post_new_prop_form", $form.serializeArray())
           .done((res) => {
             $('#addPropertyModal .btn-primary').hide();
-            // $('#addPropertyModal .modal-body').html(`
-            // <div class="d-flex justify-content-center align-items-center">
-            //   <i class='fas fa-check-circle mr-2 icon_red_40'></i>
-            //   <div>`+res+`</div>`);
+            $('#addPropertyModal .modal-body').html(`
+            <div class="d-flex justify-content-center align-items-center">
+              <i class='fas fa-check-circle mr-2 icon_red_40'></i>
+              <div>`+res+`</div>`);
           });
 
         });
+
+             $('#addPropertyModal .btn-secondary').click((event) => {
+              $('#addPropertyModal').modal('hide');
+              $('#addPropertyModal .btn-primary').show();
+          $('#addPropertyModal .modal-body').html(add_default);
+        });
+
+
 
         $('#removeFromMarketModal').on('show.bs.modal', function (event) {
           element_opened_modal = $(event.relatedTarget);
@@ -153,20 +166,29 @@
           $('#editPropertyModal #edit_rental_fee').val(data_rental_fee);
           $('#editPropertyModal #edit_description').val(data_description);
         });
+
         $('#editPropertyModal .btn-primary').click((event) => {
           $form = $('#editPropertyModal form');
           event.preventDefault();
           console.log($form.serializeArray());
           $.post(base_path + "/services/index.php?type=post_edit_prop_form", $form.serializeArray())
           .done((res) => {
+            
             $('#editPropertyModal .btn-primary').hide();
-            // $('#addPropertyModal .modal-body').html(`
-            // <div class="d-flex justify-content-center align-items-center">
-            //   <i class='fas fa-check-circle mr-2 icon_red_40'></i>
-            //   <div>`+res+`</div>`);
+            $('#editPropertyModal .modal-body').html(`
+            <div class="d-flex justify-content-center align-items-center">
+              <i class='fas fa-check-circle mr-2 icon_red_40'></i>
+              <div>`+res+`</div>`);
           });
 
         });
+
+        $('#editPropertyModal .btn-secondary').click((event) => {
+          $('#editPropertyModal').modal('hide');
+          $('#editPropertyModal .btn-primary').show();
+          $('#editPropertyModal .modal-body').html(edit_default);
+        });
+
 
     });
     </script>
@@ -294,7 +316,7 @@
         </button>
       </div>
       <div class="modal-body">
-      <form>
+      <form novalidate>
           
           <div class="form-group">
             <label for="addinputAddress">Address</label>
@@ -387,7 +409,7 @@
       </div>
       <div class="modal-body">
       <form>
-          <input type="hidden" id='property_id' name="property_id" type='number'>
+          <input type="hidden" id='edit_property_id' name="property_id" type='number'>
           <div class="form-group">
             <label for="edit_inputAddress">Address</label>
             <input type="text" class="form-control" id="edit_inputAddress" name="inputAddress" placeholder="1234 Main St">
@@ -468,20 +490,11 @@
   </div>
 </div>
 
-
-
-
-
-
-
-
-
     <main>
 <?php 
-    if( isset($_SESSION['LOGGED_IN']) && $_SESSION['LOGGED_IN']=='OK' && $_SESSION['ROLE_ID'] == ROLE_ID_RENTER ){
-        include 'renter_navigation.php';
-    } 
-    else if( isset($_SESSION['LOGGED_IN']) && $_SESSION['LOGGED_IN']=='OK' && $_SESSION['ROLE_ID'] == ROLE_ID_LANDLORD ){
-        include 'landlord_navigation.php';
-    }
+if (isset($_SESSION['LOGGED_IN']) && $_SESSION['LOGGED_IN'] == 'OK' && $_SESSION['ROLE_ID'] == ROLE_ID_RENTER) {
+  include 'renter_navigation.php';
+} else if (isset($_SESSION['LOGGED_IN']) && $_SESSION['LOGGED_IN'] == 'OK' && $_SESSION['ROLE_ID'] == ROLE_ID_LANDLORD) {
+  include 'landlord_navigation.php';
+}
 ?>

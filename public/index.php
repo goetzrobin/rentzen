@@ -103,20 +103,7 @@ if (isset($_POST['SignUp'])) {
     $credit_rating = filter_input(INPUT_POST, "credit_rating");
     $income = filter_input(INPUT_POST, "income");
 
-echo $firstname . '<br>';
-echo $lastname . '<br>';
-echo $username . '<br>';
-echo $email . '<br>';
-echo $password . '<br>';
-echo $phone . '<br>';
-echo $city . '<br>';
-echo $state_id . '<br>';
-echo $zip . '<br>';
-echo $role_id . '<br>';
-echo $credit_rating . '<br>';
-echo $income . '<br>';
 
-     print_r($_POST);
     if (empty($firstname)  || empty($lastname) || empty($username) || empty($email)  || empty($password)  || empty($phone) 
     || empty($city)|| empty($street) || empty($state_id)  || empty($zip)  || empty($role_id)  || empty($credit_rating) || empty($income)){
         $message = "* One or more required fields are missing.";
