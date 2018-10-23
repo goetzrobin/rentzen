@@ -23,9 +23,9 @@
           <li class="nav-item">
           <?php
           if( isset($_SESSION['LOGGED_IN']) && $_SESSION['LOGGED_IN']=='OK') {
-            echo '<a href="'. $base_path . '/public/index.php?sign_out"><button class="btn btn-outline-primary red">Sign Out</button></a>';
+            echo '<a class="icon" href="'. $base_path . '/public/index.php?sign_out"><i class="fas fa-sign-in-alt"></i></a>';
           } else {
-            echo '<a href="'. $base_path . '/public/index.php?sign_in"><button class="btn btn-outline-primary red">Sign In</button></a>';
+            echo '<a class="icon" href="'. $base_path . '/public/index.php?sign_in"><i class="fas fa-sign-in-alt"></i></a>';
           } ?>
              </li>
         </ul>

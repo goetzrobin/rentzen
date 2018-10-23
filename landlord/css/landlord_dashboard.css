@@ -60,3 +60,9 @@
     -webkit-transition: all 0.3s;
     transition: all 0.3s;
   }
+
+  h5.collapseToggle {
+      cursor: pointer;
+      color: #8E0000;
+      margin: 10px;
+  }

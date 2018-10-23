@@ -374,7 +374,7 @@
             </div>
             <div class="form-group col-sm-3">
               <label for="credit_score">Credit Score</label>
-                <input type="number" class="form-control" id="credit_score" name="credit_score" min='0' max='800' value='0' step='1'>
+                <input type="number" class="form-control" id="credit_score" name="credit_score" min='300' max='850' value='300' step='1'>
             </div>
             <div class="form-group col-sm-3">
               <label for="rental_fee">Rental Fee</label>

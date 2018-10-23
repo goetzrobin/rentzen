@@ -20,12 +20,14 @@
 </nav> -->
 
 <?php include '../view/public_navigation.php'; ?>
-<div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-phila">
+<div class='bg-phila'>
+<div class="overflow-hidden white-overlay">
   <div class="col-md-5 p-lg-5 mx-auto my-5">
     <h1 class="display-4 font-weight-normal pt-3 mt-3">RentZen</h1>
     <p class="lead font-weight-normal">Better Landlords. Better Tenants.</p>
-      <a class="btn btn-primary red" href="<?php echo $base_path; ?>/public/index.php?sign_up">Sign Up</a>
+    <a class="btn btn-primary red" href="<?php echo $base_path; ?>/public/index.php?sign_up">Sign Up</a>
   </div>
+</div>
 </div>
 <div class="container marketing">
 
@@ -40,22 +42,22 @@
 
 <div class="row">
   <div class="col-lg-4">
-    <img class="rounded-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
+    <div><i class='p-2 fa-icon fas fa-map-marked-alt icon_red_80'></i></div>
     <h2>MapView</h2>
     <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.</p>
-    <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+    
   </div><!-- /.col-lg-4 -->
   <div class="col-lg-4">
-    <img class="rounded-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
+    <div><i class='p-2 fa-icon fas fa-rocket icon_red_80'></i></div>
     <h2>Easy Application</h2>
     <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.</p>
-    <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+    
   </div><!-- /.col-lg-4 -->
   <div class="col-lg-4">
-    <img class="rounded-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-    <h2>ZensSore</h2>
+    <div><i class='p-2 fa-icon fas fa-star icon_red_80'></i></div>
+    <h2>ZenScore</h2>
     <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-    <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+    
   </div><!-- /.col-lg-4 -->
 </div><!-- /.row -->
 
@@ -66,7 +68,7 @@
 
 <div class="row featurette">
   <div class="col-md-7">
-    <h2 class="featurette-heading">Completely Responsive<span class="text-muted">Anywhere.</span></h2>
+    <h2 class="featurette-heading">Completely Responsive.<span class="text-muted">Anywhere.</span></h2>
     <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
   </div>
   <div class="col-md-5">

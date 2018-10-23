@@ -35,6 +35,7 @@ if (isset($_POST['go_button']) )
         $_SESSION['ROLE_ID']= $role_id;
         $_SESSION['PEOPLE_ID'] = $people_id;
         $_SESSION['USERNAME'] = $email;
+        $_SESSION['FIRSTNAME'] = $login_data['firstname'];
 
         if($role_id ==  ROLE_ID_RENTER ) // tenant
         {
@@ -91,27 +92,27 @@ if (isset($_POST['SignUp'])) {
 
     $firstname = filter_input(INPUT_POST, "firstname");
     $lastname = filter_input(INPUT_POST, "lastname");
-    $username = filter_input(INPUT_POST, "username");
-    $email= filter_input(INPUT_POST, "email");
+    $email= filter_input(INPUT_POST, "email", FILTER_VALIDATE_EMAIL);
     $password = filter_input(INPUT_POST, "password");
-    $phone = filter_input(INPUT_POST, "phone");
+    $phone = filter_input(INPUT_POST, "phone", FILTER_VALIDATE_INT);
     $street = filter_input(INPUT_POST, "street");
     $city = filter_input(INPUT_POST, "city");
-    $state_id = filter_input(INPUT_POST, "state_id");
+    $state_id = filter_input(INPUT_POST, "state_id", FILTER_VALIDATE_INT);
     $zip = filter_input(INPUT_POST, "zip");
     $role_id = filter_input(INPUT_POST, "role_id");
-    $credit_rating = filter_input(INPUT_POST, "credit_rating");
-    $income = filter_input(INPUT_POST, "income");
+    $credit_rating = filter_input(INPUT_POST, "credit_rating", FILTER_VALIDATE_INT);
+    $income = filter_input(INPUT_POST, "income", FILTER_VALIDATE_FLOAT);
 
 
-    if (empty($firstname)  || empty($lastname) || empty($username) || empty($email)  || empty($password)  || empty($phone) 
+    if (empty($firstname)  || empty($lastname) || empty($email)  || empty($password)  || empty($phone) 
     || empty($city)|| empty($street) || empty($state_id)  || empty($zip)  || empty($role_id)  || empty($credit_rating) || empty($income)){
-        $message = "* One or more required fields are missing.";
+        $message = "One or more required fields are missing.";
         include 'public_sign_up.php'; //something is empty, go back to sign up page
         exit();
     } else
     {
-        $confirmation = insertPeople($email,$username,$password,$firstname,$lastname,
+        //use email twice because username and email are the same
+        $confirmation = insertPeople($email,$email,$password,$firstname,$lastname,
         $phone,$street,$city,$state_id,$zip,$role_id,$credit_rating,$income);
 
         if ($confirmation !== false)

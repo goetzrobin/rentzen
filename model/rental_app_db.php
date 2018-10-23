@@ -65,6 +65,96 @@ function getRentalAppsByLandlordId($landlord_id){
     return $result;
 }
 
+function getSubmittedRentalAppsByLandlordId($landlord_id){
+    //returns an array of rental_application
+    global $db;
+    $sql = "SELECT
+    property.`property_id`, property.`street`, property.`city`, property.`state_id`, property.`zip`, property.`beds`, property.`baths`, property.`sqft`, property.`type_id`, property.`propstat_id`, property.`income_requirement`, property.`credit_requirement`, property.`rental_fee`, property.`description`, property.`picture`, 
+    rental_app_status.`app_status_id`, rental_app_status.`app_status_name`,
+    renter_property.`renterproperty_id`, renter_property.`renter_id`, renter_property.`property_id`, renter_property.`renter_match_score`
+    `people_id`, renters.`firstname`, renters.`lastname`, `renter_match_score`,
+    `rental_application_id`, `last_status_id`, `move_in_date`, `move_out_date`, `renter_message`
+    FROM rental_application, renter_property, property, landlord_property, rental_app_status, people, people as renters
+         WHERE rental_application.renterproperty_id = renter_property.renterproperty_id 
+         AND last_status_id = app_status_id
+         AND renter_property.property_id = property.property_id 
+         AND property.property_id = landlord_property.property_id 
+         AND people.people_id = landlord_property.landlord_id  
+        AND renters.people_id = renter_property.renter_id ".
+    "AND last_status_id=" . SUBMITTED_ID
+    ." AND people.people_id = :landlord_id
+    ORDER BY app_status_id ASC";
+    $statement = $db->prepare($sql);
+    $statement->bindValue(':landlord_id', $landlord_id);
+    $statement->execute();
+    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+    $statement->closeCursor();
+    if (empty($result)){
+        $result = false;
+    } 
+    return $result;
+}
+
+function getRejectedRentalAppsByLandlordId($landlord_id){
+    //returns an array of rental_application
+    global $db;
+    $sql = "SELECT
+    property.`property_id`, property.`street`, property.`city`, property.`state_id`, property.`zip`, property.`beds`, property.`baths`, property.`sqft`, property.`type_id`, property.`propstat_id`, property.`income_requirement`, property.`credit_requirement`, property.`rental_fee`, property.`description`, property.`picture`, 
+    rental_app_status.`app_status_id`, rental_app_status.`app_status_name`,
+    renter_property.`renterproperty_id`, renter_property.`renter_id`, renter_property.`property_id`, renter_property.`renter_match_score`
+    `people_id`, renters.`firstname`, renters.`lastname`, `renter_match_score`,
+    `rental_application_id`, `last_status_id`, `move_in_date`, `move_out_date`, `renter_message`
+    FROM rental_application, renter_property, property, landlord_property, rental_app_status, people, people as renters
+         WHERE rental_application.renterproperty_id = renter_property.renterproperty_id 
+         AND last_status_id = app_status_id
+         AND renter_property.property_id = property.property_id 
+         AND property.property_id = landlord_property.property_id 
+         AND people.people_id = landlord_property.landlord_id  
+        AND renters.people_id = renter_property.renter_id ".
+    " AND last_status_id=" . REJECTED_ID
+    ." AND people.people_id = :landlord_id
+    ORDER BY app_status_id ASC";
+    $statement = $db->prepare($sql);
+    $statement->bindValue(':landlord_id', $landlord_id);
+    $statement->execute();
+    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+    $statement->closeCursor();
+    if (empty($result)){
+        $result = false;
+    } 
+    return $result;
+}
+
+function getApprovedRentalAppsByLandlordId($landlord_id){
+    //returns an array of rental_application
+    global $db;
+    $sql = "SELECT
+    property.`property_id`, property.`street`, property.`city`, property.`state_id`, property.`zip`, property.`beds`, property.`baths`, property.`sqft`, property.`type_id`, property.`propstat_id`, property.`income_requirement`, property.`credit_requirement`, property.`rental_fee`, property.`description`, property.`picture`, 
+    rental_app_status.`app_status_id`, rental_app_status.`app_status_name`,
+    renter_property.`renterproperty_id`, renter_property.`renter_id`, renter_property.`property_id`, renter_property.`renter_match_score`
+    `people_id`, renters.`firstname`, renters.`lastname`, `renter_match_score`,
+    `rental_application_id`, `last_status_id`, `move_in_date`, `move_out_date`, `renter_message`
+    FROM rental_application, renter_property, property, landlord_property, rental_app_status, people, people as renters
+         WHERE rental_application.renterproperty_id = renter_property.renterproperty_id 
+         AND last_status_id = app_status_id
+         AND renter_property.property_id = property.property_id 
+         AND property.property_id = landlord_property.property_id 
+         AND people.people_id = landlord_property.landlord_id  
+        AND renters.people_id = renter_property.renter_id 
+    AND people.people_id = :landlord_id ".
+    " AND last_status_id=" . APPROVED_ID
+    ." ORDER BY app_status_id ASC";
+    $statement = $db->prepare($sql);
+    $statement->bindValue(':landlord_id', $landlord_id);
+    $statement->execute();
+    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+    $statement->closeCursor();
+    if (empty($result)){
+        $result = false;
+    } 
+    return $result;
+}
+
 
 function getRentalAppByStatusId($status_id){
     //returns an array of rental_application

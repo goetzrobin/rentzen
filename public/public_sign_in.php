@@ -3,6 +3,7 @@
 
 <link href="./css/public_sign_in.css" rel="stylesheet">
 
+ <div class="overlay">
   <div class="test text-center">
     <form class="form-signin" novalidate action="<?php echo $base_path; ?>/public/index.php" method="post">
     <a href='<?php echo $base_path; ?>/public/index.php'><img class="mb-4" src="<?php echo $base_path; ?>/images/rentzen_logo.svg" alt="RentZen Logo" width="72" height="72"></a>
@@ -22,6 +23,7 @@
         &copy; 2017-2018
     </p>
     </form>
+    </div>
   </div>
 
 <?php include '../view/footer.php'; ?>
