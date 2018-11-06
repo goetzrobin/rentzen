@@ -6,6 +6,7 @@
 <?php require_once "../model/property_db.php"; ?>
 <?php require_once "../model/renter_property_db.php"; ?>
 <?php require_once "../model/rental_app_db.php"; ?>
+
 <?php
     session_start();
 
@@ -43,17 +44,21 @@
     }
     
     if ($_GET['type'] === 'get_property_status') {
-        echo json_encode(getPropertyStatus());
+        $property_status = getPropertyStatus();
+        include "./properties/property_status_list.php";
         exit();
     }
 
     if ($_GET['type'] === 'get_application_data') {
         $id = $_SESSION['PEOPLE_ID'];
         if($id){
-            echo json_encode(getRentalAppsByLandlordId($id));
+            $applications = getRentalAppsByLandlordId($id);
+            include "./applications/application_list.php";
             exit();
         } else {
-            echo 'No id set.';
+            $error_id = 404;
+            $error_message = 'No id set.';
+            include "./util/error.php";
             exit();
         }
         
