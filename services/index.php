@@ -10,36 +10,38 @@
     session_start();
 
     if ($_GET['type'] === 'get_prop_data') {
-
         if(isset($_GET['prop_id']) ){
             $data = getPropertyById($_GET['prop_id']);
             if(!empty($data)) {
                 $landlord_state = getStateById($data['landlord_state_id']);
                 $data['landlord_state_text'] = $landlord_state['state_name'];
             }
-            echo json_encode($data);
+            include "./properties/property_data.php";
         } else {
-            echo 'No Property Id provided.';
+            $error = 401;
+            $error_message = 'No Property Id provided.';
+            include "./util/error.php";
             exit();
         }
+    }
 
+    if ($_GET['type'] === 'get_property_type') {
+        $property_types = getPropertyTypes();
+        include "./properties/property_types_list.php";
+        exit();
     }
 
     if ($_GET['type'] === 'get_session_data') {
-        echo json_encode($_SESSION);
+        include "./util/session_data.php";
         exit();
     }
 
     if ($_GET['type'] === 'get_states') {
-        echo json_encode(getStates());
+        $states = getStates();
+        include "./util/states_list.php";
         exit();
     }
     
-    if ($_GET['type'] === 'get_property_type') {
-        echo json_encode(getPropertyTypes());
-        exit();
-    }
-
     if ($_GET['type'] === 'get_property_status') {
         echo json_encode(getPropertyStatus());
         exit();
