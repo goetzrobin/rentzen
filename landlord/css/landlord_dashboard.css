@@ -79,7 +79,7 @@ h5.collapseToggle {
 }
 
 #app_tab {
-    height: 300px;
+    min-height: 300px;
 }
 
 .card {
@@ -95,4 +95,90 @@ h5.collapseToggle {
 .list_header {
     font-size: .7em;
     font-weight: bolder;
+}
+
+.app_navigation {
+    display: flex;
+    padding: 5px;
+    justify-content: space-around;
+    width: 55px;
+    position: absolute;
+    top: 5px;
+    right: 5px;;
+}
+.app_navigation_arrow {
+    height: 20px;
+    width: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    background-color: #eee;
+}
+.app_navigation_arrow:hover {
+    background-color: #ddd;
+    transition: background-color 300ms linear;
+}
+.apps-empty {
+    min-height: 300px;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.tab-pane {
+    min-height: 300px;
+    height: 100%;
+    width: 100%;
+}
+
+.apps_container {
+    height: 100%;
+}
+
+.apps_container .row {
+    height: 100%;
+}
+
+.app_body {
+    height: 90%;
+}
+.app_body .heading {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    font-size: 0.8em;
+    font-weight: bold;
+    color: #8E0000;
+}
+
+.app_body h1 {
+    font-size: 0.9em;
+    font-weight: bold;
+}
+.app_body .info {
+    font-size: 0.8em;
+}
+.app_body .message {
+    margin-top: 5px;
+    padding: 5px;
+    font-size: 0.95em;
+    border-radius: 4px;
+    border-top: 1px solid #eee;
+}
+.app_buttons {
+    height: 10%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.app_buttons .btn {
+    height: 40px;
+    width: 40px;
+}
+
+#app_spinner {
+    padding: 0;
 }
