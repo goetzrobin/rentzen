@@ -64,6 +64,21 @@
         
     }
 
+    if ($_GET['type'] === 'get_properties') {
+        $user_id = $_SESSION['PEOPLE_ID'];
+        if($user_id){
+            $properties = getPropertiesByLandlordId($user_id);
+            include "./properties/property_list.php";
+            exit();
+        } else {
+            $error_id = 404;
+            $error_message = 'No id set.';
+            include "./util/error.php";
+            exit();
+        }
+        
+    }
+
     if ($_GET['type'] === 'set_property_status_occupied' && isset($_GET['prop_id'])) {
         $id = $_GET['prop_id'];
         $updated_property = updateProperty($id,"propstat_id",OCCUPIED_ID);
@@ -225,6 +240,7 @@
     }
 
     if( $_GET['type'] === 'post_edit_prop_form' && !empty($_POST)){
+
         $property_id = filter_input(INPUT_POST, "property_id", FILTER_VALIDATE_INT);
         $inputAddress = filter_input(INPUT_POST,"inputAddress");
         $inputCity = filter_input(INPUT_POST,"inputCity");
@@ -237,7 +253,7 @@
         $status = filter_input(INPUT_POST,"status",FILTER_VALIDATE_INT);
         $income_req = filter_input(INPUT_POST,"income_req",FILTER_VALIDATE_FLOAT);
         $credit_score = filter_input(INPUT_POST,"credit_score",FILTER_VALIDATE_INT);
-        $rental_fee = filter_input(INPUT_POST,"rental_fee",FILTER_VALIDATE_INT);
+        $rental_fee = filter_input(INPUT_POST,"rental_fee",FILTER_VALIDATE_FLOAT);
         $description = filter_input(INPUT_POST,"description");
 
         if(!isset($property_id)) {
@@ -245,22 +261,23 @@
             exit();
         }
         
-        if( !isset($inputAddress) || empty($inputAddress) ||
-            !isset($inputCity) || empty($inputCity) ||
-            !isset($inputState) || empty($inputState) ||
-            !isset($inputZip) || empty($inputZip) ||
-            !isset($beds) || empty($beds) ||
-            !isset($baths) || empty($baths) ||
-            !isset($sqft) || empty($sqft) ||
-            !isset($type) || empty($type) ||
-            !isset($status) || empty($status) ||
-            !isset($income_req) || empty($income_req) ||
-            !isset($credit_score) || empty($credit_score) ||
-            !isset($rental_fee) || empty($rental_fee) ||
-            !isset($description) || empty($description) ) {
-                echo "Not all data provided.";
-                exit();
-            }
+        //figure out validation
+        // if( !isset($inputAddress) || empty($inputAddress) ||
+        //     !isset($inputCity) || empty($inputCity) ||
+        //     !isset($inputState) || empty($inputState) ||
+        //     !isset($inputZip) || empty($inputZip) ||
+        //     !isset($beds) || empty($beds) ||
+        //     !isset($baths) || empty($baths) ||
+        //     !isset($sqft) || empty($sqft) ||
+        //     !isset($type) || empty($type) ||
+        //     !isset($status) || empty($status) ||
+        //     !isset($income_req) || empty($income_req) ||
+        //     !isset($credit_score) || empty($credit_score) ||
+        //     !isset($rental_fee) || empty($rental_fee) ||
+        //     !isset($description) || empty($description) ) {
+        //         echo "Not all data provided.";
+        //         exit();
+        //     }
         
         $result = updatePropertyComplete(
             $property_id,
