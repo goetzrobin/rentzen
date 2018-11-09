@@ -182,3 +182,27 @@ h5.collapseToggle {
 #app_spinner {
     padding: 0;
 }
+
+@media all and (max-width: 768px) {
+
+    .prop_heading {
+        font-size: 0.8em;
+        font-weight: bolder;
+    }
+    
+    .prop_detail {
+        font-size: 0.6em;
+    }
+
+} 
+.spinning {
+        /* The animation part: */
+        animation-name: spin;
+        animation-duration: 1000ms;
+        animation-iteration-count: infinite;
+        animation-timing-function: ease-in-out;
+    }
+@keyframes spin {
+    from {transform:rotate(0deg);}
+    to {transform:rotate(360deg);}
+}

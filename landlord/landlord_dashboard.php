@@ -126,9 +126,22 @@
                             <div class='apps-empty rejected-apps-empty'><i class='fas fa-info icon_red_40'></i><div>No Applications to be displayed...</div></div>
                     </div>
                     </div>
-
+            </div>
         </div>
+        <div class="row justify-content-center mt-2">
+            <div class="col-md-10 shadow-sm p-3 bg-white rounded">
+                <div class='db_heading mb-3'>APPLICATION PROGRESS</div>
+                <canvas id="myAppProgress" width="200" height="200"></canvas>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mt-2">
+            <div class="col-md-10 shadow-sm p-3 bg-white rounded">
+                <div class='db_heading mb-3'>PROPERTY PROGRESS</div>
+                <canvas id="myPropProgress" width="200" height="200"></canvas>
+            </div>
+        </div>
+
     </div>
-</div>
 
 <?php include '../view/footer.php' ?>

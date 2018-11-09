@@ -1,4 +1,5 @@
 $(function () {
+
     var current_id;
     var element_opened_modal;
 
@@ -98,6 +99,8 @@ $(function () {
 
     get_properties(properties);
 
+    create_app_progress();
+
     $('#editPropertyModal .btn-primary').click((event) => {
         edit_property(event, properties);
     });
@@ -187,22 +190,24 @@ $(function () {
 
     $("#refresh_apps").click(function (e) {
         e.preventDefault();
+        $("#refresh_apps").addClass('spinning');
         get_applications(submitted_applications, rejected_applications, approved_applications);
     });
 
     $("#refresh_props").click(function (e) {
         e.preventDefault();
+        $("#refresh_props").addClass('spinning');
         properties = [];
         get_properties(properties);
     });
 
     $('#addPropertyModal').on('show.bs.modal', function (event) {
-        reset_modal_add(states_option_html,status_option_html,type_option_html);
+        reset_modal_add(states_option_html, status_option_html, type_option_html);
     });
 
     $('#editPropertyModal').on('show.bs.modal', function (event) {
 
-        reset_modal_edit(states_option_html,status_option_html,type_option_html);
+        reset_modal_edit(states_option_html, status_option_html, type_option_html);
 
         element_opened_modal = $(event.relatedTarget);
         element_opened_modal.data('');
@@ -239,7 +244,7 @@ $(function () {
     });
 
     $('#addPropertyModal .btn-primary').click((event) => {
-        create_property(event,properties);
+        create_property(event, properties);
     });
 
     // $('#addPropertyModal .btn-secondary').click((event) => {
@@ -307,9 +312,13 @@ var get_applications = function (submitted_applications, rejected_applications, 
             $('#app_spinner').addClass('d-none');
             $('#app_tab').removeClass('d-none');
 
+            $("#refresh_apps").removeClass('spinning');
+
             display_array(submitted_applications, 'open-apps');
             display_array(rejected_applications, 'rejected-apps');
             display_array(approved_applications, 'approved-apps');
+
+            create_app_progress(submitted_applications.length,rejected_applications.length,approved_applications.length)
         }
     );
 }
@@ -361,7 +370,10 @@ var get_properties = function (properties) {
             $('#prop_spinner').addClass('d-none');
             $('#prop_list').removeClass('d-none');
 
+            $("#refresh_props").removeClass('spinning');
+
             generate_property_list(properties);
+            create_property_progress(properties);
         });
 }
 
@@ -374,8 +386,8 @@ var generate_property_list = function (property_arr) {
                                     <div class='row w-100'>
                                         <div class='col-9 col-sm-6 overflow-hidden'>
                                             <button class="btn btn-link" data-toggle="collapse" data-target="#collapse` + property.property_id + `" aria-expanded="true" aria-controls="collapse` + property.property_id + ` ">
-                                            <h5 class='mb-0'> ` + property.street + `</h5>
-                                            <small class='ml-1'> ` + property.zip + ` ` + property.city + `,  ` + property.state_name + `</small>
+                                            <h5 class='prop_heading mb-0'> ` + property.street + `</h5>
+                                            <small class='prop_detail ml-1'> ` + property.zip + ` ` + property.city + `,  ` + property.state_name + `</small>
                                             </button>
                                         </div>
                                         <div class="col-0 d-none col-sm-3 d-sm-flex justify-content-around align-items-center p-2">
@@ -471,7 +483,7 @@ var generate_property_list = function (property_arr) {
     });
     $('#property_container').html(html);
 }
-var create_property = function (event,properties){
+var create_property = function (event, properties) {
     $form = $('#addPropertyModal form');
     event.preventDefault();
     console.log($form.serializeArray());
@@ -482,12 +494,12 @@ var create_property = function (event,properties){
       <div class="d-flex justify-content-center align-items-center">
         <i class='fas fa-check-circle mr-2 icon_red_40'></i>
         <div>` + res + `</div>`);
-        properties = [];
-        get_properties(properties);
-        setTimeout(() => {
-            $('#addPropertyModal').modal('hide');
-            setTimeout(reset_modal_add(), 1200);
-        }, 800);
+            properties = [];
+            get_properties(properties);
+            setTimeout(() => {
+                $('#addPropertyModal').modal('hide');
+                setTimeout(reset_modal_add(), 1200);
+            }, 800);
 
         });
 }
@@ -514,7 +526,7 @@ var edit_property = function (event, properties) {
         });
 }
 
-var reset_modal_edit = function (states_option_html,status_option_html,type_option_html) {
+var reset_modal_edit = function (states_option_html, status_option_html, type_option_html) {
     var edit_default = ` 
     <input type="hidden" id='edit_property_id' name="property_id" type='number'>
     <div class="form-group">
@@ -528,7 +540,7 @@ var reset_modal_edit = function (states_option_html,status_option_html,type_opti
       </div>
       <div class="form-group col-md-4">
         <label for="edit_inputState">State</label>
-        <select id="edit_inputState" name="inputState" class="form-control">`+states_option_html+`</select>
+        <select id="edit_inputState" name="inputState" class="form-control">` + states_option_html + `</select>
       </div>
       <div class="form-group col-md-2">
         <label for="edit_inputZip">Zip</label>
@@ -552,7 +564,7 @@ var reset_modal_edit = function (states_option_html,status_option_html,type_opti
       </div>
       <div class="form-group col-sm-3">
       <label for="edit_type">Type</label>
-        <select id="edit_type" name="type" class="form-control">`+type_option_html+`
+        <select id="edit_type" name="type" class="form-control">` + type_option_html + `
         </select>
         </div>
     </div>
@@ -560,7 +572,7 @@ var reset_modal_edit = function (states_option_html,status_option_html,type_opti
      <div class="form-row">
       <div class="form-group col-sm-3">
       <label for="edit_status">Status</label>
-        <select id="edit_status" name="status" class="form-control">`+status_option_html+`
+        <select id="edit_status" name="status" class="form-control">` + status_option_html + `
         </select>
       </div>
       <div class="form-group col-sm-3">
@@ -581,13 +593,13 @@ var reset_modal_edit = function (states_option_html,status_option_html,type_opti
         <label for="edit_description">Description</label>
         <textarea class="form-control" id="edit_description" name='description' rows="3"></textarea>
       </div>`;
-    
-      $('#editPropertyModal .modal-body').html(edit_default);
-      $('#editPropertyModal .modal-footer').show();
+
+    $('#editPropertyModal .modal-body').html(edit_default);
+    $('#editPropertyModal .modal-footer').show();
 
 }
 
-var reset_modal_add = function (states_option_html,status_option_html,type_option_html) {
+var reset_modal_add = function (states_option_html, status_option_html, type_option_html) {
     var add_default = `
                 <div class="form-group">
                     <label for="addinputAddress">Address</label>
@@ -659,7 +671,67 @@ var reset_modal_add = function (states_option_html,status_option_html,type_optio
                     </div>`;
 
     $('#addPropertyModal .modal-body').html(add_default);
+    $('#addPropertyModal .modal-footer').show();
     $('#addPropertyModal #inputState').html(states_option_html);
     $('#addPropertyModal #type').html(type_option_html);
     $('#addPropertyModal #status').html(status_option_html);
+}
+
+var create_app_progress = function(submitted_applications_length,rejected_applications_length,accepted_application_length){
+        var data = {
+            datasets: [{
+                data: [submitted_applications_length, rejected_applications_length,accepted_application_length],
+                backgroundColor: ["#333", "#CCC", "#8E0000"]
+            }],
+        
+            // These labels appear in the legend and in the tooltips when hovering different arcs
+            labels: [
+                'Submitted',
+                'Rejected',
+                'Approved'
+            ]
+        };
+        
+        var ctx = document.getElementById("myAppProgress").getContext('2d');
+        var myPieChart = new Chart(ctx,{
+            type: 'pie',
+            data: data,
+            options: {cutoutPercentage: 50, legend: {position: 'bottom'}}
+        });
+}
+
+var create_property_progress = function(properties){
+    var listed_count = 0;
+    var occupied_count = 0;
+    var vacant_count = 0;
+
+    $.each(properties, function (indexInArray, property) { 
+         switch(property.propstat_id){
+             case "401": vacant_count++; break;
+             case "402": occupied_count++; break;
+             case "403": listed_count++; break;
+         }
+    });
+
+    var data = {
+        datasets: [{
+            data: [listed_count, occupied_count,vacant_count],
+            backgroundColor: ["#8E0000", "#CCC", "#333"]
+        }],
+    
+        // These labels appear in the legend and in the tooltips when hovering different arcs
+        labels: [
+            'Listed',
+            'Occupied',
+            'Vacant'
+        ]
+    };
+    
+    var ctx = document.getElementById("myPropProgress").getContext('2d');
+    var myPieChart = new Chart(ctx,{
+        type: 'pie',
+        data: data,
+        options: {cutoutPercentage: 50, legend: {position: 'bottom'}}
+    });
+
 }
