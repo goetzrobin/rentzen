@@ -1,0 +1,15 @@
+body {
+    height: 100%;
+    background-image: url("../../images/public/phila_skyline.jpg") !important;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+main {
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+footer {
+    background-color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 0;
+    padding-bottom: 30px;
+}

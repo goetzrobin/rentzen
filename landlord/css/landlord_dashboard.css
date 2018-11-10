@@ -7,11 +7,11 @@
 .db_item {
     background-color: #fff;
     padding: 5px;
-    margin: 10px 0;
+    margin: 10px 5px;
     border-radius: 4px;
     border: 1px #eee solid;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-    transition: all 3s cubic-bezier(.25,.8,.25,1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    transition: all 3s cubic-bezier(.25, .8, .25, 1);
 }
 
 .prop_collapse {
@@ -44,19 +44,165 @@
 .rotate {
     transform: rotate(360deg);
     transition-duration: 500ms;
-    -webkit-transform:rotate(360deg);
+    -webkit-transform: rotate(360deg);
     -webkit-transition-duration: 500ms;
-  }
+}
 
-  .application {
-    position: relative;  
+.application {
+    position: relative;
     overflow: hidden;
     width: 100%;
-  }
-  
-  .application img {
-    max-width: 100%;  
+}
+
+.application img {
+    max-width: 100%;
     -moz-transition: all 0.3s;
     -webkit-transition: all 0.3s;
     transition: all 0.3s;
-  }
+}
+
+h5.collapseToggle {
+    cursor: pointer;
+    color: #8E0000;
+    margin: 10px;
+}
+
+.db_container {
+    background-color: #fff;
+    border-radius: 4px;
+}
+
+.db_heading {
+    font-size: 0.8em;
+    font-weight: bold;
+    color: #333;
+}
+
+#app_tab {
+    min-height: 300px;
+}
+
+.card {
+    border: none;
+    border-radius: 0;
+}
+
+.card-header {
+    background-color: transparent;
+    padding: 0;
+}
+
+.list_header {
+    font-size: .7em;
+    font-weight: bolder;
+}
+
+.app_navigation {
+    display: flex;
+    padding: 5px;
+    justify-content: space-around;
+    width: 55px;
+    position: absolute;
+    top: 5px;
+    right: 5px;;
+}
+.app_navigation_arrow {
+    height: 20px;
+    width: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    background-color: #eee;
+}
+.app_navigation_arrow:hover {
+    background-color: #ddd;
+    transition: background-color 300ms linear;
+}
+.apps-empty {
+    min-height: 300px;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.tab-pane {
+    min-height: 300px;
+    height: 100%;
+    width: 100%;
+}
+
+.apps_container {
+    height: 100%;
+}
+
+.apps_container .row {
+    height: 100%;
+}
+
+.app_body {
+    height: 90%;
+}
+.app_body .heading {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    font-size: 0.8em;
+    font-weight: bold;
+    color: #8E0000;
+}
+
+.app_body h1 {
+    font-size: 0.9em;
+    font-weight: bold;
+}
+.app_body .info {
+    font-size: 0.8em;
+}
+.app_body .message {
+    margin-top: 5px;
+    padding: 5px;
+    font-size: 0.95em;
+    border-radius: 4px;
+    border-top: 1px solid #eee;
+}
+.app_buttons {
+    height: 10%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.app_buttons .btn {
+    height: 40px;
+    width: 40px;
+}
+
+#app_spinner {
+    padding: 0;
+}
+
+@media all and (max-width: 768px) {
+
+    .prop_heading {
+        font-size: 0.8em;
+        font-weight: bolder;
+    }
+    
+    .prop_detail {
+        font-size: 0.6em;
+    }
+
+} 
+.spinning {
+        /* The animation part: */
+        animation-name: spin;
+        animation-duration: 1000ms;
+        animation-iteration-count: infinite;
+        animation-timing-function: ease-in-out;
+    }
+@keyframes spin {
+    from {transform:rotate(0deg);}
+    to {transform:rotate(360deg);}
+}

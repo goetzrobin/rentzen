@@ -8,7 +8,6 @@ body {
 }
 
 main {
-    height: 100vh;
 }
 
 .index__logo {
@@ -39,10 +38,22 @@ pre {
     border-color: rgb(97, 0, 0) !important;
   }
 
-  .icon_red_40 {
-      color: #8E0000;
-      font-size: 40px;
+  .red:active:focus {
+    box-shadow: 0 0 0 .2rem rgba(142,0,0,.5) !important;
   }
+
+  .icon_red {
+    color: #8E0000;
+  }
+  .icon_red_40 {
+    color: #8E0000;
+    font-size: 40px;
+}
+
+.icon_red_80 {
+    color: #8E0000;
+    font-size: 80px;
+}
 
   .nav_logo {
     display: block; 
@@ -82,3 +93,34 @@ pre {
         width: 40px;
         will-change: transform;
     }
+
+    .error {
+        display: flex;
+        margin: 20px 0px;
+        color: #8E0000;
+        border-color: #8E0000;
+        padding: 5px 20px;
+        justify-content: center;
+      
+      }
+
+      a {
+        color: #8E0000 !important;
+      }
+      
+      a:hover {
+        color: #8E0000 !important;
+        text-decoration: none;
+      }
+
+      a.btn {
+          color: white !important;
+      }
+
+      a.icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        font-size: 20px;
+      }

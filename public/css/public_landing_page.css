@@ -1,7 +1,21 @@
 
 .bg-phila {
-  background-image: url(../../images/public/phila_large.jpg);
+  background-image: url("../../images/public/phila_skyline.jpg") !important;
   background-size: cover;
+  min-height: 100%;
+}
+
+.white-overlay {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, .5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#main-logo {
+  max-width: 60px;
 }
 
 /* MARKETING CONTENT

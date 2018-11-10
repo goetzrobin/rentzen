@@ -9,6 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="../main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
@@ -22,179 +23,12 @@
     </style>
     </head>
     <script>
-    $(function () {
-      var current_id;
-      var element_opened_modal;
-      var add_default;
-      var edit_default;
-
-      
-        $('#notification__badge').hide();
-        $('.modal-btn__optional').hide();
-        
-        var states_option_html = "<option selected>Choose...</option>";
-        $.getJSON(base_path + '/services/index.php?type=get_states').done( (states) => {
-          for(var i=0; i < states.length; i++){
-            var current_state = states[i];
-            states_option_html += ('<option value="'+current_state['state_id']+'">'+current_state['state_name']+"</option>");
-          }
-
-          $('#addPropertyModal #inputState').html(states_option_html);
-          $('#editPropertyModal #edit_inputState').html(states_option_html);
-
-        });
-
-        var type_option_html = "<option selected>Choose...</option>";
-        $.getJSON(base_path + '/services/index.php?type=get_property_type').done( (types) => {
-          for(var i=0; i < types.length; i++){
-            var current_type = types[i];
-            type_option_html += ('<option value="'+current_type['propertytype_id']+'">'+current_type['typename']+"</option>");
-          }
-          console.log(type_option_html);
-          $('#addPropertyModal #type').html(type_option_html);
-          $('#editPropertyModal #edit_type').html(type_option_html);
-
-        });
-
-        var status_option_html = "<option selected>Choose...</option>";
-        $.getJSON(base_path + '/services/index.php?type=get_property_status').done( (status) => {
-          for(var i=0; i < status.length; i++){
-            var current_status = status[i];
-            status_option_html += ('<option value="'+current_status['propstat_id']+'">'+current_status['propertystat']+"</option>");
-          }
-          $('#addPropertyModal #status').html(status_option_html);
-          $('#editPropertyModal #edit_status').html(status_option_html);
-          add_default = $('#addPropertyModal .modal-body').html();
-          edit_default = $('#editPropertyModal .modal-body').html();
-        });
-
-        $('#addPropertyModal .btn-primary').click((event) => {
-          $form = $('#addPropertyModal form');
-          event.preventDefault();
-          console.log($form.serializeArray());
-          $.post(base_path + "/services/index.php?type=post_new_prop_form", $form.serializeArray())
-          .done((res) => {
-            $('#addPropertyModal .btn-primary').hide();
-            $('#addPropertyModal .modal-body').html(`
-            <div class="d-flex justify-content-center align-items-center">
-              <i class='fas fa-check-circle mr-2 icon_red_40'></i>
-              <div>`+res+`</div>`);
-          });
-
-        });
-
-             $('#addPropertyModal .btn-secondary').click((event) => {
-              $('#addPropertyModal').modal('hide');
-              $('#addPropertyModal .btn-primary').show();
-          $('#addPropertyModal .modal-body').html(add_default);
-        });
-
-
-
-        $('#removeFromMarketModal').on('show.bs.modal', function (event) {
-          element_opened_modal = $(event.relatedTarget);
-          var prop_id  = element_opened_modal.data('id');
-          current_id = prop_id;
-        });
-        $('#removeFromMarketModal .btn-primary').click((event) => {
-          $.getJSON(base_path + '/services/index.php?type=set_property_status_occupied&prop_id='+current_id).done( (response) => {
-            console.log('reloading data necessary');
-            $('#removeFromMarketModal').modal('hide');
-            location.reload();
-          });
-        });
-
-        $('#approveApplicationModal').on('show.bs.modal', function (event) {
-          element_opened_modal = $(event.relatedTarget);
-          var application_id  = element_opened_modal.data('id');
-          current_id = application_id;
-        });
-        $('#approveApplicationModal .btn-primary').click((event) => {
-          console.log(current_id);
-          $.getJSON(base_path + '/services/index.php?type=set_application_status_approved&app_id='+current_id).done( (response) => {
-            console.log('reloading data necessary');
-            $('#approveApplicationModal').modal('hide');
-            location.reload();
-          });
-        });
-
-        $('#rejectApplicationModal').on('show.bs.modal', function (event) {
-          element_opened_modal = $(event.relatedTarget);
-          var application_id  = element_opened_modal.data('id');
-          current_id = application_id;
-        });
-        $('#rejectApplicationModal .btn-primary').click((event) => {
-          console.log(current_id);
-          $.getJSON(base_path + '/services/index.php?type=set_application_status_rejected&app_id='+current_id).done( (response) => {
-            console.log('reloading data necessary');
-            $('#approveApplicationModal').modal('hide');
-            location.reload();
-          });
-        });
-        
-        $('#editPropertyModal').on('show.bs.modal', function (event) {
-          element_opened_modal =  $(event.relatedTarget);
-          element_opened_modal.data('');
-          data_propid = element_opened_modal.data('propid')
-          data_street= element_opened_modal.data('street');
-          data_city= element_opened_modal.data('city');
-          data_state_id= element_opened_modal.data('state_id');
-          data_zip= element_opened_modal.data('zip');
-          data_beds= element_opened_modal.data('beds');
-          data_baths= element_opened_modal.data('baths');
-          data_sqft= element_opened_modal.data('sqft');
-          data_type_id= element_opened_modal.data('type_id');
-          data_propstat_id= element_opened_modal.data('propstat_id');
-          data_income_requirement= element_opened_modal.data('income_requirement');
-          data_credit_requirement= element_opened_modal.data('credit_requirement');
-          data_rental_fee= element_opened_modal.data('rental_fee');
-          data_description= element_opened_modal.data('description');
-          data_picture= element_opened_modal.data('picture');
-  
-          $('#editPropertyModal #edit_property_id').val(data_propid);
-          $('#editPropertyModal #edit_inputAddress').val(data_street);
-          $('#editPropertyModal #edit_inputCity').val(data_city);
-          $('#editPropertyModal #edit_inputState').val(data_state_id);
-          $('#editPropertyModal #edit_inputZip').val(data_zip);
-          $('#editPropertyModal #edit_beds').val(data_beds);
-          $('#editPropertyModal #edit_baths').val(data_baths);
-          $('#editPropertyModal #edit_sqft').val(data_sqft);
-          $('#editPropertyModal #edit_type').val(data_type_id);
-          $('#editPropertyModal #edit_status').val(data_propstat_id);
-          $('#editPropertyModal #edit_income_req').val(data_income_requirement);
-          $('#editPropertyModal #edit_credit_score').val(data_credit_requirement);
-          $('#editPropertyModal #edit_rental_fee').val(data_rental_fee);
-          $('#editPropertyModal #edit_description').val(data_description);
-        });
-
-        $('#editPropertyModal .btn-primary').click((event) => {
-          $form = $('#editPropertyModal form');
-          event.preventDefault();
-          console.log($form.serializeArray());
-          $.post(base_path + "/services/index.php?type=post_edit_prop_form", $form.serializeArray())
-          .done((res) => {
-            
-            $('#editPropertyModal .btn-primary').hide();
-            $('#editPropertyModal .modal-body').html(`
-            <div class="d-flex justify-content-center align-items-center">
-              <i class='fas fa-check-circle mr-2 icon_red_40'></i>
-              <div>`+res+`</div>`);
-          });
-
-        });
-
-        $('#editPropertyModal .btn-secondary').click((event) => {
-          $('#editPropertyModal').modal('hide');
-          $('#editPropertyModal .btn-primary').show();
-          $('#editPropertyModal .modal-body').html(edit_default);
-        });
-
-
-    });
+    $('#notification__badge').hide();
+    $('.modal-btn__optional').hide();
     </script>
 <body>
     <!-- Button trigger modal -->
-<div id='notification__badge' style='display: flex; justify-content: center; align-items: center; background-color: #8E0000; display: block; position: fixed; z-index: 99; bottom: 10px; right: 10px; padding: 10px 20px;
+<div id='notification__badge' class='d-none' style='display: flex; justify-content: center; align-items: center; background-color: #8E0000; display: block; position: fixed; z-index: 99; bottom: 10px; right: 10px; padding: 10px 20px;
         border-radius: 4px;
         border: 1px #8E0000 solid;
         color: white;'><i class="fas fa-bell"></i> <span id='notification__text' class='ml-1'>Appartment added to favorites</span></div>
@@ -315,84 +149,84 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-      <form novalidate>
-          
-          <div class="form-group">
-            <label for="addinputAddress">Address</label>
-            <input type="text" class="form-control" id="addinputAddress" name="inputAddress" placeholder="1234 Main St">
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <label for="inputCity">City</label>
-              <input type="text" class="form-control" id="inputCity" name="inputCity">
-            </div>
-            <div class="form-group col-md-4">
-              <label for="inputState">State</label>
-              <select id="inputState" name="inputState" class="form-control">
-              </select>
-            </div>
-            <div class="form-group col-md-2">
-              <label for="inputZip">Zip</label>
-              <input type="text" class="form-control" id="inputZip" name="inputZip">
-            </div>
-          </div>
-
-
-          <div class="form-row">
-            <div class="form-group col-sm-3">
-              <label for="beds">Beds</label>
-              <input type="number" class="form-control" id="beds" name="beds" min='0' value='0'>
-            </div>
-            <div class="form-group col-sm-3">
-              <label for="baths">Baths</label>
-              <input type="number" class="form-control" id="baths" name="baths" min='0' value='0' step='0.5'>
-            </div>
-            <div class="form-group col-sm-3">
-              <label for="sqft">Square Feet</label>
-              <input type="number" class="form-control" id="sqft" name="sqft"  min='0' value='0'>
-            </div>
-            <div class="form-group col-sm-3">
-            <label for="type">Type</label>
-              <select id="type" name="type" class="form-control">
-                <option selected>Choose...</option>
-                <option>...</option>
-              </select>   </div>
-          </div>
-
-           <div class="form-row">
-            <div class="form-group col-sm-3">
-            <label for="status">Status</label>
-              <select id="status" name="status" class="form-control">
-                <option selected>Choose...</option>
-                <option>...</option>
-              </select>
-            </div>
-            <div class="form-group col-sm-3">
-              <label for="income_req">Income Req.</label>
-              <input type="number" class="form-control" id="income_req" name="income_req" min='0' value='0' step='0.01'>
-            </div>
-            <div class="form-group col-sm-3">
-              <label for="credit_score">Credit Score</label>
-                <input type="number" class="form-control" id="credit_score" name="credit_score" min='0' max='800' value='0' step='1'>
-            </div>
-            <div class="form-group col-sm-3">
-              <label for="rental_fee">Rental Fee</label>
-              <input type="number" class="form-control" id="rental_fee" name="rental_fee" min='0' value='0' step='0.01'>
-            </div>
-          </div>
-
+      <form>
+        <div class="modal-body">
             <div class="form-group">
-              <label for="description">Description</label>
-              <textarea class="form-control" id="description" name='description' rows="3"></textarea>
+              <label for="addinputAddress">Address</label>
+              <input type="text" class="form-control" id="addinputAddress" name="inputAddress" placeholder="1234 Main St">
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="inputCity">City</label>
+                <input type="text" class="form-control" id="inputCity" name="inputCity">
+              </div>
+              <div class="form-group col-md-4">
+                <label for="inputState">State</label>
+                <select id="inputState" name="inputState" class="form-control">
+                </select>
+              </div>
+              <div class="form-group col-md-2">
+                <label for="inputZip">Zip</label>
+                <input type="text" class="form-control" id="inputZip" name="inputZip">
+              </div>
             </div>
 
-          
-      </div>
-      <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button type="submit" class="btn btn-primary red modal-btn">Submit</button>
-      </div>
+
+            <div class="form-row">
+              <div class="form-group col-sm-3">
+                <label for="beds">Beds</label>
+                <input type="number" class="form-control" id="beds" name="beds" min='0' value='0'>
+              </div>
+              <div class="form-group col-sm-3">
+                <label for="baths">Baths</label>
+                <input type="number" class="form-control" id="baths" name="baths" min='0' value='0' step='0.5'>
+              </div>
+              <div class="form-group col-sm-3">
+                <label for="sqft">Square Feet</label>
+                <input type="number" class="form-control" id="sqft" name="sqft"  min='0' value='0'>
+              </div>
+              <div class="form-group col-sm-3">
+                <label for="type">Type</label>
+                  <select id="type" name="type" class="form-control">
+                    <option selected>Choose...</option>
+                    <option>...</option>
+                  </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-sm-3">
+                <label for="status">Status</label>
+                <select id="status" name="status" class="form-control">
+                  <option selected>Choose...</option>
+                  <option>...</option>
+                </select>
+              </div>
+              <div class="form-group col-sm-3">
+                <label for="income_req">Income Req.</label>
+                <input type="number" class="form-control" id="income_req" name="income_req" min='0' value='0' step='0.01'>
+              </div>
+              <div class="form-group col-sm-3">
+                <label for="credit_score">Credit Score</label>
+                  <input type="number" class="form-control" id="credit_score" name="credit_score" min='300' max='850' value='300' step='1'>
+              </div>
+              <div class="form-group col-sm-3">
+                <label for="rental_fee">Rental Fee</label>
+                <input type="number" class="form-control" id="rental_fee" name="rental_fee" min='0' value='0' step='0.01'>
+              </div>
+            </div>
+
+              <div class="form-group">
+                <label for="description">Description</label>
+                <textarea class="form-control" id="description" name='description' rows="3"></textarea>
+              </div>
+
+            
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary red modal-btn">Submit</button>
+        </div>
       </form>
     </div>
   </div>
@@ -407,23 +241,23 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
       <form>
+      <div class="modal-body">
           <input type="hidden" id='edit_property_id' name="property_id" type='number'>
-          <div class="form-group">
-            <label for="edit_inputAddress">Address</label>
-            <input type="text" class="form-control" id="edit_inputAddress" name="inputAddress" placeholder="1234 Main St">
-          </div>
+                <div class="form-group">
+                  <label for="edit_inputAddress">Address</label>
+                  <input type="text" class="form-control" id="edit_inputAddress" name="inputAddress" placeholder="1234 Main St">
+                </div>
           <div class="form-row">
-            <div class="form-group col-md-6">
-              <label for="edit_inputCity">City</label>
-              <input type="text" class="form-control" id="edit_inputCity" name="inputCity">
-            </div>
-            <div class="form-group col-md-4">
-              <label for="edit_inputState">State</label>
-              <select id="edit_inputState" name="inputState" class="form-control">
-              </select>
-            </div>
+                  <div class="form-group col-md-6">
+                    <label for="edit_inputCity">City</label>
+                    <input type="text" class="form-control" id="edit_inputCity" name="inputCity">
+                  </div>
+              <div class="form-group col-md-4">
+                <label for="edit_inputState">State</label>
+                <select id="edit_inputState" name="inputState" class="form-control">
+                </select>
+              </div>
             <div class="form-group col-md-2">
               <label for="edit_inputZip">Zip</label>
               <input type="text" class="form-control" id="edit_inputZip" name="inputZip">
@@ -445,11 +279,12 @@
               <input type="number" class="form-control" id="edit_sqft" name="sqft"  min='0' value='0'>
             </div>
             <div class="form-group col-sm-3">
-            <label for="edit_type">Type</label>
-              <select id="edit_type" name="type" class="form-control">
-                <option selected>Choose...</option>
-                <option>...</option>
-              </select>   </div>
+                <label for="edit_type">Type</label>
+                  <select id="edit_type" name="type" class="form-control">
+                    <option selected>Choose...</option>
+                    <option>...</option>
+                  </select>   
+            </div>
           </div>
 
            <div class="form-row">
