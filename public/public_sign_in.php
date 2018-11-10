@@ -5,7 +5,7 @@
 
  <div class="overlay">
   <div class="test text-center">
-    <form class="form-signin" novalidate action="<?php echo $base_path; ?>/public/index.php" method="post">
+    <form class="form-signin" action="<?php echo $base_path; ?>/public/index.php" method="post">
     <a href='<?php echo $base_path; ?>/public/index.php'><img class="mb-4" src="<?php echo $base_path; ?>/images/rentzen_logo.svg" alt="RentZen Logo" width="72" height="72"></a>
        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
        <?php if (!empty($message)) {

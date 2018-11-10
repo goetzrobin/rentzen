@@ -16,7 +16,7 @@ if ((int)$_SESSION['ROLE_ID'] !== ROLE_ID_RENTER) {
             data-placement="top" data-content="Vivamus
             sagittis lacus vel augue laoreet rutrum faucibus."></a>
         </div>
-        <form novalidate class='search_form'>
+        <form class='search_form'>
           <div id='type' class='search_form_item'>
             <div class='search_form_description'>THIS IS</div>
             <div class='search_form_data'><i class="fas fa-home mr-2"></i>An Apartment <a class="icon fas fa-chevron-up"

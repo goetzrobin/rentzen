@@ -124,7 +124,7 @@ return result;
 <link href="./css/public_sign_up.css" rel="stylesheet">
 
 <div class="container">
-<form novalidate class="needs-validation" method='post' id="SignUpPage" action='index.php'> 
+<form class="needs-validation" method='post' id="SignUpPage" action='index.php'> 
       <div class="py-5 text-center">
         <a href="<?php echo $base_path; ?>"><img class="d-block mx-auto mb-4" src="<?php echo $base_path; ?>/images/rentzen_logo.svg" alt="RentZen Logo" width="72" height="72"></a>
         <h2>Sign Up Form</h2>

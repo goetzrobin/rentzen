@@ -149,7 +149,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form novalidate>
+      <form>
         <div class="modal-body">
             <div class="form-group">
               <label for="addinputAddress">Address</label>
