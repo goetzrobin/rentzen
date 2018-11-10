@@ -2,129 +2,116 @@
 <?php include '../view/header.php' ?>
 
 
-<!-- <script>
+<script>
 "use strict";
 
-var validate = function (event){
-  var email = $('#email').val();
-  var username = $('#username').val();
-  var password = $('#password').val();
-  var firstname = $('#firstname').val();
-  var lastname = $('#lastname').val();
-  var phone = $('#phone').val();
-  var city = $('#city').val();
-  var state = $('#state').val();
-  var zip = $('#zip').val();
-  var email = $('#role').val();
-  var email = $('#creditrating').val();
-  var email = $('#income').val();
+var isEmail = function(email) {
+  var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+  return regex.test(email);
+}
+var validate = function (theForm){
 
   var result = true;
 
-  $('#message').html("<div class='invalid-feedback'><ul></ul></div>");
-
-  var theForm = document.getElementById('SignUpPage');
-
-  if (theForm.email.value=== " ")
+  // $('#message').html("<div class='invalid-feedback'><ul></ul></div>");
+  
+  if (theForm.email.value == "" || !isEmail(theForm.email.value))
   {
-    alert("You must provide a email.");
-    event.preventDefault();
+    $('#email').addClass('is-invalid');
     result=false;
+  } else {
+    $('#email').removeClass('is-invalid'); 
   }
 
-   if (theForm.username.value=== " ")
-  {
-    alert("You must provide a Username.");
-    event.preventDefault();
+   if (theForm.password.value == "")
+   {
+    $('#password').addClass('is-invalid');
     result=false;
+  } else {
+    $('#password').removeClass('is-invalid'); 
   }
 
-   if (theForm.password.value=== " ")
-  {
-    alert("You must provide a password.");
-    event.preventDefault();
-    result=false;
-  }
-
-   if (theForm.firstname.value=== " ")
+   if (theForm.firstname.value == "")
   {
     alert("You must provide a first name.");
     event.preventDefault();
     result=false;
   }
 
-   if (theForm.lastname.value=== " ")
+   if (theForm.lastname.value == "")
   {
     alert("You must provide a last name.");
     event.preventDefault();
     result=false;
   }
 
-   if (theForm.phone.value=== " ")
+   if (theForm.phone.value == "")
   {
     alert("You must provide a phone number.");
     event.preventDefault();
     result=false;
   }
 
-   if (theForm.city.value=== " ")
+   if (theForm.city.value == "")
   {
     alert("You must provide a City.");
     event.preventDefault();
     result=false;
   }
 
-   if (theForm.state.value=== " ")
+   if (theForm.state.value == "")
   {
     alert("You must provide a State.");
     event.preventDefault();
     result=false;
   }
 
-   if (theForm.zip.value=== " ")
+   if (theForm.zip.value == "")
   {
     alert("You must provide a Zip code.");
     event.preventDefault();
     result=false;
   }
 
-   if (theForm.role.value=== " ")
+   if (theForm.role.value == "")
   {
     alert("You must provide a role.");
     event.preventDefault();
     result=false;
   }
 
-   if (theForm.creditrating.value=== " ")
+   if (theForm.creditrating.value == "")
   {
     alert("You must provide a credit rating.");
     event.preventDefault();
     result=false;
   }
 
-   if (theForm.income.value=== " ")
+   if (theForm.income.value == "")
   {
     alert("You must provide a email.");
     event.preventDefault();
     result=false;
   }
-return result;
-};
- $(document).ready(function(){
-   $('#SignUpPage').submit(function(event){
-     validate(event);
-   });
 
-  $('#SignUpPage').submit();
- });
+  return result;
+};
+
+$(document).ready(function(){
+   $('#signup_form').submit(function(event){
+     event.preventDefault();
+     if(validate(this)){
+      event.submit();
+     };
+   });
  }); 
 
-</script>-->
+</script>
 
 <link href="./css/public_sign_up.css" rel="stylesheet">
 
 <div class="container">
-<form class="needs-validation" method='post' id="SignUpPage" action='index.php'> 
+<form novalidate id='signup_form' method='post' action='index.php'> 
       <div class="py-5 text-center">
         <a href="<?php echo $base_path; ?>"><img class="d-block mx-auto mb-4" src="<?php echo $base_path; ?>/images/rentzen_logo.svg" alt="RentZen Logo" width="72" height="72"></a>
         <h2>Sign Up Form</h2>
@@ -147,8 +134,8 @@ return result;
                       <div class="form-group">
                         <label for="email">Email <span class="text-muted"></span></label>
                         <input type="email" name="email" class="form-control" id="email" placeholder="you@example.com" required>
-                        <div class="invalid-feedback" id="email">
-                          Please enter a valid email address for shipping updates.
+                        <div class="invalid-feedback">
+                          Please enter a valid email address for to sign up.
                         </div>
                       </div> <!-- end input grou -->
                     </div> <!-- end email -->
