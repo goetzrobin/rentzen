@@ -5,6 +5,12 @@
 <script>
 "use strict";
 
+var getTheStates = function(){
+  $.getJSON("https://misdemo.temple.edu/states/",function(data){
+    $("#list_of_states").html('');
+  });
+}
+
 var isEmail = function(email) {
   var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
   return regex.test(email);
@@ -21,6 +27,7 @@ var validate = function (theForm){
     result=false;
   } else {
     $('#email').removeClass('is-invalid'); 
+    result=true;
   }
 
    if (theForm.password.value == "")
@@ -33,65 +40,83 @@ var validate = function (theForm){
 
    if (theForm.firstname.value == "")
   {
-    alert("You must provide a first name.");
-    event.preventDefault();
+    $('#firstname').addClass('is-invalid');
     result=false;
+  }else {
+    $('#firstname').removeClass('is-invalid'); 
+    result=true;
   }
 
    if (theForm.lastname.value == "")
   {
-    alert("You must provide a last name.");
-    event.preventDefault();
+    $('#lastname').addClass('is-invalid');
     result=false;
+  }else {
+    $('#lastname').removeClass('is-invalid'); 
+    result=true;
   }
-
+  
    if (theForm.phone.value == "")
   {
-    alert("You must provide a phone number.");
-    event.preventDefault();
+    $('#phone').addClass('is-invalid');
     result=false;
+  }else {
+    $('#phone').removeClass('is-invalid'); 
+    result=true;
   }
 
    if (theForm.city.value == "")
-  {
-    alert("You must provide a City.");
-    event.preventDefault();
+   {
+    $('#city').addClass('is-invalid');
     result=false;
+  }else {
+    $('#city').removeClass('is-invalid'); 
+    result=true;
   }
 
    if (theForm.state.value == "")
-  {
-    alert("You must provide a State.");
-    event.preventDefault();
+   {
+    $('#state').addClass('is-invalid');
     result=false;
+  }else {
+    $('#state').removeClass('is-invalid'); 
+    result=true;
   }
 
    if (theForm.zip.value == "")
-  {
-    alert("You must provide a Zip code.");
-    event.preventDefault();
+   {
+    $('#zip').addClass('is-invalid');
     result=false;
+  }else {
+    $('#zip').removeClass('is-invalid'); 
+    result=true;
   }
 
-   if (theForm.role.value == "")
-  {
-    alert("You must provide a role.");
-    event.preventDefault();
+   if (theForm.role_id.value == "100")
+   {
+    $('#role_id').addClass('is-invalid');
     result=false;
+  }else {
+    $('#role_id').removeClass('is-invalid'); 
+    result=true;
   }
 
    if (theForm.creditrating.value == "")
-  {
-    alert("You must provide a credit rating.");
-    event.preventDefault();
+   {
+    $('#creditrating').addClass('is-invalid');
     result=false;
+  }else {
+    $('#creditrating').removeClass('is-invalid'); 
+    result=true;
   }
 
    if (theForm.income.value == "")
-  {
-    alert("You must provide a email.");
-    event.preventDefault();
+   {
+    $('#income').addClass('is-invalid');
     result=false;
+  }else {
+    $('#income').removeClass('is-invalid');
+    result=true; 
   }
 
   return result;
@@ -203,13 +228,13 @@ $(document).ready(function(){
                   <div class="col-md-6 mb-3">
                     <div class='form-group'>
                     <label for="role_id">Role</label>
-                    <select type="select" name="role_id" class="form-control" id="role_id" placeholder="" required>
-                    <option value="volvo">Choose one</option>
+                    <select type="select" name="role_id" class="form-control" id="role_id"  required>
+                    <option value="100">Choose one</option>
                         <option value="101">Renter</option>
                         <option value="102">Owner</option>
                     </select>
                     <div class="invalid-feedback">
-                      Role code required.
+                      Role required.
                     </div>
                     </div>
                 </div> 
