@@ -15,6 +15,7 @@ var isEmail = function(email) {
   var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
   return regex.test(email);
 }
+
 var validate = function (theForm){
 
   var result = true;
@@ -74,24 +75,22 @@ var validate = function (theForm){
     result=true;
   }
 
-   if (theForm.state.value == "")
+  console.log(theForm.state_id.value);
+   if (theForm.state_id.value == "")
    {
-    $('#state').addClass('is-invalid');
+    $('#state_id').addClass('is-invalid');
     result=false;
   }else {
-    $('#state').removeClass('is-invalid'); 
+    $('#state_id').removeClass('is-invalid'); 
     result=true;
   }
-
-   if (theForm.zip.value == "")
-   {
-    $('#zip').addClass('is-invalid');
-    result=false;
-  }else {
-    $('#zip').removeClass('is-invalid'); 
-    result=true;
-  }
-
+      var zip_length = theForm.zip.value.length;
+    if ( zip_length < 5 || zip_length > 10 ){
+        $(theForm.zip).addClass('is-invalid');
+    } else {
+        $(theForm.zip).removeClass('is-invalid');
+    }
+  console.log(theForm.role_id.value)
    if (theForm.role_id.value == "100")
    {
     $('#role_id').addClass('is-invalid');
@@ -101,21 +100,32 @@ var validate = function (theForm){
     result=true;
   }
 
-   if (theForm.creditrating.value == "")
+    var creditRating = theForm.credit_rating.value;
+   if (creditRating == "" || creditRating < 300 || creditRating > 850 )
    {
-    $('#creditrating').addClass('is-invalid');
+    $('#credit_rating').addClass('is-invalid');
     result=false;
   }else {
-    $('#creditrating').removeClass('is-invalid'); 
+    $('#credit_rating').removeClass('is-invalid'); 
     result=true;
   }
 
-   if (theForm.income.value == "")
+  var Income = theForm.income.value;
+   if (Income == "" || Income < 0)
    {
     $('#income').addClass('is-invalid');
     result=false;
   }else {
     $('#income').removeClass('is-invalid');
+    result=true; 
+  }
+
+  if (theForm.street.value == "")
+   {
+    $('#street').addClass('is-invalid');
+    result=false;
+  }else {
+    $('#street').removeClass('is-invalid');
     result=true; 
   }
 
