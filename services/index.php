@@ -79,6 +79,21 @@
         
     }
 
+    if ($_GET['type'] === 'get_listed_properties') {
+        $user_id = $_SESSION['PEOPLE_ID'];
+        if($user_id){
+            $properties = getProperties();
+            include "./properties/property_list.php";
+            exit();
+        } else {
+            $error_id = 404;
+            $error_message = 'No id set.';
+            include "./util/error.php";
+            exit();
+        }
+        
+    }
+
     if ($_GET['type'] === 'set_property_status_occupied' && isset($_GET['prop_id'])) {
         $id = $_GET['prop_id'];
         $updated_property = updateProperty($id,"propstat_id",OCCUPIED_ID);

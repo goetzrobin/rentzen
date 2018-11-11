@@ -84,124 +84,18 @@ if ((int)$_SESSION['ROLE_ID'] !== ROLE_ID_RENTER) {
       </div> <!-- end searchbar -->
     </div>
   </div>
-
   <div class='row'>
-    <div class='col mb-2 p-0'>
+    <div class='col-12 mb-2 p-0'>
       <div id="map"></div>
     </div>
   </div>
-
-
-  <div class='row mt-3'>
-    <div class='col mt-3'>
-      <h4>Results</h4>
-      <div class='row' id='result_header'>
-        <div class='col-2'></div>
-        <div class='col-3'>Address</div>
-        <div class='col-1'>Price</div>
-        <div class='col-1'>Size</div>
-        <div class='col-1'>Beds</div>
-        <div class='col-1'>Baths</div>
-        <div class='col-1'>ZenScore</div>
-        <div class='col-2'></div>
-      </div>
-
-
-      <?php foreach ($properties as $property) { ?>
-        <div class="row item justify-content-center">
-        <div class="result_image col-sm-12 col-md-2 p-0 d-flex justify-content-center align-items-center">
-          <img alt='Placeholder Image' class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
-          <!-- <div class='hidden thumbmails col-4 row' style='heigth: 100%; padding: 0'>
-            <div class='col-6 thumbmails__image'>
-            <img alt='Placeholder Image' class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
-        
-            </div>
-            <div class='col-6 thumbmails__image'>
-            <img alt='Placeholder Image' class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
-        
-            </div>
-            <div class='col-6 thumbmails__image'>
-            <img alt='Placeholder Image' class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
-        
-            </div>
-            <div class='col-6 thumbmails__image'>
-            <img alt='Placeholder Image' class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
-        
-            </div>
-            <div class='col-6 thumbmails__image'>
-            <img alt='Placeholder Image' class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
-        
-            </div>
-            <div class='col-6 thumbmails__image'>
-            <img alt='Placeholder Image' class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
-        
-            </div>
-          </div> -->
-         
-        </div>
-        <div class="result_address my-3 col-sm-12 col-md-3 d-flex align-items-center">
-          <div>
-            <input type='hidden' class='property_id' value='<?php echo $property['property_id'] ?>'</div>
-            <h5 class='mb-0'> <?php echo $property['street']; ?>
-             <!-- <i class="fas fa-chevron-down icon__expand"></i> -->
-            </h5>
-            <small class='ml-1'> <?php echo $property['zip']; ?>  <?php echo $property['city'];?>, <?php echo $property['state_name']; ?></small>
-          </div>
-          
-        </div>
-        <div class="result_fee quick_fact col-2 col-sm-1 col-md-1 d-flex justify-content-center align-items-baseline">
-          <div class='d-flex flex-column justify-content-center'>
-            <p class="mb-0 info"><i class='fas fa-money-check-alt'></i></p>
-            <div>
-              <div>$<?php echo $property['rental_fee']; ?></div> <small class='info_small'>/month</small>
-            </div>
-          </div>
-        </div>
-        <div class="result_sqft quick_fact col-2 col-sm-1 col-md-1 d-flex justify-content-center align-items-baseline">
-          <div class='d-flex flex-column justify-content-center'>
-            <p class="mb-0 info"><i class='fas fa-arrows-alt'></i></p>
-            <div>
-              <div>
-              <?php echo $property['sqft']; ?>
-              </div> <small class='info_small'>sqft</small>
-            </div>
-          </div>
-        </div>
-        <div class="result_beds quick_fact col-2 col-sm-1 col-md-1 d-flex justify-content-center align-items-baseline">
-          <div class='d-flex flex-column justify-content-center'>
-            <p class="mb-0 info"><i class='fas fa-bed'></i></p>
-            <?php echo $property['beds']; ?>
-          </div>
-        </div>
-        <div class="result_baths quick_fact col-2 col-sm-1 col-md-1 d-flex justify-content-center align-items-baseline">
-          <div class='d-flex flex-column justify-content-center'>
-            <p class="mb-0 info"><i class='fas fa-bath'></i></p>
-            <?php echo $property['baths']; ?>
-          </div>
-        </div>
-        <div class="result_match quick_fact col-2 col-sm-1 col-md-1 d-flex justify-content-center align-items-baseline">
-          <div class='d-flex flex-column justify-content-center'>
-            <p class="mb-0 info"><i class='fas fa-star'></i></p>
-            10
-          </div>
-        </div>
-        <div class='description col-sm-12 mt-3'>
-          <h5 class='mt-2 mb-0'>Description</h5>
-          <?php echo $property['description']; ?>
-        </div>
-        <div class="col-sm-12 col-md-2 p-3 d-flex justify-content-around align-items-center">
-          <span style='background-color: transparent; border: 0; font-size: 30px;' class="far fa-calendar-check icon__action" id='icon__action--calendar' data-toggle="modal" data-target="#exampleModal" data-id='1234'></span>
-          <i style='font-size: 30px; color: #8E0000' class="far fa-heart icon__action" id='icon__action--heart'></i>
-
-        </div>
-      </div>
-      <?php 
-    } ?>
-     
-
+  <div class='ml-1 row mt-3'>
+    <h4 class='list_header'>Available Properties</h4>
+    <div class='container'>
 
     </div>
   </div>
+
 </div>
 <script src='./js/renter_map.js'></script>
 <script>
@@ -426,3 +320,97 @@ if ((int)$_SESSION['ROLE_ID'] !== ROLE_ID_RENTER) {
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBGe2Qu6G_eINiYN28_igiiifEKRmj8uw&callback=initMap"
   async defer></script>
 <?php include '../view/footer.php' ?>
+
+<?php /*
+     <?php foreach ($properties as $property) { ?>
+        <div class="row item justify-content-center">
+        <div class="result_image col-sm-12 col-md-2 p-0 d-flex justify-content-center align-items-center">
+          <img alt='Placeholder Image' class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
+          <!-- <div class='hidden thumbmails col-4 row' style='heigth: 100%; padding: 0'>
+            <div class='col-6 thumbmails__image'>
+            <img alt='Placeholder Image' class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
+        
+            </div>
+            <div class='col-6 thumbmails__image'>
+            <img alt='Placeholder Image' class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
+        
+            </div>
+            <div class='col-6 thumbmails__image'>
+            <img alt='Placeholder Image' class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
+        
+            </div>
+            <div class='col-6 thumbmails__image'>
+            <img alt='Placeholder Image' class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
+        
+            </div>
+            <div class='col-6 thumbmails__image'>
+            <img alt='Placeholder Image' class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
+        
+            </div>
+            <div class='col-6 thumbmails__image'>
+            <img alt='Placeholder Image' class="img-fluid" src="<?php echo $base_path ?>/user_data/properties/images/rentzen.jpg">
+        
+            </div>
+          </div> -->
+         
+        </div>
+        <div class="result_address my-3 col-sm-12 col-md-3 d-flex align-items-center">
+          <div>
+            <input type='hidden' class='property_id' value='<?php echo $property['property_id'] ?>'</div>
+            <h5 class='mb-0'> <?php echo $property['street']; ?>
+             <!-- <i class="fas fa-chevron-down icon__expand"></i> -->
+            </h5>
+            <small class='ml-1'> <?php echo $property['zip']; ?>  <?php echo $property['city'];?>, <?php echo $property['state_name']; ?></small>
+          </div>
+          
+        </div>
+        <div class="result_fee quick_fact col-2 col-sm-1 col-md-1 d-flex justify-content-center align-items-baseline">
+          <div class='d-flex flex-column justify-content-center'>
+            <p class="mb-0 info"><i class='fas fa-money-check-alt'></i></p>
+            <div>
+              <div>$<?php echo $property['rental_fee']; ?></div> <small class='info_small'>/month</small>
+            </div>
+          </div>
+        </div>
+        <div class="result_sqft quick_fact col-2 col-sm-1 col-md-1 d-flex justify-content-center align-items-baseline">
+          <div class='d-flex flex-column justify-content-center'>
+            <p class="mb-0 info"><i class='fas fa-arrows-alt'></i></p>
+            <div>
+              <div>
+              <?php echo $property['sqft']; ?>
+              </div> <small class='info_small'>sqft</small>
+            </div>
+          </div>
+        </div>
+        <div class="result_beds quick_fact col-2 col-sm-1 col-md-1 d-flex justify-content-center align-items-baseline">
+          <div class='d-flex flex-column justify-content-center'>
+            <p class="mb-0 info"><i class='fas fa-bed'></i></p>
+            <?php echo $property['beds']; ?>
+          </div>
+        </div>
+        <div class="result_baths quick_fact col-2 col-sm-1 col-md-1 d-flex justify-content-center align-items-baseline">
+          <div class='d-flex flex-column justify-content-center'>
+            <p class="mb-0 info"><i class='fas fa-bath'></i></p>
+            <?php echo $property['baths']; ?>
+          </div>
+        </div>
+        <div class="result_match quick_fact col-2 col-sm-1 col-md-1 d-flex justify-content-center align-items-baseline">
+          <div class='d-flex flex-column justify-content-center'>
+            <p class="mb-0 info"><i class='fas fa-star'></i></p>
+            10
+          </div>
+        </div>
+        <div class='description col-sm-12 mt-3'>
+          <h5 class='mt-2 mb-0'>Description</h5>
+          <?php echo $property['description']; ?>
+        </div>
+        <div class="col-sm-12 col-md-2 p-3 d-flex justify-content-around align-items-center">
+          <span style='background-color: transparent; border: 0; font-size: 30px;' class="far fa-calendar-check icon__action" id='icon__action--calendar' data-toggle="modal" data-target="#exampleModal" data-id='1234'></span>
+          <i style='font-size: 30px; color: #8E0000' class="far fa-heart icon__action" id='icon__action--heart'></i>
+
+        </div>
+      </div>
+      <?php 
+    } ?>
+
+    */

@@ -185,3 +185,8 @@
           color: #8E0000;
           font-weight: bold;
       }
+
+      .list_header {
+        font-size: .9em;
+        font-weight: bolder;
+    }

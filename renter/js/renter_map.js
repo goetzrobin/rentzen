@@ -1,5 +1,9 @@
 //JQUERY
-$(function () {
+$(function() {
+
+  var properties = new Array();
+  get_properties(properties);
+
   $('[data-toggle="popover"]').popover({
     html: true,
     trigger: 'focus'
@@ -368,4 +372,33 @@ function format_phone_number(number) {
     return '(' + match[1] + ') ' + match[2] + '-' + match[3]
   }
   return null
+}
+
+function get_properties(property_arr){
+  var url = base_path + "services/index.php?type=get_listed_properties";
+
+  $.getJSON(url, function(properties){
+    property_arr = properties;
+    build_property_list(properties);
+  })
+}
+
+function build_property_list(properties){
+  $.each(properties, function (indexInArray, property) { 
+      console.log(property.baths,
+                property.beds,
+                property.city,
+                property.credit_requirement,
+                property.description,
+                property.description,
+                property.income_requirement,
+                property.picture,
+                property.propertystat,
+                property.rental_fee,
+                property.sqft,
+                property.state_name,
+                property.street,
+                property.typename,
+                property.zip);
+  });
 }
