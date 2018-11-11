@@ -797,7 +797,7 @@ var validate_form = function(the_form){
     } else {
         $(the_form.inputState).removeClass('is-invalid');
     }
-
+    
     var zip_length = the_form.inputZip.value.length;
     if( zip_length < 5 || zip_length > 10 ){
         $(the_form.inputZip).addClass('is-invalid');
