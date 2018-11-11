@@ -149,25 +149,29 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form>
+      <form novalidate id='add_form'>
         <div class="modal-body">
             <div class="form-group">
               <label for="addinputAddress">Address</label>
               <input type="text" class="form-control" id="addinputAddress" name="inputAddress" placeholder="1234 Main St">
+              <div class='invalid-feedback'>Plese enter an Address.</div>
             </div>
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="inputCity">City</label>
                 <input type="text" class="form-control" id="inputCity" name="inputCity">
+                <div class='invalid-feedback'>Test</div>
               </div>
               <div class="form-group col-md-4">
                 <label for="inputState">State</label>
                 <select id="inputState" name="inputState" class="form-control">
+                  <div class='invalid-feedback'>Test</div>
                 </select>
               </div>
               <div class="form-group col-md-2">
                 <label for="inputZip">Zip</label>
                 <input type="text" class="form-control" id="inputZip" name="inputZip">
+                <div class='invalid-feedback'>Test</div>
               </div>
             </div>
 
@@ -176,14 +180,17 @@
               <div class="form-group col-sm-3">
                 <label for="beds">Beds</label>
                 <input type="number" class="form-control" id="beds" name="beds" min='0' value='0'>
+                <div class='invalid-feedback'>Test</div>
               </div>
               <div class="form-group col-sm-3">
                 <label for="baths">Baths</label>
                 <input type="number" class="form-control" id="baths" name="baths" min='0' value='0' step='0.5'>
+                <div class='invalid-feedback'>Test</div>
               </div>
               <div class="form-group col-sm-3">
                 <label for="sqft">Square Feet</label>
                 <input type="number" class="form-control" id="sqft" name="sqft"  min='0' value='0'>
+                <div class='invalid-feedback'>Test</div>
               </div>
               <div class="form-group col-sm-3">
                 <label for="type">Type</label>
@@ -191,6 +198,7 @@
                     <option selected>Choose...</option>
                     <option>...</option>
                   </select>
+                  <div class='invalid-feedback'>Test</div>
               </div>
             </div>
 
@@ -201,27 +209,30 @@
                   <option selected>Choose...</option>
                   <option>...</option>
                 </select>
+                <div class='invalid-feedback'>Test</div>
               </div>
               <div class="form-group col-sm-3">
                 <label for="income_req">Income Req.</label>
                 <input type="number" class="form-control" id="income_req" name="income_req" min='0' value='0' step='0.01'>
+                <div class='invalid-feedback'>Test</div>
               </div>
               <div class="form-group col-sm-3">
                 <label for="credit_score">Credit Score</label>
                   <input type="number" class="form-control" id="credit_score" name="credit_score" min='300' max='850' value='300' step='1'>
+                  <div class='invalid-feedback'>Test</div>
               </div>
               <div class="form-group col-sm-3">
                 <label for="rental_fee">Rental Fee</label>
                 <input type="number" class="form-control" id="rental_fee" name="rental_fee" min='0' value='0' step='0.01'>
+                <div class='invalid-feedback'>Test</div>
               </div>
             </div>
 
               <div class="form-group">
                 <label for="description">Description</label>
                 <textarea class="form-control" id="description" name='description' rows="3"></textarea>
-              </div>
-
-            
+                <div class='invalid-feedback'>Test</div>
+              </div>         
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -241,26 +252,31 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form>
+      <form novalidate id='edit_form'>
       <div class="modal-body">
           <input type="hidden" id='edit_property_id' name="property_id" type='number'>
                 <div class="form-group">
                   <label for="edit_inputAddress">Address</label>
                   <input type="text" class="form-control" id="edit_inputAddress" name="inputAddress" placeholder="1234 Main St">
+                  <div class='invalid-feedback'>Please provide an address</div>
                 </div>
           <div class="form-row">
                   <div class="form-group col-md-6">
                     <label for="edit_inputCity">City</label>
                     <input type="text" class="form-control" id="edit_inputCity" name="inputCity">
+                    <div class='invalid-feedback'>Test</div>
+                    <div class='invalid-feedback'>Test</div>
                   </div>
               <div class="form-group col-md-4">
                 <label for="edit_inputState">State</label>
                 <select id="edit_inputState" name="inputState" class="form-control">
+                  <div class='invalid-feedback'>Test</div>
                 </select>
               </div>
             <div class="form-group col-md-2">
               <label for="edit_inputZip">Zip</label>
               <input type="text" class="form-control" id="edit_inputZip" name="inputZip">
+              <div class='invalid-feedback'>Test</div>
             </div>
           </div>
 
@@ -269,21 +285,25 @@
             <div class="form-group col-sm-3">
               <label for="edit_beds">Beds</label>
               <input type="number" class="form-control" id="edit_beds" name="beds" min='0' value='0'>
+              <div class='invalid-feedback'>Test</div>
             </div>
             <div class="form-group col-sm-3">
               <label for="edit_baths">Baths</label>
               <input type="number" class="form-control" id="edit_baths" name="baths" min='0' value='0' step='0.5'>
+              <div class='invalid-feedback'>Test</div>
             </div>
             <div class="form-group col-sm-3">
               <label for="edit_sqft">Square Feet</label>
               <input type="number" class="form-control" id="edit_sqft" name="sqft"  min='0' value='0'>
+              <div class='invalid-feedback'>Test</div>
             </div>
             <div class="form-group col-sm-3">
                 <label for="edit_type">Type</label>
                   <select id="edit_type" name="type" class="form-control">
                     <option selected>Choose...</option>
                     <option>...</option>
-                  </select>   
+                  </select> 
+                  <div class='invalid-feedback'>Test</div>  
             </div>
           </div>
 
@@ -294,28 +314,32 @@
                 <option selected>Choose...</option>
                 <option>...</option>
               </select>
+              <div class='invalid-feedback'>Test</div>
             </div>
             <div class="form-group col-sm-3">
               <label for="edit_income_req">Income Req.</label>
               <input type="number" class="form-control" id="edit_income_req" name="income_req" min='0' value='0' step='0.01'>
+              <div class='invalid-feedback'>Test</div>
             </div>
             <div class="form-group col-sm-3">
               <label for="edit_credit_score">Credit Score</label>
                 <input type="number" class="form-control" id="edit_credit_score" name="credit_score" min='0' max='800' value='0' step='1'>
+                <div class='invalid-feedback'>Test</div>
             </div>
             <div class="form-group col-sm-3">
               <label for="edit_rental_fee">Rental Fee</label>
               <input type="number" class="form-control" id="edit_rental_fee" name="rental_fee" min='0' value='0' step='0.01'>
+              <div class='invalid-feedback'>Test</div>
             </div>
           </div>
 
             <div class="form-group">
               <label for="edit_description">Description</label>
               <textarea class="form-control" id="edit_description" name='description' rows="3"></textarea>
+              <div class='invalid-feedback'>Test</div>
             </div>
 
-          
-      </div>
+          </div>
       <div class="modal-footer">
       <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
         <button type="submit" class="btn btn-primary red modal-btn">Submit</button>

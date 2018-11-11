@@ -15,6 +15,7 @@ var isEmail = function(email) {
   var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
   return regex.test(email);
 }
+
 var validate = function (theForm){
 
   var result = true;
@@ -74,24 +75,22 @@ var validate = function (theForm){
     result=true;
   }
 
-   if (theForm.state.value == "")
+  console.log(theForm.state_id.value);
+   if (theForm.state_id.value == "")
    {
-    $('#state').addClass('is-invalid');
+    $('#state_id').addClass('is-invalid');
     result=false;
   }else {
-    $('#state').removeClass('is-invalid'); 
+    $('#state_id').removeClass('is-invalid'); 
     result=true;
   }
-
-   if (theForm.zip.value == "")
-   {
-    $('#zip').addClass('is-invalid');
-    result=false;
-  }else {
-    $('#zip').removeClass('is-invalid'); 
-    result=true;
-  }
-
+      var zip_length = theForm.zip.value.length;
+    if ( zip_length < 5 || zip_length > 10 ){
+        $(theForm.zip).addClass('is-invalid');
+    } else {
+        $(theForm.zip).removeClass('is-invalid');
+    }
+  console.log(theForm.role_id.value)
    if (theForm.role_id.value == "100")
    {
     $('#role_id').addClass('is-invalid');
@@ -101,21 +100,32 @@ var validate = function (theForm){
     result=true;
   }
 
-   if (theForm.creditrating.value == "")
+    var creditRating = theForm.credit_rating.value;
+   if (creditRating == "" || creditRating < 300 || creditRating > 850 )
    {
-    $('#creditrating').addClass('is-invalid');
+    $('#credit_rating').addClass('is-invalid');
     result=false;
   }else {
-    $('#creditrating').removeClass('is-invalid'); 
+    $('#credit_rating').removeClass('is-invalid'); 
     result=true;
   }
 
-   if (theForm.income.value == "")
+  var Income = theForm.income.value;
+   if (Income == "" || Income < 0)
    {
     $('#income').addClass('is-invalid');
     result=false;
   }else {
     $('#income').removeClass('is-invalid');
+    result=true; 
+  }
+
+  if (theForm.street.value == "")
+   {
+    $('#street').addClass('is-invalid');
+    result=false;
+  }else {
+    $('#street').removeClass('is-invalid');
     result=true; 
   }
 
@@ -128,6 +138,15 @@ $(document).ready(function(){
      if(validate(this)){
       event.submit();
      };
+   });
+
+   var url = base_path + "services/index.php?type=get_states";
+   $.getJSON(url,function(states){
+    var state_html = `<option value="">Choose one...</option>`;
+     $.each(states,function(indexInArray, state_data){
+      state_html += (`<option value='`+state_data.state_id+`'>`+state_data.state_name+`</option>`);
+     });
+     $('#state_id').html(state_html);
    });
  }); 
 
@@ -286,13 +305,6 @@ $(document).ready(function(){
               <div class="col-md-3 mb-3">
                 <label for="state_id">State</label>
                 <select name="state_id" class="custom-select d-block w-100" id="state_id" required>
-                  <option value="">Choose...</option>
-                  <?php foreach ($state as $s) { ?>
-                  <option value="<?php echo $s['state_id']; ?>">
-                          <?php echo $s['state_name']; ?>
-                  </option>
-                  <?php 
-                } ?>
                 </select>
                 <div class="invalid-feedback">
                   Please provide a valid state.
@@ -309,8 +321,8 @@ $(document).ready(function(){
             </div>
 
                           <?php if (!empty($message)) {
-                      echo '<div class="row"><div class="col-12 mb-3"><div class="error form-control"><small>' . $message . '</small></div></div></div>';
-                    } ?>
+                            echo '<div class="row"><div class="col-12 mb-3"><div class="error form-control"><small>' . $message . '</small></div></div></div>';
+                          } ?>
               <div class='row'>
                 <button class="btn btn-primary btn-lg btn-block red" name="SignUp" id="SignUp" value="submit" type="submit">Sign Up</button> 
               </div>
