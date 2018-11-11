@@ -23,7 +23,10 @@
                     </div>
 
                     <div id='property_container'></div>
-                    </div>
+
+                    <div id='property_nav'></div>
+
+            </div>
 
         </div>
         <div class="col-md-4 my-1">

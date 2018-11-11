@@ -1,3 +1,5 @@
+"use strict";
+
 $(function () {
 
     var current_id;
@@ -6,6 +8,7 @@ $(function () {
 
     $('#notification__badge').hide();
     $('.modal-btn__optional').hide();
+    
 
     var states_option_html = "<option selected>Choose...</option>";
     $.getJSON(base_path + '/services/index.php?type=get_states').done((states) => {
@@ -290,7 +293,7 @@ var build_app_list_html = function (data_arr) {
 var get_applications = function (submitted_applications, rejected_applications, approved_applications) {
 
 
-    url = base_path + "services/index.php?type=get_application_data";
+    var url = base_path + "services/index.php?type=get_application_data";
     $('#app_spinner').removeClass('d-none');
     $('#app_tab').addClass('d-none');
     $.getJSON(url,
@@ -338,7 +341,7 @@ var display_array = function (array, fieldname) {
 }
 
 var accept_application = function (app_id) {
-    url = base_path + "services/index.php?type=set_application_status_approved&app_id=" + app_id;
+    var url = base_path + "services/index.php?type=set_application_status_approved&app_id=" + app_id;
     $.getJSON(url,
         function (data, textStatus, jqXHR) {
             console.log(data);
@@ -347,7 +350,7 @@ var accept_application = function (app_id) {
 }
 
 var reject_application = function (app_id) {
-    url = base_path + "services/index.php?type=set_application_status_rejected&app_id=" + app_id;
+    var url = base_path + "services/index.php?type=set_application_status_rejected&app_id=" + app_id;
 
     $.getJSON(url,
         function (data, textStatus, jqXHR) {
@@ -357,7 +360,7 @@ var reject_application = function (app_id) {
 }
 
 var get_properties = function (properties) {
-    url = base_path + "services/index.php?type=get_properties";
+    var url = base_path + "services/index.php?type=get_properties";
     $('#prop_spinner').removeClass('d-none');
     $('#prop_list').addClass('d-none');
     $.getJSON(url,
@@ -481,6 +484,7 @@ var generate_property_list = function (property_arr) {
                                 </div>
                             </div>`
     });
+
     $('#property_container').html(html);
 }
 var create_property = function (event, properties) {
