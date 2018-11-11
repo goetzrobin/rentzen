@@ -104,10 +104,6 @@ $(function () {
 
     create_app_progress();
 
-    $('#editPropertyModal .btn-primary').click((event) => {
-        edit_property(event, properties);
-    });
-
     // add event listener to application widget navigation
     $(".next_app").click(function (e) {
         e.preventDefault();
@@ -214,21 +210,21 @@ $(function () {
 
         element_opened_modal = $(event.relatedTarget);
         element_opened_modal.data('');
-        data_propid = element_opened_modal.data('propid')
-        data_street = element_opened_modal.data('street');
-        data_city = element_opened_modal.data('city');
-        data_state_id = element_opened_modal.data('state_id');
-        data_zip = element_opened_modal.data('zip');
-        data_beds = element_opened_modal.data('beds');
-        data_baths = element_opened_modal.data('baths');
-        data_sqft = element_opened_modal.data('sqft');
-        data_type_id = element_opened_modal.data('type_id');
-        data_propstat_id = element_opened_modal.data('propstat_id');
-        data_income_requirement = element_opened_modal.data('income_requirement');
-        data_credit_requirement = element_opened_modal.data('credit_requirement');
-        data_rental_fee = element_opened_modal.data('rental_fee');
-        data_description = element_opened_modal.data('description');
-        data_picture = element_opened_modal.data('picture');
+        var data_propid = element_opened_modal.data('propid')
+        var data_street = element_opened_modal.data('street');
+        var data_city = element_opened_modal.data('city');
+        var data_state_id = element_opened_modal.data('state_id');
+        var data_zip = element_opened_modal.data('zip');
+        var data_beds = element_opened_modal.data('beds');
+        var data_baths = element_opened_modal.data('baths');
+        var data_sqft = element_opened_modal.data('sqft');
+        var data_type_id = element_opened_modal.data('type_id');
+        var data_propstat_id = element_opened_modal.data('propstat_id');
+        var data_income_requirement = element_opened_modal.data('income_requirement');
+        var data_credit_requirement = element_opened_modal.data('credit_requirement');
+        var data_rental_fee = element_opened_modal.data('rental_fee');
+        var data_description = element_opened_modal.data('description');
+        var data_picture = element_opened_modal.data('picture');
 
         $('#editPropertyModal #edit_property_id').val(data_propid);
         $('#editPropertyModal #edit_inputAddress').val(data_street);
@@ -246,8 +242,18 @@ $(function () {
         $('#editPropertyModal #edit_description').val(data_description);
     });
 
-    $('#addPropertyModal .btn-primary').click((event) => {
-        create_property(event, properties);
+    $('#edit_form').submit(function(event){
+        event.preventDefault();
+        if(validate_form(this)){
+            edit_property(event, properties);
+        };
+    });
+
+    $('#add_form').submit(function(event) {
+        event.preventDefault();
+        if(validate_form(this)){
+            create_property(event, properties);
+        }
     });
 
     // $('#addPropertyModal .btn-secondary').click((event) => {
@@ -487,8 +493,9 @@ var generate_property_list = function (property_arr) {
 
     $('#property_container').html(html);
 }
+
 var create_property = function (event, properties) {
-    $form = $('#addPropertyModal form');
+    var $form = $('#add_form');
     event.preventDefault();
     console.log($form.serializeArray());
     $.post(base_path + "/services/index.php?type=post_new_prop_form", $form.serializeArray())
@@ -502,13 +509,13 @@ var create_property = function (event, properties) {
             get_properties(properties);
             setTimeout(() => {
                 $('#addPropertyModal').modal('hide');
-                setTimeout(reset_modal_add(), 1200);
             }, 800);
 
         });
 }
+
 var edit_property = function (event, properties) {
-    $form = $('#editPropertyModal form');
+    var $form = $('#edit_form');
     event.preventDefault();
     console.log($form.serialize());
     $.post(base_path + "/services/index.php?type=post_edit_prop_form", $form.serializeArray())
@@ -523,7 +530,6 @@ var edit_property = function (event, properties) {
             get_properties(properties);
             setTimeout(() => {
                 $('#editPropertyModal').modal('hide');
-                setTimeout(reset_modal_edit(), 1200);
             }, 800);
 
 
@@ -536,19 +542,23 @@ var reset_modal_edit = function (states_option_html, status_option_html, type_op
     <div class="form-group">
       <label for="edit_inputAddress">Address</label>
       <input type="text" class="form-control" id="edit_inputAddress" name="inputAddress" placeholder="1234 Main St">
+      <div class='invalid-feedback'>Test</div>
     </div>
     <div class="form-row">
       <div class="form-group col-md-6">
         <label for="edit_inputCity">City</label>
         <input type="text" class="form-control" id="edit_inputCity" name="inputCity">
+        <div class='invalid-feedback'>Test</div>
       </div>
       <div class="form-group col-md-4">
         <label for="edit_inputState">State</label>
         <select id="edit_inputState" name="inputState" class="form-control">` + states_option_html + `</select>
+        <div class='invalid-feedback'>Test</div>
       </div>
       <div class="form-group col-md-2">
         <label for="edit_inputZip">Zip</label>
         <input type="text" class="form-control" id="edit_inputZip" name="inputZip">
+        <div class='invalid-feedback'>Test</div>
       </div>
     </div>
 
@@ -557,19 +567,23 @@ var reset_modal_edit = function (states_option_html, status_option_html, type_op
       <div class="form-group col-sm-3">
         <label for="edit_beds">Beds</label>
         <input type="number" class="form-control" id="edit_beds" name="beds" min='0' value='0'>
+        <div class='invalid-feedback'>Test</div>
       </div>
       <div class="form-group col-sm-3">
         <label for="edit_baths">Baths</label>
         <input type="number" class="form-control" id="edit_baths" name="baths" min='0' value='0' step='0.5'>
+        <div class='invalid-feedback'>Test</div>
       </div>
       <div class="form-group col-sm-3">
         <label for="edit_sqft">Square Feet</label>
         <input type="number" class="form-control" id="edit_sqft" name="sqft"  min='0' value='0'>
+        <div class='invalid-feedback'>Test</div>
       </div>
       <div class="form-group col-sm-3">
       <label for="edit_type">Type</label>
         <select id="edit_type" name="type" class="form-control">` + type_option_html + `
         </select>
+        <div class='invalid-feedback'>Test</div>
         </div>
     </div>
 
@@ -578,24 +592,29 @@ var reset_modal_edit = function (states_option_html, status_option_html, type_op
       <label for="edit_status">Status</label>
         <select id="edit_status" name="status" class="form-control">` + status_option_html + `
         </select>
+        <div class='invalid-feedback'>Test</div>
       </div>
       <div class="form-group col-sm-3">
         <label for="edit_income_req">Income Req.</label>
         <input type="number" class="form-control" id="edit_income_req" name="income_req" min='0' value='0' step='0.01'>
+        <div class='invalid-feedback'>Test</div>
       </div>
       <div class="form-group col-sm-3">
         <label for="edit_credit_score">Credit Score</label>
           <input type="number" class="form-control" id="edit_credit_score" name="credit_score" min='0' max='800' value='0' step='1'>
+          <div class='invalid-feedback'>Test</div>
       </div>
       <div class="form-group col-sm-3">
         <label for="edit_rental_fee">Rental Fee</label>
         <input type="number" class="form-control" id="edit_rental_fee" name="rental_fee" min='0' value='0' step='0.01'>
+        <div class='invalid-feedback'>Test</div>
       </div>
     </div>
 
       <div class="form-group">
         <label for="edit_description">Description</label>
         <textarea class="form-control" id="edit_description" name='description' rows="3"></textarea>
+        <div class='invalid-feedback'>Test</div>
       </div>`;
 
     $('#editPropertyModal .modal-body').html(edit_default);
@@ -644,7 +663,8 @@ var reset_modal_add = function (states_option_html, status_option_html, type_opt
                     <select id="type" name="type" class="form-control">
                         <option selected>Choose...</option>
                         <option>...</option>
-                    </select>   </div>
+                    </select>
+                    <div class='invalid-feedback'>Test</div>   </div>
                 </div>
 
                 <div class="form-row">
@@ -654,24 +674,29 @@ var reset_modal_add = function (states_option_html, status_option_html, type_opt
                         <option selected>Choose...</option>
                         <option>...</option>
                     </select>
+                    <div class='invalid-feedback'>Test</div>
                     </div>
                     <div class="form-group col-sm-3">
                     <label for="income_req">Income Req.</label>
                     <input type="number" class="form-control" id="income_req" name="income_req" min='0' value='0' step='0.01'>
+                    <div class='invalid-feedback'>Test</div>
                     </div>
                     <div class="form-group col-sm-3">
                     <label for="credit_score">Credit Score</label>
                         <input type="number" class="form-control" id="credit_score" name="credit_score" min='300' max='850' value='300' step='1'>
+                        <div class='invalid-feedback'>Test</div>
                     </div>
                     <div class="form-group col-sm-3">
                     <label for="rental_fee">Rental Fee</label>
                     <input type="number" class="form-control" id="rental_fee" name="rental_fee" min='0' value='0' step='0.01'>
+                    <div class='invalid-feedback'>Test</div>
                     </div>
                 </div>
 
                     <div class="form-group">
                     <label for="description">Description</label>
                     <textarea class="form-control" id="description" name='description' rows="3"></textarea>
+                    <div class='invalid-feedback'>Test</div>
                     </div>`;
 
     $('#addPropertyModal .modal-body').html(add_default);
@@ -738,4 +763,105 @@ var create_property_progress = function(properties){
         options: {cutoutPercentage: 50, legend: {position: 'bottom'}}
     });
 
+}
+
+var validate_form = function(the_form){
+    console.log(the_form);
+    console.log(the_form.inputZip.value.length);
+    var is_valid = true;
+    if(the_form.inputAddress.value == ""){
+        $(the_form.inputAddress).addClass('is-invalid');
+        is_valid = false;
+    } else {
+        $(the_form.inputAddress).removeClass('is-invalid');
+    }
+
+    if(the_form.inputCity.value == ""){
+        $(the_form.inputCity).addClass('is-invalid');
+        is_valid = false;
+    } else {
+        $(the_form.inputCity).removeClass('is-invalid');
+    }
+
+    if(the_form.inputState.value == ""){
+        $(the_form.inputState).addClass('is-invalid');
+        is_valid = false;
+    } else {
+        $(the_form.inputState).removeClass('is-invalid');
+    }
+
+    var zip_length = the_form.inputZip.value.length;
+    if( zip_length < 5 || zip_length > 10 ){
+        $(the_form.inputZip).addClass('is-invalid');
+        is_valid = false;
+    } else {
+        $(the_form.inputZip).removeClass('is-invalid');
+    }
+
+    if( the_form.beds.value < 1){
+        $(the_form.beds).addClass('is-invalid');
+        is_valid = false;
+    } else {
+        $(the_form.beds).removeClass('is-invalid');
+    }
+
+    if( the_form.baths.value < 1){
+        $(the_form.baths).addClass('is-invalid');
+        is_valid = false;
+    } else {
+        $(the_form.baths).removeClass('is-invalid');
+    }
+
+    if( the_form.sqft.value < 100){
+        $(the_form.sqft).addClass('is-invalid');
+        is_valid = false;
+    } else {
+        $(the_form.inputZip).removeClass('is-invalid');
+    }
+
+    if( the_form.type = ''){
+        $(the_form.type).addClass('is-invalid');
+        is_valid = false;
+    } else {
+        $(the_form.type).removeClass('is-invalid');
+    }
+
+    if( the_form.status = ''){
+        $(the_form.status).addClass('is-invalid');
+        is_valid = false;
+    } else {
+        $(the_form.status).removeClass('is-invalid');
+    }
+
+    if( the_form.income_req.value < 0){
+        $(the_form.income_req).addClass('is-invalid');
+        is_valid = false;
+    } else {
+        $(the_form.income_req).removeClass('is-invalid');
+    }
+
+    if( the_form.credit_score.value < 300 || the_form.credit_score.value > 850){
+        $(the_form.credit_score).addClass('is-invalid');
+        is_valid = false;
+    } else {
+        $(the_form.credit_score).removeClass('is-invalid');
+    }
+
+    if( the_form.rental_fee.value < 0){
+        $(the_form.rental_fee).addClass('is-invalid');
+        is_valid = false;
+    } else {
+        $(the_form.rental_fee).removeClass('is-invalid');
+    }
+
+    if( the_form.description.value == ""){
+        $(the_form.description).addClass('is-invalid');
+        is_valid = false;
+    } else {
+        $(the_form.description).removeClass('is-invalid');
+    }
+
+
+
+    return is_valid;
 }
