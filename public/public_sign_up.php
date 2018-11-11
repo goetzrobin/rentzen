@@ -129,6 +129,15 @@ $(document).ready(function(){
       event.submit();
      };
    });
+
+   var url = base_path + "services/index.php?type=get_states";
+   $.getJSON(url,function(states){
+    var state_html = `<option value="">Choose one...</option>`;
+     $.each(states,function(indexInArray, state_data){
+      state_html += (`<option value='`+state_data.state_id+`'>`+state_data.state_name+`</option>`);
+     });
+     $('#state_id').html(state_html);
+   });
  }); 
 
 </script>
@@ -286,13 +295,6 @@ $(document).ready(function(){
               <div class="col-md-3 mb-3">
                 <label for="state_id">State</label>
                 <select name="state_id" class="custom-select d-block w-100" id="state_id" required>
-                  <option value="">Choose...</option>
-                  <?php foreach ($state as $s) { ?>
-                  <option value="<?php echo $s['state_id']; ?>">
-                          <?php echo $s['state_name']; ?>
-                  </option>
-                  <?php 
-                } ?>
                 </select>
                 <div class="invalid-feedback">
                   Please provide a valid state.
@@ -309,8 +311,8 @@ $(document).ready(function(){
             </div>
 
                           <?php if (!empty($message)) {
-                      echo '<div class="row"><div class="col-12 mb-3"><div class="error form-control"><small>' . $message . '</small></div></div></div>';
-                    } ?>
+                            echo '<div class="row"><div class="col-12 mb-3"><div class="error form-control"><small>' . $message . '</small></div></div></div>';
+                          } ?>
               <div class='row'>
                 <button class="btn btn-primary btn-lg btn-block red" name="SignUp" id="SignUp" value="submit" type="submit">Sign Up</button> 
               </div>
