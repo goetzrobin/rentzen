@@ -132,14 +132,12 @@
             </div>
         </div>
         <div class="row justify-content-center mt-2">
-            <div class="col-md-10 shadow-sm p-3 bg-white rounded">
+            <div class="col-sm-6 col-md-10 shadow-sm my-1 p-3 bg-white rounded">
                 <div class='db_heading mb-3'>APPLICATION PROGRESS</div>
                 <canvas id="myAppProgress" width="200" height="200"></canvas>
             </div>
-        </div>
 
-        <div class="row justify-content-center mt-2">
-            <div class="col-md-10 shadow-sm p-3 bg-white rounded">
+            <div class="col-sm-6 col-md-10 shadow-sm my-1 p-3 bg-white rounded">
                 <div class='db_heading mb-3'>PROPERTY PROGRESS</div>
                 <canvas id="myPropProgress" width="200" height="200"></canvas>
             </div>

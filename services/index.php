@@ -195,25 +195,26 @@
 
         $landlord_id = $_SESSION['PEOPLE_ID'];
 
-        if( !isset($inputAddress) || empty($inputAddress) ||
-            !isset($inputCity) || empty($inputCity) ||
-            !isset($inputState) || empty($inputState) ||
-            !isset($inputZip) || empty($inputZip) ||
-            !isset($beds) || empty($beds) ||
-            !isset($baths) || empty($baths) ||
-            !isset($sqft) || empty($sqft) ||
-            !isset($type) || empty($type) ||
-            !isset($status) || empty($status) ||
-            !isset($income_req) || empty($income_req) ||
-            !isset($credit_score) || empty($credit_score) ||
-            !isset($rental_fee) || empty($rental_fee) ||
-            !isset($description) || empty($description) ||
-            !isset($landlord_id) || empty($landlord_id) ) {
-                echo "Not all data provided.";
-                exit();
-            }
+        // if( !isset($inputAddress) || empty($inputAddress) ||
+        //     !isset($inputCity) || empty($inputCity) ||
+        //     !isset($inputState) || empty($inputState) ||
+        //     !isset($inputZip) || empty($inputZip) ||
+        //     !isset($beds) || empty($beds) ||
+        //     !isset($baths) || empty($baths) ||
+        //     !isset($sqft) || empty($sqft) ||
+        //     !isset($type) || empty($type) ||
+        //     !isset($status) || empty($status) ||
+        //     !isset($income_req) || empty($income_req) ||
+        //     !isset($credit_score) || empty($credit_score) ||
+        //     !isset($rental_fee) || empty($rental_fee) ||
+        //     !isset($description) || empty($description) ||
+        //     !isset($landlord_id) || empty($landlord_id) ) {
+        //         echo "Not all data provided.";
+        //         exit();
+        //     }
         
-        $result = insertProperty(
+        
+            $result = insertProperty(
             $inputAddress,
             $inputCity,
             $inputState,
