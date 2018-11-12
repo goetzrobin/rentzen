@@ -62,7 +62,8 @@ function getPropertiesByLandlordId($id)
     .  ' and property.propstat_id = property_status.propstat_id'
     .  ' and property.type_id = property_type.propertytype_id'
     .  ' and property.state_id = state.state_id'
-    . '  and landlord_property.landlord_id = :landlord_id');
+    . '  and landlord_property.landlord_id = :landlord_id '
+    .  ' ORDER BY property.propstat_id DESC');
     $statement->bindValue(':landlord_id', $id);
     $statement->execute();
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);

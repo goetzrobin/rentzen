@@ -50,6 +50,19 @@ pre {
     font-size: 40px;
 }
 
+.icon_40 {
+  font-size: 40px;
+}
+
+.icon_red_20 {
+  color: #8E0000;
+  font-size: 20px;
+}
+
+.icon_20 {
+font-size: 20px;
+}
+
 .icon_red_80 {
     color: #8E0000;
     font-size: 80px;

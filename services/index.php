@@ -83,6 +83,7 @@
         $user_id = $_SESSION['PEOPLE_ID'];
         if($user_id){
             $properties = getProperties();
+            // print_r($properties);
             include "./properties/property_list.php";
             exit();
         } else {
@@ -137,7 +138,7 @@
 
         if(empty($rel_data)){
             $result = insertRenterProperty($renter_id,$prop_id, $renter_match_score);
-            $data = [$renter_id,$prop_id,$renter_match_score];
+            $data = [ "renter_id"=> $renter_id, "property_id" => $prop_id, "renter_match_score" => $renter_match_score];
             if($result){
                 echo json_encode(["result" => true, "message" => "Sucessfully established relationship", "data" => ($data)]);
             } else {

@@ -134,10 +134,10 @@ var validate = function (theForm){
 
 $(document).ready(function(){
    $('#signup_form').submit(function(event){
-     event.preventDefault();
      if(validate(this)){
-      event.submit();
+      return;
      };
+     event.preventDefault();
    });
 
    var url = base_path + "services/index.php?type=get_states";

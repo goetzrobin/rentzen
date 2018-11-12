@@ -190,3 +190,32 @@
         font-size: .9em;
         font-weight: bolder;
     }
+
+    .property_list_item {
+        padding: 10px;
+        border-radius: 4px;
+        background-color: #fff;
+        margin-bottom: 5px;
+        min-height: 300px;
+    }
+
+    .prop_desc {
+        height: 100px;
+        overflow: hidden;
+    }
+
+    .prop_desc_heading {
+        margin: 5px 0px;
+        font-size: 1em;
+        font-weight: bolder;
+    }
+
+    .prop_info {
+        border-radius: 4px;
+        background-color: #eee;
+    }
+
+    .prop_buttons i {
+        cursor: pointer;
+        padding: 10px;
+    }

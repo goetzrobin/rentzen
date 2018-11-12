@@ -50,8 +50,8 @@ function getPeopleById($id)
     //returns an array of people
     global $db;
     $statement = $db->prepare('select * '
-        . ' from people '
-        . 'where people_id=:id'
+        . ' from people,state '
+        . 'where people_id=:id and people.state_id = state.state_id'
         . ' order by lastname, firstname');
     $statement->bindValue(':id', $id);
     $statement->execute();

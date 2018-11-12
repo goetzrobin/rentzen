@@ -104,13 +104,13 @@ if (isset($_POST['SignUp'])) {
     $income = filter_input(INPUT_POST, "income", FILTER_VALIDATE_FLOAT);
 
 
-    if (empty($firstname)  || empty($lastname) || empty($email)  || empty($password)  || empty($phone) 
-    || empty($city)|| empty($street) || empty($state_id)  || empty($zip)  || empty($role_id)  || empty($credit_rating) || empty($income)){
-        $message = "One or more required fields are missing.";
-        include 'public_sign_up.php'; //something is empty, go back to sign up page
-        exit();
-    } else
-    {
+    // if (empty($firstname)  || empty($lastname) || empty($email)  || empty($password)  || empty($phone) 
+    // || empty($city)|| empty($street) || empty($state_id)  || empty($zip)  || empty($role_id)  || empty($credit_rating) || empty($income)){
+    //     $message = "One or more required fields are missing.";
+    //     include 'public_sign_up.php'; //something is empty, go back to sign up page
+    //     exit();
+    // } else
+    // {
         //use email twice because username and email are the same
         $confirmation = insertPeople($email,$email,$password,$firstname,$lastname,
         $phone,$street,$city,$state_id,$zip,$role_id,$credit_rating,$income);
@@ -125,7 +125,7 @@ if (isset($_POST['SignUp'])) {
             exit();
             }
         
-    }
+    // }
 }
 
 //if all else fails

@@ -6,16 +6,10 @@
 <div class="collapse navbar-collapse justify-content-end" id="navbarsExample04">
         <ul class="navbar-nav">
           <li class="nav-item active">
-            <a class="nav-link" href="#">Properties<span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="<?php echo $base_path; ?>/renter/index.php">Properties<span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Viewings</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Applications</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Profile</a>
+            <a class="nav-link" href="<?php echo $base_path; ?>/renter/index.php?profile">Profile</a>
           </li>
           <li class="nav-item">
           <?php

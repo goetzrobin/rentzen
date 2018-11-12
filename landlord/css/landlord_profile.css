@@ -1,0 +1,19 @@
+.profile_header {
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(250,250,250,0.8)
+}
+.profile_header h1 {
+    color: #8E0000;
+}
+
+.phila_bg {
+    margin-left: -15px;
+    width: 100vw;
+    height: 100%;
+    background-image: url(../../images/public/phila_skyline.jpg);
+    background-size: cover;
+}

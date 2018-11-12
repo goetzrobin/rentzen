@@ -36,7 +36,7 @@ $(function() {
 
   $(document).on("click", ".icon__action", function () {
     $('#exampleModal .modal-body .spinner').show();
-    current_prop_id = $(this).parents('.item').find('.property_id').val();
+    current_prop_id = $(this).parents('.property_list_item').find('.property_id').val();
     console.log(current_prop_id);
     url = base_path + "/services/index.php?type=set_property_renter_relationship&prop_id=" + current_prop_id;
     $.getJSON(url).done((response) => {
@@ -384,21 +384,72 @@ function get_properties(property_arr){
 }
 
 function build_property_list(properties){
+  var new_html='';
+
   $.each(properties, function (indexInArray, property) { 
-      console.log(property.baths,
-                property.beds,
-                property.city,
-                property.credit_requirement,
-                property.description,
-                property.description,
-                property.income_requirement,
-                property.picture,
-                property.propertystat,
-                property.rental_fee,
-                property.sqft,
-                property.state_name,
-                property.street,
-                property.typename,
-                property.zip);
+   
+    new_html += `
+              <div class='col-md-4 col-sm-6 col-12 '>
+              <div class='property_list_item'>
+              <input type='hidden' class='property_id' value='`+property.property_id+`'>
+              <h5 class='mb-0'>`+property.street+`</h5>
+              <small class='d-block mb-2'><i class="fas fa-map-marker-alt icon_red"></i><span class='ml-1'>`+property.city+`, `+property.state_name+`</span></small>
+                <img src="`+base_path+`user_data/properties/images/rentzen.jpg" class="mx-auto d-block w-100" alt="Image">
+                  <div class='mt-1 prop_info'>
+                  <div class='d-flex justify-content-around'>
+
+                        <div class='p-1 d-flex flex-column align-items-center'>
+                            <i class="fas fa-vector-square"></i>
+                            <small>`+property.sqft+`/sqft</small>
+                          </div>
+
+                          <div class='p-1 d-flex flex-column align-items-center'>
+                          <i class="fas fa-bed"></i>
+                          <small>`+property.beds+`</small>
+                        </div>
+
+                        <div class='p-1 d-flex flex-column align-items-center'>
+                        <i class="fas fa-bath"></i>
+                        <small>$`+property.baths+`</small>
+                      </div>
+
+                          <div class='p-1 d-flex flex-column align-items-center'>
+                            <i class="fas fa-home"></i>
+                            <small>`+property.typename+`</small>
+                          </div>
+
+                      </div>
+
+                      <div class='d-flex justify-content-around'>
+
+                        <div class='p-1 d-flex flex-column align-items-center'>
+                        <i class="far fa-credit-card"></i>
+                        <small>`+property.credit_requirement+`</small>
+                      </div>
+
+                      <div class='p-1 d-flex flex-column align-items-center'>
+                      <i class="fas fa-money-check"></i>
+                      <small>$`+parseFloat(property.income_requirement).toFixed(2)+`</small>
+                    </div>
+
+                        <div class='p-1 d-flex flex-column align-items-center'>
+                          <i class="fas fa-dollar-sign"></i>
+                          <small>$`+parseFloat(property.rental_fee).toFixed(2)+`</small>
+                        </div>
+
+                    </div>
+                    </div>
+                    <h4 class='prop_desc_heading'>Description</h4>
+                    <p class='prop_desc'>`+property.description+`</p>
+                    <div class='prop_buttons d-flex justify-content-around'>
+                        <i class="icon__action icon_20 far fa-clipboard" data-toggle="modal" data-target="#exampleModal"></i>
+                        <i class="icon_red_20 fas fa-heart"></i>
+                    </div>
+                </div>
+              </div>`;
+
+      console.log(property);
   });
+
+  $('#property_list').html(new_html);
 }

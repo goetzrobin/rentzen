@@ -2,11 +2,20 @@
 <?php require_once "../model/database.php"; ?>
 <?php require_once "../model/property_db.php";?>
 <?php require_once "../model/rental_app_db.php";?>
+<?php require_once "../model/people_db.php";?>
+
 <?php
     session_start();
     if( (int) $_SESSION['ROLE_ID'] !== ROLE_ID_LANDLORD) {
         header("Location: ".$base_path."/public");
     }
+
+    if(isset($_GET['profile'])){
+        $profile_data = getPeopleById($_SESSION['PEOPLE_ID']);
+        include 'landlord_profile.php';
+        exit;
+      }
+
     $user_id = $_SESSION['PEOPLE_ID'];
     $properties = getPropertiesByLandlordId($user_id);
     $listed_properties = getListedPropertiesByLandlordId($user_id);

@@ -89,10 +89,11 @@ if ((int)$_SESSION['ROLE_ID'] !== ROLE_ID_RENTER) {
       <div id="map"></div>
     </div>
   </div>
-  <div class='ml-1 row mt-3'>
-    <h4 class='list_header'>Available Properties</h4>
-    <div class='container'>
-
+  <div class='mx-1 row mt-3'>
+    <div class='col-12'><h4 class='list_header'>Available Properties</h4></div>
+    <div class='col-12 container'>
+      <div class='row' id='property_list'>
+      </div>
     </div>
   </div>
 
