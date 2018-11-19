@@ -1,15 +1,15 @@
-<nav class="navbar navbar-expand-md navbar-light bg-light">
+<nav class="navbar navbar-expand navbar-light bg-light justify-content-between">
       <a class="navbar-brand nav_logo" href="<?php echo $base_path . '/index.php'; ?>"><img alt="RentZen Logo" src="<?php echo $base_path; ?>/images/rentzen_logo.svg"></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-<div class="collapse navbar-collapse justify-content-end" id="navbarsExample04">
+<div class="navbar-expand justify-content-end" id="navbarsExample04">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="<?php echo $base_path; ?>/landlord/index.php">Dashboard</a>
+            <a class="nav-link icon" href="<?php echo $base_path; ?>/landlord/index.php"><i class="fas fa-th-list"></i></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<?php echo $base_path; ?>/landlord/index.php?profile">Profile</a>
+            <a class="nav-link icon" href="<?php echo $base_path; ?>/landlord/index.php?profile"><i class="far fa-user-circle"></i></a>
           </li>
           <li class="nav-item">
           <?php 

@@ -52,6 +52,46 @@ function getPropertyById($id)
     return $result;
 }
 
+/*
+Figure out when we need to change params
+longitude is east and west
+latitude is north and south
+*/
+function getPropertyByBounds($north,$south,$east,$west)
+{
+    //returns an array of people
+    global $db;
+    $statement = $db->prepare(
+        'select'
+        .  ' property.property_id, property.street, property.city, property.state_id, property.zip, property.beds, property.baths, property.sqft, property.type_id, property.propstat_id, property.income_requirement, property.credit_requirement, property.rental_fee, property.description, property.picture, property.latitude, property.longitude, '
+        .  ' property_type.typename, '
+        .  ' property_status.propertystat, '
+        .  ' state.state_id, state.state_name, '
+        .  ' people.people_id as landlord_people_id, people.email as landlord_email, people.username as landlord_username, people.firstname as landlord_firstname, people.lastname as landlord_lastname, people.phone as landlord_phone, people.street as landlord_street, people.city as landlord_city, people.state_id as landlord_state_id, people.zip as landlord_zip, people.role_id as landlord_role_id, people.credit_rating as landlord_credit_rating, people.income as landlord_income, people.date_updated as landlord_date_updated'
+        .  ' from property, property_status, property_type, state, landlord_property,people'
+        .  ' where property.propstat_id = property_status.propstat_id 
+                and property.type_id = property_type.propertytype_id 
+                and property.state_id = state.state_id 
+                and landlord_property.property_id = property.property_id 
+                and landlord_property.landlord_id = people.people_id 
+                and property.longitude > :west 
+                and property.longitude < :east 
+                and property.latitude < :north 
+                and property.latitude > :south 
+                and property.propstat_id = '.LISTED);
+    $statement->bindValue(':north', $north);
+    $statement->bindValue(':south', $south);
+    $statement->bindValue(':east', $east);
+    $statement->bindValue(':west', $west);
+    $statement->execute();
+    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+    $statement->closeCursor();
+    if (empty($result)) {
+        $result = false;
+    }
+    return $result;
+}
+
 function getPropertiesByLandlordId($id)
 {
     //returns an array of people

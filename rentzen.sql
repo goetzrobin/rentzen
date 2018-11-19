@@ -176,7 +176,9 @@ CREATE TABLE `property` (
   `credit_requirement` int(11) NOT NULL,
   `rental_fee` decimal(8,0) NOT NULL,
   `description` varchar(200) DEFAULT NULL,
-  `picture` varchar(200) DEFAULT NULL
+  `picture` varchar(200) DEFAULT NULL,
+  `longitude` DECIMAL(17, 15) DEFAULT NULL,
+  `latitude` DECIMAL(17, 15) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --

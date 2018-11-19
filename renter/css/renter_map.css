@@ -219,3 +219,156 @@
         cursor: pointer;
         padding: 10px;
     }
+
+    /* The location pointed to by the popup tip. */
+      .popup-tip-anchor {
+        height: 0;
+        position: absolute;
+        bottom: 10px;
+        /* The max width of the info window. */
+        width: 200px;
+      }
+      /* The bubble is anchored above the tip. */
+      .popup-bubble-anchor {
+        position: absolute;
+        width: 100%;
+        bottom: /* TIP_HEIGHT= */ 50px;
+        left: 0;
+      }
+      /* Draw the tip. */
+      .popup-bubble-anchor::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        /* Center the tip horizontally. */
+        transform: translate(-50%, 0);
+        /* The tip is a https://css-tricks.com/snippets/css/css-triangle/ */
+        width: 0;
+        height: 0;
+        /* The tip is 8px high, and 12px wide. */
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-top: /* TIP_HEIGHT= */ 8px solid white;
+      }
+      /* The popup bubble itself. */
+      .popup-bubble-content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: translate(-50%, -100%);
+        /* Style the info window. */
+        background-color: white;
+        padding: 0px;
+        border-radius: 5px;
+        font-family: sans-serif;
+        overflow-y: auto;
+        height: 170px;
+        width: 200px;
+        box-shadow: 0px 2px 10px 1px rgba(0,0,0,0.5);
+      }
+
+
+.prop_card {
+    height: 100%;
+    width: 100%;
+    /* max-width: 200px;
+    max-height: 180px; */
+    background-color: #fff;
+    overflow: hidden;
+    position: relative;
+}
+
+.prop_card_exit{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: #fff;
+    height: 10px;
+    width: 10px;
+    z-index: 1;
+}
+
+.prop_card_exit i {
+    height: 10px;
+    width: 10px;
+    font-size: 10px;
+    cursor: pointer;
+}
+
+.prop_card_img {
+    position: relative;
+    background-color: #8E0000;
+    width: 100%;
+    height: 100px;
+}
+
+.prop_card_price {
+    position: absolute;
+    bottom: 0px;
+    margin-left: 5px;
+    margin-bottom: 5px;
+    font-size: 1.2em;
+}
+
+.prop_card_icon {
+    padding: 10px;
+    border-radius: 50%;
+    background-color: #fff;
+    border: 1px solid #eee;
+    height: 30px;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: absolute;
+    right: 20px;
+    top: 50%;
+}
+.prop_card_icon:hover {
+    background-color: #eee;
+    border: 1px solid #ddd;
+}
+.prop_card_icon i {
+    color: #8E0000;
+}
+
+.prop_card_street {
+    margin-top: 5px;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.prop_card_cs {
+    font-size: 1.1em;
+}
+
+.prop_card_info {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 5px 10px;
+    position: absolute;
+    bottom: 5px;
+}
+
+.prop_card_info_bed {
+    font-size: 0.9em;
+    display: flex;
+    justify-content: start;
+}
+
+.prop_card_info_bath {
+    font-size: 0.9em;
+    display: flex;
+    justify-content: start;
+}
+
+.prop_card_info_sqft {
+    font-size: 0.9em;
+    display: flex;
+    justify-content: start;
+}

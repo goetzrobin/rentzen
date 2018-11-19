@@ -321,4 +321,18 @@
         //ENTER VALIDATION HERE
     }
 
+    if( $_GET['type'] === 'get_properties_by_bounds'){
+        $north = $_GET['north'];
+        $south = $_GET['south'];
+        $east = $_GET['east'];
+        $west = $_GET['west'];
+
+        if(empty($north) || empty($south) || empty($east) || empty($west) ) {
+            echo "Error when retrieving bounds";
+            exit;
+        }
+        $properties = getPropertyByBounds($north,$south,$east,$west);
+        echo json_encode($properties);
+    }
+
 ?>
