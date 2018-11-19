@@ -1,8 +1,8 @@
 <?php
     //this is for the database
     // $dsn = 'mysql:host=localhost;dbname=db_fall105';
-    // $username = 'fall105';
-    // $password = 'XO464841';
+    // $username = 'XXXXXXX';
+    // $password = 'XXXXXXX';
 
     $dsn = 'mysql:host=localhost;dbname=rentzen';
     $username = 'rentzen';
