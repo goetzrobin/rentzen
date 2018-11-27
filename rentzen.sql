@@ -1,17 +1,23 @@
 -- phpMyAdmin SQL Dump
--- version 4.4.10
--- http://www.phpmyadmin.net
+-- version 4.6.5.2
+-- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Sep 04, 2018 at 02:54 PM
--- Server version: 5.5.42
--- PHP Version: 5.6.10
+-- Host: localhost
+-- Generation Time: Nov 19, 2018 at 09:29 PM
+-- Server version: 10.1.21-MariaDB
+-- PHP Version: 5.6.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
 --
--- Database: `RENTZEN`
+-- Database: `rentzen`
 --
 
 -- --------------------------------------------------------
@@ -177,37 +183,37 @@ CREATE TABLE `property` (
   `rental_fee` decimal(8,0) NOT NULL,
   `description` varchar(200) DEFAULT NULL,
   `picture` varchar(200) DEFAULT NULL,
-  `longitude` DECIMAL(17, 15) DEFAULT NULL,
-  `latitude` DECIMAL(17, 15) DEFAULT NULL
+  `longitude` decimal(17,15) DEFAULT NULL,
+  `latitude` decimal(17,15) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `property`
 --
 
-INSERT INTO `property` (`property_id`, `street`, `city`, `state_id`, `zip`, `beds`, `baths`, `sqft`, `type_id`, `propstat_id`, `income_requirement`, `credit_requirement`, `rental_fee`, `description`, `picture`) VALUES
-(301, '33 walnut street', 'Philadelphia', 38, '19145', 2, '1.5', 1100, 504, 403, '60000.00', 750, '1300', 'Welcome home to Walnut Street in Philadelphia. This 1100 square foot home has been completely renovated and is move-in ready! A charming covered front porch provides tons of curb appeal.  You''ll love', '../images/home1.jpg'),
-(302, '43 chestnut street', 'Philadelphia', 38, '19145', 5, '2.5', 1500, 504, 402, '80000.00', 750, '2000', 'Pack your bags and move right into Chestnut Street. This rowhome blends original Old City charm with modern living. Step into the main entrance and see the spacious living area', '../images/home2.jpg'),
-(303, '89 locust street', 'Philadelphia', 38, '19145', 4, '1.5', 1300, 504, 403, '70000.00', 790, '1700', 'Pack your bags and move right into Chestnut Street. This rowhome blends original Old City charm with modern living. Step into the main entrance and see the spacious living area', '../images/home3.jpg'),
-(304, '22 spruce street', 'Philadelphia', 38, '19145', 2, '1.0', 1100, 504, 403, '60000.00', 750, '1300', 'Welcome home to Spruce Street in Philadelphia. This 1100 square foot home has been completely renovated and is move-in ready! A charming covered front porch provides tons of curb appeal.  You''ll love', '../images/home4.jpg'),
-(305, '38 spruce street', 'Philadelphia', 38, '19145', 3, '1.5', 1200, 504, 402, '60000.00', 740, '1200', 'Pack your bags and move right into Chestnut Street.This rowhome blends original Old City charm with modern living. Step into the main entrance and see the spacious living area', '../images/home5.jpg'),
-(306, '2116 Walnut St', 'Philadelphia', 38, '19103', 1, '1.0', 700, 502, 403, '50000.00', 500, '1000', 'Pack your bags and move right into Walnut Street. This rowhome blends with modern living. Step into the main entrance and see the spacious living area. Prime location! Fantastic studio unit with kitch', '../images/home6.jpg'),
-(307, '800 lombard street', 'Philadelphia', 38, '19145', 2, '1.0', 1100, 503, 402, '60000.00', 600, '1450', 'Welcome home to Lombard Street in Philadelphia. This 1100 square foot home has been completely renovated and is move-in ready! A charming covered front porch provides tons of curb appeal.  You''ll love', '../images/home7.jpg'),
-(308, '700 race street', 'Philadelphia', 38, '19145', 1, '1.0', 800, 502, 402, '50000.00', 750, '800', 'Fantastic studio condominium with a sunrise and river view from the three floor to ceiling windows in the I.M. Pei designed Society Hill Towers. This residence has been completely gutted and renovated', '../images/home8.jpg'),
-(309, '400 2nd street', 'Philadelphia', 38, '19145', 1, '1.0', 600, 502, 403, '50000.00', 750, '800', 'Fantastic studio condominium with a sunrise and river view from the three floor to ceiling windows in the I.M. Pei designed Society Hill Towers. This residence has been completely gutted and renovated', '../images/home9.jpg'),
-(312, '1603 N Broad St, S-0916', 'Phoenixville', 38, '19122', 4, '1.0', 1, 501, 401, '2.00', 1, '1', 'IRS', '../images/home5.jpg'),
-(314, '1603 N Broad', 'Pittsburg', 38, '19122', 2, '2.0', 1, 501, 402, '1.00', 1, '2', 'asdf', NULL),
-(315, '831 Columbus', 'Brick', 30, '08724', 1, '10.0', 2500, 501, 402, '36000.00', 600, '750', 'Beautiful home in Brick, New Jersey. Located right next to the famous Tyler Ascione''s Home.', NULL),
-(316, '1800 Elm Street', 'Philadelphia', 38, '19147', 2, '2.0', 500, 502, 402, '50000.00', 500, '500', 'Standout!', '../images/home6.jpg'),
-(317, '1601 N. Broad Street', 'Philadelphia', 38, '19122', 1, '1.0', 800, 502, 403, '40000.00', 800, '700', 'Lovely Home in morgan north', '../images/home5.jpg'),
-(318, 'Elf lane', 'philadelphia', 19, '55555', 1, '1.0', 500, 501, 402, '50000.00', 300, '5000', 'Beachfront!', '../images/home6.jpg'),
-(319, '1601 N. Broad Street, RM-N1801', 'Philadelphia', 38, '19122', 1, '1.0', 250, 501, 402, '56000.00', 700, '800', 'Nice home - Tyler might live here.', '../images/home3.jpg'),
-(320, '1901 Susquehana', 'Philadelphia', 38, '19302', 4, '4.0', 800, 502, 402, '130000.00', 700, '1450', 'A nice apartment in North Philly', '../images/home5.jpg'),
-(321, '1900 N Broad', 'Philadelphia', 38, '19144', 3, '2.0', 800, 501, 402, '120000.00', 680, '1700', 'Great place to live', '../images/home7.jpg'),
-(322, '1700 N Broad St', 'Philadelphia', 8, '19100', 1, '1.0', 1100, 502, 402, '60000.00', 700, '800', 'A beautiful home', '../images/home1.jpg'),
-(323, '1700 Carlisle Street', 'Philadelphia', 38, '19121', 1, '1.0', 600, 502, 402, '40000.00', 560, '1400', 'Beautiful Home in philadelphia with amazing views.', '../images/home6.jpg'),
-(324, '1900 N. Broad Street', 'Philadelphia', 38, '19122', 2, '1.0', 1200, 502, 402, '35000.00', 550, '600', 'Beautiful home.', '../images/home7.jpg'),
-(325, '123 street', 'Feasterville', 38, '19053', 2, '1.0', 5000, 503, 402, '55000.00', 500, '1000', 'test', '../images/home2.jpg');
+INSERT INTO `property` (`property_id`, `street`, `city`, `state_id`, `zip`, `beds`, `baths`, `sqft`, `type_id`, `propstat_id`, `income_requirement`, `credit_requirement`, `rental_fee`, `description`, `picture`, `longitude`, `latitude`) VALUES
+(301, '33 walnut street', 'Philadelphia', 38, '19145', 2, '1.5', 1100, 504, 403, '60000.00', 750, '1300', 'Welcome home to Walnut Street in Philadelphia. This 1100 square foot home has been completely renovated and is move-in ready! A charming covered front porch provides tons of curb appeal.  You\'ll love', '../images/home1.jpg', '-75.164762814668280', '39.962229140924464'),
+(302, '43 chestnut street', 'Philadelphia', 38, '19145', 5, '2.5', 1500, 504, 402, '80000.00', 750, '2000', 'Pack your bags and move right into Chestnut Street. This rowhome blends original Old City charm with modern living. Step into the main entrance and see the spacious living area', '../images/home2.jpg', NULL, NULL),
+(303, '89 locust street', 'Philadelphia', 38, '19145', 4, '1.5', 1300, 504, 403, '70000.00', 790, '1700', 'Pack your bags and move right into Chestnut Street. This rowhome blends original Old City charm with modern living. Step into the main entrance and see the spacious living area', '../images/home3.jpg', '-75.158560000000000', '39.963400000000000'),
+(304, '22 spruce street', 'Philadelphia', 38, '19145', 2, '1.0', 1100, 504, 403, '60000.00', 750, '1300', 'Welcome home to Spruce Street in Philadelphia. This 1100 square foot home has been completely renovated and is move-in ready! A charming covered front porch provides tons of curb appeal.  You\'ll love', '../images/home4.jpg', '-75.157000000000000', '39.970000000000000'),
+(305, '38 spruce street', 'Philadelphia', 38, '19145', 3, '1.5', 1200, 504, 402, '60000.00', 740, '1200', 'Pack your bags and move right into Chestnut Street.This rowhome blends original Old City charm with modern living. Step into the main entrance and see the spacious living area', '../images/home5.jpg', NULL, NULL),
+(306, '2116 Walnut St', 'Philadelphia', 38, '19103', 1, '1.0', 700, 502, 403, '50000.00', 500, '1000', 'Pack your bags and move right into Walnut Street. This rowhome blends with modern living. Step into the main entrance and see the spacious living area. Prime location! Fantastic studio unit with kitch', '../images/home6.jpg', '-75.160000000000000', '39.910000000000000'),
+(307, '800 lombard street', 'Philadelphia', 38, '19145', 2, '1.0', 1100, 503, 402, '60000.00', 600, '1450', 'Welcome home to Lombard Street in Philadelphia. This 1100 square foot home has been completely renovated and is move-in ready! A charming covered front porch provides tons of curb appeal.  You\'ll love', '../images/home7.jpg', NULL, NULL),
+(308, '700 race street', 'Philadelphia', 38, '19145', 1, '1.0', 800, 502, 402, '50000.00', 750, '800', 'Fantastic studio condominium with a sunrise and river view from the three floor to ceiling windows in the I.M. Pei designed Society Hill Towers. This residence has been completely gutted and renovated', '../images/home8.jpg', NULL, NULL),
+(309, '400 2nd street', 'Philadelphia', 38, '19145', 1, '1.0', 600, 502, 403, '50000.00', 750, '800', 'Fantastic studio condominium with a sunrise and river view from the three floor to ceiling windows in the I.M. Pei designed Society Hill Towers. This residence has been completely gutted and renovated', '../images/home9.jpg', '-75.000000000000000', '39.850000000000000'),
+(312, '1603 N Broad St, S-0916', 'Phoenixville', 38, '19122', 4, '1.0', 1, 501, 401, '2.00', 1, '1', 'IRS', '../images/home5.jpg', NULL, NULL),
+(314, '1603 N Broad', 'Pittsburg', 38, '19122', 2, '2.0', 1, 501, 402, '1.00', 1, '2', 'asdf', NULL, NULL, NULL),
+(315, '831 Columbus', 'Brick', 30, '08724', 1, '10.0', 2500, 501, 402, '36000.00', 600, '750', 'Beautiful home in Brick, New Jersey. Located right next to the famous Tyler Ascione\'s Home.', NULL, NULL, NULL),
+(316, '1800 Elm Street', 'Philadelphia', 38, '19147', 2, '2.0', 500, 502, 402, '50000.00', 500, '500', 'Standout!', '../images/home6.jpg', NULL, NULL),
+(317, '1601 N. Broad Street', 'Philadelphia', 38, '19122', 1, '1.0', 800, 502, 403, '40000.00', 800, '700', 'Lovely Home in morgan north', '../images/home5.jpg', '-75.150000000000000', '39.900000000000000'),
+(318, 'Elf lane', 'philadelphia', 19, '55555', 1, '1.0', 500, 501, 402, '50000.00', 300, '5000', 'Beachfront!', '../images/home6.jpg', NULL, NULL),
+(319, '1601 N. Broad Street, RM-N1801', 'Philadelphia', 38, '19122', 1, '1.0', 250, 501, 402, '56000.00', 700, '800', 'Nice home - Tyler might live here.', '../images/home3.jpg', NULL, NULL),
+(320, '1901 Susquehana', 'Philadelphia', 38, '19302', 4, '4.0', 800, 502, 402, '130000.00', 700, '1450', 'A nice apartment in North Philly', '../images/home5.jpg', NULL, NULL),
+(321, '1900 N Broad', 'Philadelphia', 38, '19144', 3, '2.0', 800, 501, 402, '120000.00', 680, '1700', 'Great place to live', '../images/home7.jpg', NULL, NULL),
+(322, '1700 N Broad St', 'Philadelphia', 8, '19100', 1, '1.0', 1100, 502, 402, '60000.00', 700, '800', 'A beautiful home', '../images/home1.jpg', NULL, NULL),
+(323, '1700 Carlisle Street', 'Philadelphia', 38, '19121', 1, '1.0', 600, 502, 402, '40000.00', 560, '1400', 'Beautiful Home in philadelphia with amazing views.', '../images/home6.jpg', '-75.159000000000000', '39.873400000000000'),
+(324, '1900 N. Broad Street', 'Philadelphia', 38, '19122', 2, '1.0', 1200, 502, 402, '35000.00', 550, '600', 'Beautiful home.', '../images/home7.jpg', NULL, NULL),
+(325, '123 street', 'Feasterville', 38, '19053', 2, '1.0', 5000, 503, 402, '55000.00', 500, '1000', 'test', '../images/home2.jpg', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -315,19 +321,19 @@ INSERT INTO `rental_application` (`rental_application_id`, `renterproperty_id`, 
 (12, 14, 1, '2018-04-27', NULL, NULL),
 (13, 15, 1, '2018-04-27', NULL, NULL),
 (14, 16, 2, '0000-00-00', NULL, NULL),
-(15, 17, 4, '2018-05-18', NULL, 'Your house looks really nice. I''m a student looking for a place to live in the next 2 years'),
+(15, 17, 4, '2018-05-18', NULL, 'Your house looks really nice. I\'m a student looking for a place to live in the next 2 years'),
 (16, 18, 1, '2018-04-21', NULL, NULL),
-(17, 19, 2, '2018-06-15', NULL, 'I''m excited to be your renter'),
+(17, 19, 2, '2018-06-15', NULL, 'I\'m excited to be your renter'),
 (18, 20, 2, '2018-01-01', NULL, ''),
 (19, 21, 2, '2006-04-18', NULL, 'HI IM BEN! Can i live here plzzzzzzzzzzzzzzzzzzzzzzzzz'),
 (20, 22, 4, '2019-02-05', NULL, 'I hope you are friendyl~!'),
 (21, 23, 2, '2018-04-30', NULL, 'This place seems very nice'),
 (22, 24, 2, '2018-04-27', NULL, 'Hi'),
 (23, 25, 2, '2018-05-05', NULL, ''),
-(24, 26, 1, '2018-09-01', NULL, 'Hi,\r\n\r\nI''m looking for a place for the next 3 years. I''m a recent graduate from Temple University. \r'),
-(25, 27, 2, '2018-08-27', NULL, 'Hello, I''m looking to move in!'),
+(24, 26, 1, '2018-09-01', NULL, 'Hi,\r\n\r\nI\'m looking for a place for the next 3 years. I\'m a recent graduate from Temple University. \r'),
+(25, 27, 2, '2018-08-27', NULL, 'Hello, I\'m looking to move in!'),
 (26, 28, 2, '2018-07-21', NULL, 'I want to live with Tyler'),
-(27, 29, 4, '2018-09-01', NULL, 'I''m looking for a place for the next three years. I''m excited to be your renter.');
+(27, 29, 4, '2018-09-01', NULL, 'I\'m looking for a place for the next three years. I\'m excited to be your renter.');
 
 -- --------------------------------------------------------
 
@@ -398,7 +404,8 @@ INSERT INTO `renter_property` (`renterproperty_id`, `renter_id`, `property_id`, 
 (26, 901, 306, NULL),
 (27, 916, 317, NULL),
 (28, 920, 319, NULL),
-(29, 921, 306, NULL);
+(29, 921, 306, NULL),
+(30, 901, 303, '5.1');
 
 -- --------------------------------------------------------
 
@@ -565,54 +572,57 @@ ALTER TABLE `state`
 -- AUTO_INCREMENT for table `feature`
 --
 ALTER TABLE `feature`
-  MODIFY `feature_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `feature_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=205;
 --
 -- AUTO_INCREMENT for table `landlord_property`
 --
 ALTER TABLE `landlord_property`
-  MODIFY `landlord_property_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `landlord_property_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9322;
 --
 -- AUTO_INCREMENT for table `people`
 --
 ALTER TABLE `people`
-  MODIFY `people_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `people_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=926;
 --
 -- AUTO_INCREMENT for table `people_role`
 --
 ALTER TABLE `people_role`
-  MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
 --
 -- AUTO_INCREMENT for table `property`
 --
 ALTER TABLE `property`
-  MODIFY `property_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `property_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=326;
 --
 -- AUTO_INCREMENT for table `property_feature`
 --
 ALTER TABLE `property_feature`
-  MODIFY `propertyfeature_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `propertyfeature_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3210;
 --
 -- AUTO_INCREMENT for table `property_status`
 --
 ALTER TABLE `property_status`
-  MODIFY `propstat_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `propstat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=404;
 --
 -- AUTO_INCREMENT for table `property_type`
 --
 ALTER TABLE `property_type`
-  MODIFY `propertytype_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `propertytype_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=505;
 --
 -- AUTO_INCREMENT for table `rental_application`
 --
 ALTER TABLE `rental_application`
-  MODIFY `rental_application_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `rental_application_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 --
 -- AUTO_INCREMENT for table `rental_app_status`
 --
 ALTER TABLE `rental_app_status`
-  MODIFY `app_status_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `app_status_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `renter_property`
 --
 ALTER TABLE `renter_property`
-  MODIFY `renterproperty_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `renterproperty_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -5,6 +5,19 @@ if(!defined("VACANT_ID")) define("VACANT_ID",401);
 if(!defined("OCCUPIED_ID")) define("OCCUPIED_ID",402);
 if(!defined("LISTED")) define("LISTED",403);
 
+$property_data_icon_array = array(
+    'beds' => '<i class="fas fa-bed"></i>',
+    'baths' => '<i class="fas fa-bath"></i>',
+    'sqft' => '<i class="fas fa-vector-square"></i>',
+    'type' => '<i class="fas fa-home"></i>',
+    'income_requirement' => '<i class="fas fa-money-check"></i>',
+    'credit_requirement' => '<i class="far fa-credit-card"></i>',
+    'rental_fee' => '<i class="fas fa-dollar-sign"></i>'
+);
+
+$property_status_icon_array = array();
+
+
 function getProperties()
 {
     //returns an array of people

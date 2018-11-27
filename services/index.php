@@ -277,7 +277,6 @@
             echo "No id provided. Cannot update.";
             exit();
         }
-        
         //figure out validation
         // if( !isset($inputAddress) || empty($inputAddress) ||
         //     !isset($inputCity) || empty($inputCity) ||

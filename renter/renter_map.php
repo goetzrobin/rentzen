@@ -90,7 +90,7 @@ if ((int)$_SESSION['ROLE_ID'] !== ROLE_ID_RENTER) {
 
     </div>
   </div>
-  <div class='mx-1 row mt-3'>
+  <div class='mx-1 row my-3'>
     <div class='col-12'><h4 class='list_header'>Available Properties</h4></div>
     <div class='col-12 container'>
       <div class="spinner" id='property_spinner'></div>
@@ -99,6 +99,7 @@ if ((int)$_SESSION['ROLE_ID'] !== ROLE_ID_RENTER) {
     </div>
   </div>
 
+</div>
 </div>
 <script src='./js/renter_map.js'></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBGe2Qu6G_eINiYN28_igiiifEKRmj8uw&callback=initMap"

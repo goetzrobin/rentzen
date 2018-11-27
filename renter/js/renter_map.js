@@ -271,28 +271,42 @@ function initMap() {
   });
 
 
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function (position) {
-      var pos = {
-        // lat: position.coords.latitude,
-        // lng: position.coords.longitude
+  var pos = {
+    // lat: position.coords.latitude,
+    // lng: position.coords.longitude
 
-        lat: 39.962229140924464,
-        lng: -75.164762814668280
-      };
+    lat: 39.962229140924464,
+    lng: -75.164762814668280
+  };
 
-      // infowindow.setPosition(pos);
-      // infowindow.setContent('Location found.');
-      // infowindow.open(map);
-      map.setCenter(pos);
-      map.setZoom(16);
-    }, function () {
-      handleLocationError(true, infowindow, map.getCenter());
-    });
-  } else {
-    // Browser doesn't support Geolocation
-    handleLocationError(false, infowindow, map.getCenter());
-  }
+  // infowindow.setPosition(pos);
+  // infowindow.setContent('Location found.');
+  // infowindow.open(map);
+  map.setCenter(pos);
+  map.setZoom(16);
+
+  // if (navigator.geolocation) {
+  //   navigator.geolocation.getCurrentPosition(function (position) {
+  //     var pos = {
+  //       // lat: position.coords.latitude,
+  //       // lng: position.coords.longitude
+
+  //       lat: 39.962229140924464,
+  //       lng: -75.164762814668280
+  //     };
+
+  //     // infowindow.setPosition(pos);
+  //     // infowindow.setContent('Location found.');
+  //     // infowindow.open(map);
+  //     map.setCenter(pos);
+  //     map.setZoom(16);
+  //   }, function () {
+  //     handleLocationError(true, infowindow, map.getCenter());
+  //   });
+  // } else {
+  //   // Browser doesn't support Geolocation
+  //   handleLocationError(false, infowindow, map.getCenter());
+  // }
 
 
 }
@@ -303,323 +317,334 @@ function update_map_properties(bounds) {
 
   var url = base_path + "services/index.php?type=get_properties_by_bounds&north=" + bounds.north + "&south=" + bounds.south + "&west=" + bounds.west + "&east=" + bounds.east;
   // console.log('updating prop', bounds);
+  $('#property_list').hide();
   $('#property_spinner').show();
   $.getJSON(url, function (properties_within_bounds) {
-      console.log(properties_within_bounds);
-      $.each(properties_within_bounds, function (indexInArray, property) {
+    console.log(properties_within_bounds);
+    $.each(properties_within_bounds, function (indexInArray, property) {
 
-          // get position of property
-          var long = parseFloat(property.longitude)
-          var lat = parseFloat(property.latitude);
-          var contentString = `
+      // get position of property
+      var long = parseFloat(property.longitude)
+      var lat = parseFloat(property.latitude);
+      var contentString = `
           <div class='prop_card'>
-            `+//<div class='prop_card_exit'><i id='exit_`+property.property_id+`'class='fas fa-times'></i></div>
-            `<div class='prop_card_img' style='background-image: url("`+base_path+`user_data/properties/images/rentzen.jpg"); background-size: cover;'>
-            <div class='prop_card_price'>$`+parseFloat(property.rental_fee).toFixed(2)+`</div>
+            ` + //<div class='prop_card_exit'><i id='exit_`+property.property_id+`'class='fas fa-times'></i></div>
+        `<div class='prop_card_img' style='background-image: url("` + base_path + `user_data/properties/images/rentzen.jpg"); background-size: cover;'>
+            <div class='prop_card_price'>$` + parseFloat(property.rental_fee).toFixed(2) + `</div>
             </div>
             <!-- <div class='prop_card_chevron_left'><</div>
             <div class='prop_card_chevron_right'>></div> -->
-            <div class='prop_card_icon'><i class="fas fa-info"></i></div>
-            <div class='prop_card_street ml-1'>`+property.street+`</div>
-            <div class='prop_card_cs ml-1 mt-1'>`+property.zip+' '+property.city+', '+property.state_name+`</div>
+            <div class='prop_card_icon' onclick="scrollToProp(`+property.property_id+`)" ><i class="fas fa-info"></i></div>
+            <div class='prop_card_street ml-1'>` + property.street + `</div>
+            <div class='prop_card_cs ml-1 mt-1'>` + property.zip + ' ' + property.city + ', ' + property.state_name + `</div>
             <div class='prop_card_info'>
-            <div class='prop_card_info_bed'>`+property.beds+` BEDS</div>
-            <div class='prop_card_info_bath'>`+property.baths+` BATHS</div>
-            <div class='prop_card_info_sqft'>`+property.sqft+` SQFT</div>
+            <div class='prop_card_info_bed'>` + property.beds + ` BEDS</div>
+            <div class='prop_card_info_bath'>` + property.baths + ` BATHS</div>
+            <div class='prop_card_info_sqft'>` + property.sqft + ` SQFT</div>
             </div>
           </div>`;
 
 
-          // create info window with newly generated content
-          // var infowindow = new google.maps.InfoWindow({
-          //   content: contentString
-          // });
-          // create icon
-          var icon = {
-            url: base_path + "images/rentzen_marker.svg",
-            scaledSize: new google.maps.Size(40, 40)
+      // create info window with newly generated content
+      // var infowindow = new google.maps.InfoWindow({
+      //   content: contentString
+      // });
+      // create icon
+      var icon = {
+        url: base_path + "images/rentzen_marker.svg",
+        scaledSize: new google.maps.Size(40, 40)
+      }
+
+
+      // set marker
+      var marker = new google.maps.Marker({
+        position: {
+          lat: lat,
+          lng: long
+        },
+        map: map,
+        title: property.street,
+        icon: icon,
+        optimized: false
+      });
+
+      // when marker is clicked open info window
+      marker.addListener('click', function () {
+        // a popup already exists, i am going to remove it
+        if (popup != undefined) {
+          popup.onRemove();
+          popup = undefined;
+          // i just wanted to close the current one, stop here
+          if (last_clicked_marker == marker) {
+            last_clicked_marker = marker;
+            return;
           }
+        }
+        // closed a different popup, open the new one
+        var prop_pop_up = document.createElement('DIV');
+        $(prop_pop_up).html(contentString);
 
-
-          // set marker
-          var marker = new google.maps.Marker({
-            position: {
-              lat: lat,
-              lng: long
-            },
-            map: map,
-            title: property.street,
-            icon: icon,
-            optimized: false
-          });
-
-          // when marker is clicked open info window
-          marker.addListener('click', function () {
-                // a popup already exists, i am going to remove it
-              if(popup != undefined){
-                popup.onRemove();
-                popup = undefined;
-                // i just wanted to close the current one, stop here
-                if(last_clicked_marker == marker){
-                  last_clicked_marker = marker;
-                  return;
-                }
-              }
-              // closed a different popup, open the new one
-              var prop_pop_up = document.createElement('DIV');
-              $(prop_pop_up).html(contentString);
-
-              popup = new Popup(
-                new google.maps.LatLng(lat, long),
-                prop_pop_up);
-              popup.setMap(map);
-              last_clicked_marker = marker;
-              });
-
-            // end each
-          });
-        // end json
-
-        build_property_list(properties_within_bounds);
-        $('#property_spinner').hide();
-
+        popup = new Popup(
+          new google.maps.LatLng(lat, long),
+          prop_pop_up);
+        popup.setMap(map);
+        last_clicked_marker = marker;
       });
+
+      // end each
+    });
+    // end json
+
+    build_property_list(properties_within_bounds);
+    $('#property_spinner').hide();
+
+  });
+}
+
+function scrollToProp(id){
+  // console.log(id);
+  $('html, body').animate({
+    scrollTop: $("#" + id).offset().top - 50
+   }, 1000);
+   $("#"+id).find(".property_list_item").addClass("red_border").delay(2000).queue(function(next){
+    $(this).removeClass("red_border");
+    next();
+});}
+
+function handleLocationError(browserHasGeolocation, infowindow, pos) {
+  infowindow.setPosition(pos);
+  infowindow.setContent(browserHasGeolocation ?
+    'Error: The Geolocation service failed.' :
+    'Error: Your browser doesn\'t support geolocation.');
+  infowindow.open(map);
+}
+
+/** Defines the Popup class. */
+function definePopupClass() {
+  /**
+   * A customized popup on the map.
+   * @param {!google.maps.LatLng} position
+   * @param {!Element} content
+   * @constructor
+   * @extends {google.maps.OverlayView}
+   */
+  Popup = function (position, content) {
+    this.position = position;
+
+    content.classList.add('popup-bubble-content');
+
+    var pixelOffset = document.createElement('div');
+    pixelOffset.classList.add('popup-bubble-anchor');
+    pixelOffset.appendChild(content);
+
+    this.anchor = document.createElement('div');
+    this.anchor.classList.add('popup-tip-anchor');
+    this.anchor.appendChild(pixelOffset);
+
+    // Optionally stop clicks, etc., from bubbling up to the map.
+    this.stopEventPropagation();
+  };
+  // NOTE: google.maps.OverlayView is only defined once the Maps API has
+  // loaded. That is why Popup is defined inside initMap().
+  Popup.prototype = Object.create(google.maps.OverlayView.prototype);
+
+  /** Called when the popup is added to the map. */
+  Popup.prototype.onAdd = function () {
+    this.getPanes().floatPane.appendChild(this.anchor);
+  };
+
+  /** Called when the popup is removed from the map. */
+  Popup.prototype.onRemove = function () {
+    if (this.anchor.parentElement) {
+      this.anchor.parentElement.removeChild(this.anchor);
+    }
+  };
+
+  /** Called when the popup needs to draw itself. */
+  Popup.prototype.draw = function () {
+    var divPosition = this.getProjection().fromLatLngToDivPixel(this.position);
+    // Hide the popup when it is far out of view.
+    var display =
+      Math.abs(divPosition.x) < 4000 && Math.abs(divPosition.y) < 4000 ?
+      'block' :
+      'none';
+
+    if (display === 'block') {
+      this.anchor.style.left = divPosition.x + 'px';
+      this.anchor.style.top = divPosition.y + 'px';
+    }
+    if (this.anchor.style.display !== display) {
+      this.anchor.style.display = display;
+    }
+  };
+
+  /** Stops clicks/drags from bubbling up to the map. */
+  Popup.prototype.stopEventPropagation = function () {
+    var anchor = this.anchor;
+    anchor.style.cursor = 'auto';
+
+    ['click', 'dblclick', 'contextmenu', 'wheel', 'mousedown', 'touchstart',
+      'pointerdown'
+    ]
+    .forEach(function (event) {
+      anchor.addEventListener(event, function (e) {
+        e.stopPropagation();
+      });
+    });
+  };
+}
+
+
+function setSearchbar() {
+  if ($(window).width() <= 1418) {
+    $('#credit').hide();
+    $('#more * a').attr('data-content', "Test yolo");
+  } else {
+    $('#credit').show();
   }
 
-  function handleLocationError(browserHasGeolocation, infowindow, pos) {
-    infowindow.setPosition(pos);
-    infowindow.setContent(browserHasGeolocation ?
-      'Error: The Geolocation service failed.' :
-      'Error: Your browser doesn\'t support geolocation.');
-    infowindow.open(map);
+  if ($(window).width() <= 1293) {
+    $('#income').hide();
+  } else {
+    $('#income').show();
   }
 
-  /** Defines the Popup class. */
-  function definePopupClass() {
-    /**
-     * A customized popup on the map.
-     * @param {!google.maps.LatLng} position
-     * @param {!Element} content
-     * @constructor
-     * @extends {google.maps.OverlayView}
-     */
-    Popup = function (position, content) {
-      this.position = position;
-
-      content.classList.add('popup-bubble-content');
-
-      var pixelOffset = document.createElement('div');
-      pixelOffset.classList.add('popup-bubble-anchor');
-      pixelOffset.appendChild(content);
-
-      this.anchor = document.createElement('div');
-      this.anchor.classList.add('popup-tip-anchor');
-      this.anchor.appendChild(pixelOffset);
-
-      // Optionally stop clicks, etc., from bubbling up to the map.
-      this.stopEventPropagation();
-    };
-    // NOTE: google.maps.OverlayView is only defined once the Maps API has
-    // loaded. That is why Popup is defined inside initMap().
-    Popup.prototype = Object.create(google.maps.OverlayView.prototype);
-
-    /** Called when the popup is added to the map. */
-    Popup.prototype.onAdd = function () {
-      this.getPanes().floatPane.appendChild(this.anchor);
-    };
-
-    /** Called when the popup is removed from the map. */
-    Popup.prototype.onRemove = function () {
-      if (this.anchor.parentElement) {
-        this.anchor.parentElement.removeChild(this.anchor);
-      }
-    };
-
-    /** Called when the popup needs to draw itself. */
-    Popup.prototype.draw = function () {
-      var divPosition = this.getProjection().fromLatLngToDivPixel(this.position);
-      // Hide the popup when it is far out of view.
-      var display =
-        Math.abs(divPosition.x) < 4000 && Math.abs(divPosition.y) < 4000 ?
-        'block' :
-        'none';
-
-      if (display === 'block') {
-        this.anchor.style.left = divPosition.x + 'px';
-        this.anchor.style.top = divPosition.y + 'px';
-      }
-      if (this.anchor.style.display !== display) {
-        this.anchor.style.display = display;
-      }
-    };
-
-    /** Stops clicks/drags from bubbling up to the map. */
-    Popup.prototype.stopEventPropagation = function () {
-      var anchor = this.anchor;
-      anchor.style.cursor = 'auto';
-
-      ['click', 'dblclick', 'contextmenu', 'wheel', 'mousedown', 'touchstart',
-        'pointerdown'
-      ]
-      .forEach(function (event) {
-        anchor.addEventListener(event, function (e) {
-          e.stopPropagation();
-        });
-      });
-    };
+  if ($(window).width() <= 1118) {
+    $('#budget').hide();
+  } else {
+    $('#budget').show();
   }
 
-
-  function setSearchbar() {
-    if ($(window).width() <= 1418) {
-      $('#credit').hide();
-      $('#more * a').attr('data-content', "Test yolo");
-    } else {
-      $('#credit').show();
-    }
-
-    if ($(window).width() <= 1293) {
-      $('#income').hide();
-    } else {
-      $('#income').show();
-    }
-
-    if ($(window).width() <= 1118) {
-      $('#budget').hide();
-    } else {
-      $('#budget').show();
-    }
-
-    if ($(window).width() <= 972) {
-      $('#bedbath').hide();
-    } else {
-      $('#bedbath').show();
-    }
-
-    if ($(window).width() <= 768) {
-      $('.search_form').first().hide();
-
-      $('.search_form_mobile').first().show();
-      $('#result_header').hide();
-
-      $('.info').each(function (index) {
-        $(this).show()
-      });
-
-      $('.description').each(function (index) {
-        $(this).show();
-      })
-
-      $('img').each(function (index) {
-        $(this).removeClass('max-height-img')
-      });
-
-      $('.quick_fact').each(function (index) {
-        $(this).addClass('align-items-baseline')
-        $(this).removeClass('align-items-center')
-      });
-
-    } else {
-      $('.search_form').first().show();
-      $('.search_form_mobile').first().hide();
-      $('#result_header').show();
-
-      $('.description').each(function (index) {
-        $(this).hide();
-      });
-
-      $('.info').each(function (index) {
-        $(this).hide()
-      });
-
-      $('img').each(function (index) {
-        $(this).addClass('max-height-img')
-      });
-
-      $('.quick_fact').each(function (index) {
-        $(this).removeClass('align-items-baseline')
-        $(this).addClass('align-items-center')
-      });
-
-    }
+  if ($(window).width() <= 972) {
+    $('#bedbath').hide();
+  } else {
+    $('#bedbath').show();
   }
 
-  function expand(el) {
-    $(el).find('.info').each(function (index) {
-      $(this).show('slow')
+  if ($(window).width() <= 768) {
+    $('.search_form').first().hide();
+
+    $('.search_form_mobile').first().show();
+    $('#result_header').hide();
+
+    $('.info').each(function (index) {
+      $(this).show()
     });
 
-    $(el).find('.description').first().show('slow');
+    $('.description').each(function (index) {
+      $(this).show();
+    })
 
-
-    $(el).find('.result_image').first().removeClass('justify-content-center');
-
-    $(el).find('.result_image img').first().removeClass('max-height-img');
-    $(el).find('.result_image img').first().addClass('col-8');
-    $(el).find('.result_image .thumbmails').first().removeClass('hidden');
-    $(el).find('.result_image .thumbmails img').removeClass('max-height-img');
-    $(el).find('.result_image .thumbmails img').addClass('h-100');
-    $(el).find('.result_image').first().removeClass('col-md-2');
-    $(el).find('.result_image').first().addClass('col-12');
-
-    $(el).find('.result_address').first().toggleClass('col-md-3');
-    $(el).find('.result_address').first().addClass('col-12');
-
-    $(el).find('.result_fee').first().removeClass('col-md-1');
-    $(el).find('.result_fee').first().addClass('col-2');
-
-    $(el).find('.result_baths').first().removeClass('col-md-1');
-    $(el).find('.result_baths').first().addClass('col-2');
-
-    $(el).find('.result_sqft').first().removeClass('col-md-1');
-    $(el).find('.result_sqft').first().addClass('col-2');
-
-    $(el).find('.result_beds').first().removeClass('col-md-1');
-    $(el).find('.result_beds').first().addClass('col-2');
-
-    $(el).find('.result_match').first().removeClass('col-md-1');
-    $(el).find('.result_match').first().addClass('col-2');
-
-  }
-
-  function minimize(el) {
-    $(el).find('.info').each(function (index) {
-      $(this).hide('slow')
+    $('img').each(function (index) {
+      $(this).removeClass('max-height-img')
     });
 
-    $(el).find('.description').first().hide('slow');
+    $('.quick_fact').each(function (index) {
+      $(this).addClass('align-items-baseline')
+      $(this).removeClass('align-items-center')
+    });
 
-    $(el).find('.result_image').first().addClass('justify-content-center');
+  } else {
+    $('.search_form').first().show();
+    $('.search_form_mobile').first().hide();
+    $('#result_header').show();
 
-    $(el).find('.result_image img').first().addClass('max-height-img');
-    $(el).find('.result_image img').first().removeClass('col-8');
-    $(el).find('.result_image .thumbmails').first().addClass('hidden');
-    $(el).find('.result_image').first().addClass('col-md-2');
-    $(el).find('.result_image').first().removeClass('col-12');
+    $('.description').each(function (index) {
+      $(this).hide();
+    });
 
-    $(el).find('.result_address').first().addClass('col-md-3');
-    $(el).find('.result_address').first().removeClass('col-12');
+    $('.info').each(function (index) {
+      $(this).hide()
+    });
 
-    $(el).find('.result_fee').first().addClass('col-md-1');
-    $(el).find('.result_fee').first().removeClass('col-2');
+    $('img').each(function (index) {
+      $(this).addClass('max-height-img')
+    });
 
-    $(el).find('.result_baths').first().addClass('col-md-1');
-    $(el).find('.result_baths').first().removeClass('col-2');
-
-    $(el).find('.result_sqft').first().addClass('col-md-1');
-    $(el).find('.result_sqft').first().removeClass('col-2');
-
-    $(el).find('.result_beds').first().addClass('col-md-1');
-    $(el).find('.result_beds').first().removeClass('col-2');
-
-    $(el).find('.result_match').first().addClass('col-md-1');
-    $(el).find('.result_match').first().removeClass('col-2');
+    $('.quick_fact').each(function (index) {
+      $(this).removeClass('align-items-baseline')
+      $(this).addClass('align-items-center')
+    });
 
   }
+}
 
-  function setApplicationModal(prop_street, prop_zip, prop_city, prop_state, land_name, land_street, land_zip, land_city, land_state, land_email, land_phone, score) {
-    $('#exampleModal .modal-body .spinner').hide();
-    $('#exampleModal .modal-body').html(`
+function expand(el) {
+  $(el).find('.info').each(function (index) {
+    $(this).show('slow')
+  });
+
+  $(el).find('.description').first().show('slow');
+
+
+  $(el).find('.result_image').first().removeClass('justify-content-center');
+
+  $(el).find('.result_image img').first().removeClass('max-height-img');
+  $(el).find('.result_image img').first().addClass('col-8');
+  $(el).find('.result_image .thumbmails').first().removeClass('hidden');
+  $(el).find('.result_image .thumbmails img').removeClass('max-height-img');
+  $(el).find('.result_image .thumbmails img').addClass('h-100');
+  $(el).find('.result_image').first().removeClass('col-md-2');
+  $(el).find('.result_image').first().addClass('col-12');
+
+  $(el).find('.result_address').first().toggleClass('col-md-3');
+  $(el).find('.result_address').first().addClass('col-12');
+
+  $(el).find('.result_fee').first().removeClass('col-md-1');
+  $(el).find('.result_fee').first().addClass('col-2');
+
+  $(el).find('.result_baths').first().removeClass('col-md-1');
+  $(el).find('.result_baths').first().addClass('col-2');
+
+  $(el).find('.result_sqft').first().removeClass('col-md-1');
+  $(el).find('.result_sqft').first().addClass('col-2');
+
+  $(el).find('.result_beds').first().removeClass('col-md-1');
+  $(el).find('.result_beds').first().addClass('col-2');
+
+  $(el).find('.result_match').first().removeClass('col-md-1');
+  $(el).find('.result_match').first().addClass('col-2');
+
+}
+
+function minimize(el) {
+  $(el).find('.info').each(function (index) {
+    $(this).hide('slow')
+  });
+
+  $(el).find('.description').first().hide('slow');
+
+  $(el).find('.result_image').first().addClass('justify-content-center');
+
+  $(el).find('.result_image img').first().addClass('max-height-img');
+  $(el).find('.result_image img').first().removeClass('col-8');
+  $(el).find('.result_image .thumbmails').first().addClass('hidden');
+  $(el).find('.result_image').first().addClass('col-md-2');
+  $(el).find('.result_image').first().removeClass('col-12');
+
+  $(el).find('.result_address').first().addClass('col-md-3');
+  $(el).find('.result_address').first().removeClass('col-12');
+
+  $(el).find('.result_fee').first().addClass('col-md-1');
+  $(el).find('.result_fee').first().removeClass('col-2');
+
+  $(el).find('.result_baths').first().addClass('col-md-1');
+  $(el).find('.result_baths').first().removeClass('col-2');
+
+  $(el).find('.result_sqft').first().addClass('col-md-1');
+  $(el).find('.result_sqft').first().removeClass('col-2');
+
+  $(el).find('.result_beds').first().addClass('col-md-1');
+  $(el).find('.result_beds').first().removeClass('col-2');
+
+  $(el).find('.result_match').first().addClass('col-md-1');
+  $(el).find('.result_match').first().removeClass('col-2');
+
+}
+
+function setApplicationModal(prop_street, prop_zip, prop_city, prop_state, land_name, land_street, land_zip, land_city, land_state, land_email, land_phone, score) {
+  $('#exampleModal .modal-body .spinner').hide();
+  $('#exampleModal .modal-body').html(`
      <div class='container'>
      <div class='row py-2'>
      <div class='col-sm-4'>
@@ -663,76 +688,76 @@ function update_map_properties(bounds) {
      </div>
      </div>
      `);
-    $('#exampleModal .modal-title').text('Rental Application');
-    $('#exampleModal .modal-btn').show().text('Submit Application');
-    $('#exampleModal .modal-btn__optional').show().text('Save as Draft');
-    $('#exampleModal .move_in_date').val(new Date().toJSON().slice(0, 10));
-  }
+  $('#exampleModal .modal-title').text('Rental Application');
+  $('#exampleModal .modal-btn').show().text('Submit Application');
+  $('#exampleModal .modal-btn__optional').show().text('Save as Draft');
+  $('#exampleModal .move_in_date').val(new Date().toJSON().slice(0, 10));
+}
 
 
-  function addExpandMinimizeFunctionality() {
-    $('.item').each(function (index) {
-      var counter = 0;
-      var window_width = $(window).width();
+function addExpandMinimizeFunctionality() {
+  $('.item').each(function (index) {
+    var counter = 0;
+    var window_width = $(window).width();
 
-      // $(this).find('i').first().click(() => {
+    // $(this).find('i').first().click(() => {
 
-      //   $(this).find('i').first().toggleClass('fa-chevron-up');
-      //   $(this).find('i').first().toggleClass('fa-chevron-down');
+    //   $(this).find('i').first().toggleClass('fa-chevron-up');
+    //   $(this).find('i').first().toggleClass('fa-chevron-down');
 
-      //   if (window_width > 768) {
-      //     if (counter % 2 == 0) {
-      //       expand(this);
-      //     } else {
-      //       minimize(this);
-      //     }
-      //     console.log('round: ', counter);
-      //     counter++;
-      //   }
+    //   if (window_width > 768) {
+    //     if (counter % 2 == 0) {
+    //       expand(this);
+    //     } else {
+    //       minimize(this);
+    //     }
+    //     console.log('round: ', counter);
+    //     counter++;
+    //   }
 
 
-      // });
-    });
-  }
+    // });
+  });
+}
 
-  function toggleIconExpand() {
-    $('.item').each(function (index) {
-      var window_width = $(window).width();
+function toggleIconExpand() {
+  $('.item').each(function (index) {
+    var window_width = $(window).width();
 
-      if (window_width > 768) {
-        $(this).find('i').first().show();
-      } else {
-        $(this).find('i').first().hide();
+    if (window_width > 768) {
+      $(this).find('i').first().show();
+    } else {
+      $(this).find('i').first().hide();
 
-      }
-    });
-  }
-
-  function format_phone_number(number) {
-    var cleaned = ('' + number).replace(/\D/g, '')
-    var match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/)
-    if (match) {
-      return '(' + match[1] + ') ' + match[2] + '-' + match[3]
     }
-    return null
+  });
+}
+
+function format_phone_number(number) {
+  var cleaned = ('' + number).replace(/\D/g, '')
+  var match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/)
+  if (match) {
+    return '(' + match[1] + ') ' + match[2] + '-' + match[3]
   }
+  return null
+}
 
-  function get_properties(property_arr) {
-    var url = base_path + "services/index.php?type=get_listed_properties";
+function get_properties(property_arr) {
+  var url = base_path + "services/index.php?type=get_listed_properties";
 
-    $.getJSON(url, function (properties) {
-      property_arr = properties;
-      build_property_list(properties);
-    })
-  }
+  $.getJSON(url, function (properties) {
+    property_arr = properties;
+    build_property_list(properties);
+  })
+}
 
-  function build_property_list(properties) {
-    var new_html = '';
+function build_property_list(properties) {
+  var new_html = '';
 
-    $.each(properties, function (indexInArray, property) {
+  $.each(properties, function (indexInArray, property) {
 
-      new_html += `
-              <div class='col-md-4 col-sm-6 col-12 '>
+    new_html += `
+              <div id='`+property.property_id+`'class='col-md-4 col-sm-6 col-12 mb-2'>
               <div class='property_list_item'>
               <input type='hidden' class='property_id' value='` + property.property_id + `'>
               <h5 class='mb-0'>` + property.street + `</h5>
@@ -791,18 +816,19 @@ function update_map_properties(bounds) {
                 </div>
               </div>`;
 
-      console.log(property);
-    });
+    console.log(property);
+  });
 
-    console.log(properties);
-    if(!properties) {
-      new_html = `
+  console.log(properties);
+  if (!properties) {
+    new_html = `
             <div style='min-height: 200px;' class='d-flex w-100 flex-column justify-content-center align-items-center p-3'>
               <i class='icon_red_40 fas fa-home'></i>
               <p>Did not find any properties within your proximity.</p>
             </div>
       `
-    }
-
-    $('#property_list').html(new_html);
   }
+
+  $('#property_list').html(new_html);
+  $('#property_list').show();
+}
