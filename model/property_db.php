@@ -593,4 +593,27 @@ function getPropertyStatus() {
     $statement->closeCursor();
     return $result;
 }
+
+
+function geoCode($property_id){
+    global $db;
+    $statement = $db->prepare('select * '
+            . ' from property, state where property.state_id = state.state_id and property.property_id = :property_id');
+    $statement->bindValue('property_id', $property_id);
+    $statement->execute();
+    $result = $statement->fetch(PDO::FETCH_ASSOC);
+    $statement->closeCursor();
+
+    $address_string = $result['street'] .','. $result['zip'] . ','. $result['city'] .','. $result['state_name'];
+    $query_string = urlencode($address_string);
+
+    $url = "https://maps.googleapis.com/maps/api/geocode/json?address=".$query_string."&key=AIzaSyCBGe2Qu6G_eINiYN28_igiiifEKRmj8uw";
+
+
+    $json = file_get_contents($url);
+    $obj = json_decode($json);
+    print_r($obj);
+
+    
+}
 ?>
