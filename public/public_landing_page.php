@@ -20,7 +20,7 @@
 </nav> -->
 
 <?php include '../view/public_navigation.php'; ?>
-<div class='bg-phila'>
+<div id='home' class='bg-phila'>
 <div class="overflow-hidden white-overlay">
   <div class="col-md-5 p-lg-5 mx-auto my-5">
     <h1 class="display-4 font-weight-normal pt-3 mt-3">RentZen</h1>
@@ -33,7 +33,7 @@
 
 <!-- Three columns of text below the carousel -->
 
- <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+ <div id='philosophy' class=" px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
       <h1 class="display-4">Our Mission</h1>
       <p class="lead">Renting homes should be simple. That’s why we designed a centralized digital experience for landlords to find qualified tenants—and renters to find the home of their dreams without the hassles of in-person showings.
 
@@ -65,14 +65,13 @@
 <!-- START THE FEATURETTES -->
 
 <hr class="featurette-divider">
-
-<div class="row featurette">
+<div id='app' class="row featurette">
   <div class="col-md-7">
     <h2 class="featurette-heading">Completely Responsive.<span class="text-muted">Anywhere.</span></h2>
     <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
   </div>
   <div class="col-md-5">
-    <img class="featurette-image img-fluid mx-auto" alt="Generic placeholder image">
+    <img src='../images/public/screen_1.png' class="featurette-image img-fluid mx-auto" alt="Signup page image">
   </div>
 </div>
 
@@ -84,7 +83,7 @@
     <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
   </div>
   <div class="col-md-5 order-md-1">
-    <img class="featurette-image img-fluid mx-auto" alt="Generic placeholder image">
+    <img src='../images/public/screen_2.png' class="featurette-image img-fluid mx-auto" alt="MapView image">
   </div>
 </div>
 
@@ -92,11 +91,11 @@
 
 <div class="row featurette">
   <div class="col-md-7">
-    <h2 class="featurette-heading">Apply within seconds<span class="text-muted">Checkmate.</span></h2>
+    <h2 class="featurette-heading">Manage your properties.<span class="text-muted">A platform for all.</span></h2>
     <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
   </div>
   <div class="col-md-5">
-    <img class="featurette-image img-fluid mx-auto" alt="Generic placeholder image">
+    <img src='../images/public/screen_3.png' class="featurette-image img-fluid mx-auto" alt="Dashboard view image">
   </div>
 </div>
 
@@ -105,7 +104,7 @@
 <!-- /END THE FEATURETTES -->
 
 </div><!-- /.container -->
- <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+ <div id='pricing' class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
       <h1 class="display-4">Sign Up</h1>
       <p class="lead">Quickly build an effective pricing table for your potential customers with this Bootstrap example. It's built with default Bootstrap components and utilities with little customization.</p>
     </div>
@@ -145,7 +144,7 @@
       </div>
 
 
-<footer class="container py-5">
+<footer id='about' class="container py-5">
   <div class="row">
     <div class="col-12 col-md">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block mb-2"><circle cx="12" cy="12" r="10"></circle><line x1="14.31" y1="8" x2="20.05" y2="17.94"></line><line x1="9.69" y1="8" x2="21.17" y2="8"></line><line x1="7.38" y1="12" x2="13.12" y2="2.06"></line><line x1="9.69" y1="16" x2="3.95" y2="6.06"></line><line x1="14.31" y1="16" x2="2.83" y2="16"></line><line x1="16.62" y1="12" x2="10.88" y2="21.94"></line></svg>

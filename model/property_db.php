@@ -459,7 +459,7 @@ function insertProperty(
     
     // (PROPERTY_BASE_PATH ."/".$property_id,0777,true);
 
-    if (createLandlordPropertyRelationship($landlord_id, $property_id)) {
+    if (createLandlordPropertyRelationship($landlord_id, $property_id) && geoCode($property_id)) {
         return $property_id;
     } else {
         return false;
@@ -597,7 +597,7 @@ function getPropertyStatus() {
 
 function geoCode($property_id){
     global $db;
-    $statement = $db->prepare('select * '
+    $statement = $db->prepare('select street, zip, city, state_name '
             . ' from property, state where property.state_id = state.state_id and property.property_id = :property_id');
     $statement->bindValue('property_id', $property_id);
     $statement->execute();
@@ -605,15 +605,32 @@ function geoCode($property_id){
     $statement->closeCursor();
 
     $address_string = $result['street'] .','. $result['zip'] . ','. $result['city'] .','. $result['state_name'];
+
+    $obj = queryGoogleGeoCodeAPI($address_string);
+
+    $lat  = ($obj->results[0]->geometry->location->lat);
+    $lng  = ($obj->results[0]->geometry->location->lng);
+
+    $postion = array("lat" => $lat, "lng" => $lng);
+
+    print_r($postion);
+
+    return updateProperty($property_id,'longitude',$lng) && updateProperty($property_id,'latitude',$lat);
+
+}
+
+function queryGoogleGeoCodeAPI($address_string){
     $query_string = urlencode($address_string);
 
-    $url = "https://maps.googleapis.com/maps/api/geocode/json?address=".$query_string."&key=AIzaSyCBGe2Qu6G_eINiYN28_igiiifEKRmj8uw";
-
+    $url = "https://maps.googleapis.com/maps/api/geocode/json?address=".$query_string."&key=AIzaSyBkYy3QdqyYgHr8_jUiX8WEePPE5DGIQy8";
 
     $json = file_get_contents($url);
     $obj = json_decode($json);
-    print_r($obj);
 
-    
+    if($obj->status != "OK"){
+        return false;
+    };
+
+    return $obj;
 }
 ?>

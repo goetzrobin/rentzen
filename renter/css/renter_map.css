@@ -82,6 +82,7 @@
     }
 
     #map {
+        position: relative;
         height: calc(100vh - 65px);
     }
 
@@ -376,4 +377,12 @@
     font-size: 0.9em;
     display: flex;
     justify-content: start;
+}
+
+#search_address{
+    position: absolute;
+    top: 75px;
+    right: 12px;
+    width: 75%;
+    min-width: 320px;
 }

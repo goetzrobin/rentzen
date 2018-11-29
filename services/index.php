@@ -321,6 +321,7 @@
     }
 
     if( $_GET['type'] === 'get_properties_by_bounds'){
+        
         $north = $_GET['north'];
         $south = $_GET['south'];
         $east = $_GET['east'];

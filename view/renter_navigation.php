@@ -9,7 +9,7 @@
             <a class="nav-link icon" href="<?php echo $base_path; ?>/renter/index.php"><i class="fas fa-home"></i></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link icon" href="<?php echo $base_path; ?>/renter/index.php?profile"><i class="far fa-user-circle"></i></a>
+            <a class="nav-link icon" href="<?php echo $base_path; ?>/renter/index.php?profile"><i class="fas fa-user-circle"></i></a>
           </li>
           <li class="nav-item">
           <?php

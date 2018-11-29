@@ -1,12 +1,8 @@
 <?php
-include '../common/configuration.php';
-include 'database.php';
-include 'property_db.php';
-geoCode(301);
 
 /* for development purposes only */
 /* Test model functions here. */
-/*
+
 //before I can do anything, I need database credentials
 include '../common/configuration.php';
 

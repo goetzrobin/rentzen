@@ -48,10 +48,10 @@
       <div class="modal-body">
         <div class="spinner"></div>
       </div>
-      <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      <button type="button" class="btn btn-secondary modal-btn__optional" data-dismiss="modal">Save as Draft</button>
-        <button type="button" class="btn btn-primary red modal-btn">Save changes</button>
+      <div class="modal-footer d-flex justify-content-around">
+      <button style='max-width: 33%' type="button" class="btn btn-secondary" data-dismiss="modal"><i class="far fa-window-close"></i></button>
+      <button style='max-width: 33%' type="button" class="btn btn-secondary modal-btn__optional" data-dismiss="modal"><i class="far fa-save"></i></button>
+        <button style='max-width: 33%' type="button" class="btn btn-primary red modal-btn"><i class="far fa-check-circle"></i></button>
       </div>
     </div>
   </div>

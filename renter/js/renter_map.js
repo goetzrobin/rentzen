@@ -37,17 +37,17 @@ $(function () {
   $(document).on("click", ".icon__action", function () {
     $('#exampleModal .modal-body .spinner').show();
     current_prop_id = $(this).parents('.property_list_item').find('.property_id').val();
-    console.log(current_prop_id);
+    // console.log(current_prop_id);
     url = base_path + "/services/index.php?type=set_property_renter_relationship&prop_id=" + current_prop_id;
     $.getJSON(url).done((response) => {
-      console.log('response', response);
+      // console.log('response', response);
       if (response.result) {
 
         /////////////////////
         var url = base_path + "/services/?type=get_prop_data&prop_id=" + current_prop_id;
-        console.log('getting data');
+        // console.log('getting data');
         $.getJSON(url).done((renter_prop_data) => {
-          console.log(renter_prop_data);
+          // console.log(renter_prop_data);
           if (renter_prop_data) {
             setApplicationModal(prop_street = renter_prop_data.street,
               prop_zip = renter_prop_data.zip, prop_city = renter_prop_data.city, prop_state = renter_prop_data.state_name,
@@ -70,7 +70,7 @@ $(function () {
         //////////////////////
       } else {
         $('#exampleModal .modal-body .spinner').hide();
-        console.error("FAILED TO ESTABLISH RELATIONSHIP");
+        // console.error("FAILED TO ESTABLISH RELATIONSHIP");
       }
 
     });
@@ -122,6 +122,18 @@ $(function () {
     });
 
   });
+
+  $('#search_address_input').keyup(function(e){
+    if(e.keyCode == 13)
+    {
+        $(this).trigger("enterKey");
+    }
+});
+
+  $('#search_address_input').bind("enterKey",function(e){
+    //do stuff here
+    getGeoData();
+ });
 });
 
 var map;
@@ -131,6 +143,7 @@ function initMap() {
 
   map = new google.maps.Map(document.getElementById('map'), {
     fullscreenControl: false,
+    mapTypeControl: false,
     zoomControl: true,
     zoom: 16,
     styles: [{
@@ -320,7 +333,7 @@ function update_map_properties(bounds) {
   $('#property_list').hide();
   $('#property_spinner').show();
   $.getJSON(url, function (properties_within_bounds) {
-    console.log(properties_within_bounds);
+
     $.each(properties_within_bounds, function (indexInArray, property) {
 
       // get position of property
@@ -647,12 +660,12 @@ function setApplicationModal(prop_street, prop_zip, prop_city, prop_state, land_
   $('#exampleModal .modal-body').html(`
      <div class='container'>
      <div class='row py-2'>
-     <div class='col-sm-4'>
+     <div class='my-2 col-sm-4'>
       <h5>Property</h5>
       <div>` + prop_street + `</div>
       <div>` + prop_zip + ` ` + prop_city + `, ` + prop_state + `</div>
      </div>
-     <div class='col-sm-4'>
+     <div class='my-2 col-sm-4'>
       <h5>Landlord</h5>
       <div class='mb-1'><b>` + land_name + `</b></div>
       <div><i class='fa-icon fas fa-phone'></i> ` + format_phone_number(land_phone) + `</div>
@@ -660,7 +673,7 @@ function setApplicationModal(prop_street, prop_zip, prop_city, prop_state, land_
       <div>` + land_street + `</div>
       <div>` + land_zip + ` ` + land_city + `, ` + land_state + `</div>
      </div>
-     <div class='col-sm-4 d-flex justify-content-center align-items-center' style='flex-direction: column'>
+     <div class='col-sm-4 p-3 d-flex justify-content-center align-items-center flex-column'>
       <div>Match Score</div>
       <div class='match-score__data'>` + score + `</div>
      </div>
@@ -683,14 +696,14 @@ function setApplicationModal(prop_street, prop_zip, prop_city, prop_state, land_
      <div class='row py-2'>
       <div class='col-12'>
         <h5>Message</h5>
-        <textarea class='form-control message'  style='width: 100%; min-width: 300px;' rows='10'></textarea>
+        <textarea class='form-control message'  style='width: 100%;' rows='10'></textarea>
       </div>
      </div>
      </div>
      `);
   $('#exampleModal .modal-title').text('Rental Application');
-  $('#exampleModal .modal-btn').show().text('Submit Application');
-  $('#exampleModal .modal-btn__optional').show().text('Save as Draft');
+  $('#exampleModal .modal-btn').show().html('<i class="far fa-check-circle"></i>');
+  $('#exampleModal .modal-btn__optional').show().html('<i class="far fa-save"></i>');
   $('#exampleModal .move_in_date').val(new Date().toJSON().slice(0, 10));
 }
 
@@ -755,7 +768,8 @@ function build_property_list(properties) {
   var new_html = '';
 
   $.each(properties, function (indexInArray, property) {
-
+    // console.log(property.property_id);
+    var fav_icon = (property.is_favorite == 1) ? "fas" : "far";
     new_html += `
               <div id='`+property.property_id+`'class='col-md-4 col-sm-6 col-12 mb-2'>
               <div class='property_list_item'>
@@ -811,15 +825,15 @@ function build_property_list(properties) {
                     <p class='prop_desc'>` + property.description + `</p>
                     <div class='prop_buttons d-flex justify-content-around'>
                         <i class="icon__action icon_20 far fa-clipboard" data-toggle="modal" data-target="#exampleModal"></i>
-                        <i class="icon_red_20 fas fa-heart"></i>
+                        <i id="heart_icon_`+property.property_id+`" onclick="toggleFavorite(`+property.property_id+`)" class="icon_red_20 `+fav_icon+` fa-heart"></i>
                     </div>
                 </div>
               </div>`;
 
-    console.log(property);
+    // console.log(property);
   });
 
-  console.log(properties);
+  // console.log(properties);
   if (!properties) {
     new_html = `
             <div style='min-height: 200px;' class='d-flex w-100 flex-column justify-content-center align-items-center p-3'>
@@ -831,4 +845,12 @@ function build_property_list(properties) {
 
   $('#property_list').html(new_html);
   $('#property_list').show();
+}
+
+function toggleFavorite(id){
+  $("#heart_icon_"+id).toggleClass("fas far");
+}
+
+function getGeoData(){
+  console.log($("#search_address_input").val());
 }
