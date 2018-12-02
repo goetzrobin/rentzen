@@ -5,13 +5,29 @@ $(function () {
     var current_id;
     var element_opened_modal;
 
+    var submitted_applications = new Array();
+    var rejected_applications = new Array();
+    var approved_applications = new Array();
+
+    var open_index = 0;
+    var acc_index = 0;
+    var rej_index = 0;
+
+    var properties = new Array();
+
+    get_applications(submitted_applications, rejected_applications, approved_applications);
+
+    get_properties(properties);
+
+    create_app_progress();
+
 
     $('#notification__badge').hide();
     $('.modal-btn__optional').hide();
-    
+
 
     var states_option_html = "<option selected>Choose...</option>";
-    $.getJSON(base_path + '/services/index.php?type=get_states').done((states) => {
+        $.getJSON(base_path + '/services/index.php?type=get_states').done((states) => {
         for (var i = 0; i < states.length; i++) {
             var current_state = states[i];
             states_option_html += ('<option value="' + current_state['state_id'] + '">' + current_state['state_name'] + "</option>");
@@ -23,19 +39,18 @@ $(function () {
     });
 
     var type_option_html = "<option selected>Choose...</option>";
-    $.getJSON(base_path + '/services/index.php?type=get_property_type').done((types) => {
+        $.getJSON(base_path + '/services/index.php?type=get_property_type').done((types) => {
         for (var i = 0; i < types.length; i++) {
             var current_type = types[i];
             type_option_html += ('<option value="' + current_type['propertytype_id'] + '">' + current_type['typename'] + "</option>");
         }
-        console.log(type_option_html);
         $('#addPropertyModal #type').html(type_option_html);
         $('#editPropertyModal #edit_type').html(type_option_html);
 
     });
 
     var status_option_html = "<option selected>Choose...</option>";
-    $.getJSON(base_path + '/services/index.php?type=get_property_status').done((status) => {
+        $.getJSON(base_path + '/services/index.php?type=get_property_status').done((status) => {
         for (var i = 0; i < status.length; i++) {
             var current_status = status[i];
             status_option_html += ('<option value="' + current_status['propstat_id'] + '">' + current_status['propertystat'] + "</option>");
@@ -52,10 +67,31 @@ $(function () {
         current_id = prop_id;
     });
     $('#removeFromMarketModal .btn-primary').click((event) => {
-        $.getJSON(base_path + '/services/index.php?type=set_property_status_occupied&prop_id=' + current_id).done((response) => {
-            console.log('reloading data necessary');
+        event.preventDefault();
+        var url = base_path + '/services/index.php?type=set_property_status_occupied&prop_id=' + current_id;
+        // console.log(url)
+        $.getJSON(url, function(response) {
+            // console.log('response',response);
+            properties = [];
+            get_properties(properties);
             $('#removeFromMarketModal').modal('hide');
+        });
+    });
 
+    $('#deleteModal').on('show.bs.modal', function (event) {
+        element_opened_modal = $(event.relatedTarget);
+        var prop_id = element_opened_modal.data('id');
+        current_id = prop_id;
+    });
+    $('#deleteModal .btn-primary').click((event) => {
+        event.preventDefault();
+        var url = base_path + '/services/index.php?type=delete_property&prop_id=' + current_id;
+        console.log(url)
+        $.getJSON(url, function(response) {
+            console.log('response',response);
+            properties = [];
+            get_properties(properties);
+            $('#deleteModal').modal('hide');
         });
     });
 
@@ -87,22 +123,6 @@ $(function () {
         });
     });
 
-
-    var submitted_applications = new Array();
-    var rejected_applications = new Array();
-    var approved_applications = new Array();
-
-    var open_index = 0;
-    var acc_index = 0;
-    var rej_index = 0;
-
-    var properties = new Array();
-
-    get_applications(submitted_applications, rejected_applications, approved_applications);
-
-    get_properties(properties);
-
-    create_app_progress();
 
     // add event listener to application widget navigation
     $(".next_app").click(function (e) {
@@ -242,26 +262,19 @@ $(function () {
         $('#editPropertyModal #edit_description').val(data_description);
     });
 
-    $('#edit_form').submit(function(event){
+    $('#edit_form').submit(function (event) {
         event.preventDefault();
-        if(validate_form(this)){
+        if (validate_form(this)) {
             edit_property(event, properties);
         };
     });
 
-    $('#add_form').submit(function(event) {
+    $('#add_form').submit(function (event) {
         event.preventDefault();
-        if(validate_form(this)){
+        if (validate_form(this)) {
             create_property(event, properties);
         }
     });
-
-    // $('#addPropertyModal .btn-secondary').click((event) => {
-    //     $('#addPropertyModal').modal('hide');
-    //     $('#addPropertyModal .btn-primary').show();
-    //     $('#addPropertyModal .modal-body').html(add_default);
-    // });
-
 });
 
 var update_app_list = function (type, application) {
@@ -327,7 +340,7 @@ var get_applications = function (submitted_applications, rejected_applications, 
             display_array(rejected_applications, 'rejected-apps');
             display_array(approved_applications, 'approved-apps');
 
-            create_app_progress(submitted_applications.length,rejected_applications.length,approved_applications.length)
+            create_app_progress(submitted_applications.length, rejected_applications.length, approved_applications.length)
         }
     );
 }
@@ -372,10 +385,18 @@ var get_properties = function (properties) {
     $.getJSON(url,
         function (data, textStatus, jqXHR) {
             console.log(data);
+            if(data == false){
+                $('#prop_spinner').addClass('d-none');
+                $("#refresh_props").removeClass('spinning');
+                $('#prop_list_empty').removeClass('d-none');
+                create_property_progress(properties)
+                return;
+            }
             $.each(data, function (indexInArray, element) {
                 properties.push(element)
             });
 
+            $('#prop_list_empty').addClass('d-none');
             $('#prop_spinner').addClass('d-none');
             $('#prop_list').removeClass('d-none');
 
@@ -434,7 +455,7 @@ var generate_property_list = function (property_arr) {
                                             data-picture="` + property.picture + `"
                                         ></i>
                                         <i class="prop__action__icon px-1 px-sm-0 fas fa-door-closed" data-toggle="modal" data-target="#removeFromMarketModal" data-id="` + property.property_id + `"></i>
-                                        <i class="prop__action__icon px-1 px-sm-0 fas fa-trash"  data-toggle="modal" data-target="#deleteModal"></i>
+                                        <i class="prop__action__icon px-1 px-sm-0 fas fa-trash"  data-toggle="modal" data-target="#deleteModal" data-id="` + property.property_id + `"></i>
                                         </div>
                                     </div>
                                 </h5>
@@ -714,48 +735,87 @@ var reset_modal_add = function (states_option_html, status_option_html, type_opt
     $('#addPropertyModal #status').html(status_option_html);
 }
 
-var create_app_progress = function(submitted_applications_length,rejected_applications_length,accepted_application_length){
-        var data = {
-            datasets: [{
-                data: [submitted_applications_length, rejected_applications_length,accepted_application_length],
-                backgroundColor: ["#333", "#CCC", "#8E0000"]
-            }],
-        
-            // These labels appear in the legend and in the tooltips when hovering different arcs
-            labels: [
-                'Submitted',
-                'Rejected',
-                'Approved'
-            ]
-        };
-        
-        var ctx = document.getElementById("myAppProgress").getContext('2d');
-        var myPieChart = new Chart(ctx,{
-            type: 'pie',
-            data: data,
-            options: {cutoutPercentage: 50, legend: {position: 'bottom'}}
-        });
+var create_app_progress = function (submitted_applications_length, rejected_applications_length, accepted_application_length) {
+
+    if (
+        submitted_applications_length == 0 &&
+        rejected_applications_length == 0 &&
+        accepted_application_length == 0) {
+        var no_prop_html = `
+            No Applications to be displayed.
+        `
+        $('#myAppProgressText').show();
+        $('#myAppProgressText').html(no_prop_html);
+        $('#myAppProgress').hide();
+        return;
+    }
+    $('#myAppProgressText').hide();
+    $('#myAppProgress').show();
+
+    var data = {
+        datasets: [{
+            data: [submitted_applications_length, rejected_applications_length, accepted_application_length],
+            backgroundColor: ["#333", "#CCC", "#8E0000"]
+        }],
+
+        // These labels appear in the legend and in the tooltips when hovering different arcs
+        labels: [
+            'Submitted',
+            'Rejected',
+            'Approved'
+        ]
+    };
+
+    var ctx = document.getElementById("myAppProgress").getContext('2d');
+    var myPieChart = new Chart(ctx, {
+        type: 'pie',
+        data: data,
+        options: {
+            cutoutPercentage: 50,
+            legend: {
+                position: 'bottom'
+            }
+        }
+    });
 }
 
-var create_property_progress = function(properties){
+var create_property_progress = function (properties) {
     var listed_count = 0;
     var occupied_count = 0;
     var vacant_count = 0;
+    if (properties.length == 0) {
+        var no_prop_html = `
+            No Properties to be displayed.
+        `
+        $('#myPropProgressText').html(no_prop_html);
+        $('#myPropProgressText').show();
+        $('#myPropProgress').hide();
+        return;
+    }
 
-    $.each(properties, function (indexInArray, property) { 
-         switch(property.propstat_id){
-             case "401": vacant_count++; break;
-             case "402": occupied_count++; break;
-             case "403": listed_count++; break;
-         }
+    $('#myPropProgressText').hide();
+    $('#myPropProgress').show();
+
+    $.each(properties, function (indexInArray, property) {
+        switch (property.propstat_id) {
+            case "401":
+                vacant_count++;
+                break;
+            case "402":
+                occupied_count++;
+                break;
+            case "403":
+                listed_count++;
+                break;
+        }
     });
 
     var data = {
         datasets: [{
-            data: [listed_count, occupied_count,vacant_count],
+            data: [listed_count, occupied_count, vacant_count],
             backgroundColor: ["#8E0000", "#CCC", "#333"]
         }],
-    
+
         // These labels appear in the legend and in the tooltips when hovering different arcs
         labels: [
             'Listed',
@@ -763,64 +823,69 @@ var create_property_progress = function(properties){
             'Vacant'
         ]
     };
-    
+
     var ctx = document.getElementById("myPropProgress").getContext('2d');
-    var myPieChart = new Chart(ctx,{
+    var myPieChart = new Chart(ctx, {
         type: 'pie',
         data: data,
-        options: {cutoutPercentage: 50, legend: {position: 'bottom'}}
+        options: {
+            cutoutPercentage: 50,
+            legend: {
+                position: 'bottom'
+            }
+        }
     });
 
 }
 
-var validate_form = function(the_form){
+var validate_form = function (the_form) {
     console.log(the_form);
     console.log(the_form.inputZip.value.length);
     var is_valid = true;
-    if(the_form.inputAddress.value == ""){
+    if (the_form.inputAddress.value == "") {
         $(the_form.inputAddress).addClass('is-invalid');
         is_valid = false;
     } else {
         $(the_form.inputAddress).removeClass('is-invalid');
     }
 
-    if(the_form.inputCity.value == ""){
+    if (the_form.inputCity.value == "") {
         $(the_form.inputCity).addClass('is-invalid');
         is_valid = false;
     } else {
         $(the_form.inputCity).removeClass('is-invalid');
     }
 
-    if(the_form.inputState.value == "Choose..."){
+    if (the_form.inputState.value == "Choose...") {
         $(the_form.inputState).addClass('is-invalid');
         is_valid = false;
     } else {
         $(the_form.inputState).removeClass('is-invalid');
     }
-    
+
     var zip_length = the_form.inputZip.value.length;
-    if( zip_length < 5 || zip_length > 10 ){
+    if (zip_length < 5 || zip_length > 10) {
         $(the_form.inputZip).addClass('is-invalid');
         is_valid = false;
     } else {
         $(the_form.inputZip).removeClass('is-invalid');
     }
 
-    if( the_form.beds.value < 1){
+    if (the_form.beds.value < 1) {
         $(the_form.beds).addClass('is-invalid');
         is_valid = false;
     } else {
         $(the_form.beds).removeClass('is-invalid');
     }
 
-    if( the_form.baths.value < 1){
+    if (the_form.baths.value < 1) {
         $(the_form.baths).addClass('is-invalid');
         is_valid = false;
     } else {
         $(the_form.baths).removeClass('is-invalid');
     }
 
-    if( the_form.sqft.value < 100){
+    if (the_form.sqft.value < 100) {
         $(the_form.sqft).addClass('is-invalid');
         is_valid = false;
     } else {
@@ -828,7 +893,7 @@ var validate_form = function(the_form){
     }
 
     console.log(the_form.type.value);
-    if( the_form.type.value == 'Choose...'){
+    if (the_form.type.value == 'Choose...') {
         $(the_form.type).addClass('is-invalid');
         is_valid = false;
     } else {
@@ -836,35 +901,35 @@ var validate_form = function(the_form){
     }
 
     console.log(the_form.status.value);
-    if( the_form.status.value == 'Choose...'){
+    if (the_form.status.value == 'Choose...') {
         $(the_form.status).addClass('is-invalid');
         is_valid = false;
     } else {
         $(the_form.status).removeClass('is-invalid');
     }
 
-    if( the_form.income_req.value < 0){
+    if (the_form.income_req.value < 0) {
         $(the_form.income_req).addClass('is-invalid');
         is_valid = false;
     } else {
         $(the_form.income_req).removeClass('is-invalid');
     }
 
-    if( the_form.credit_score.value < 300 || the_form.credit_score.value > 850){
+    if (the_form.credit_score.value < 300 || the_form.credit_score.value > 850) {
         $(the_form.credit_score).addClass('is-invalid');
         is_valid = false;
     } else {
         $(the_form.credit_score).removeClass('is-invalid');
     }
 
-    if( the_form.rental_fee.value < 0){
+    if (the_form.rental_fee.value < 0) {
         $(the_form.rental_fee).addClass('is-invalid');
         is_valid = false;
     } else {
         $(the_form.rental_fee).removeClass('is-invalid');
     }
 
-    if( the_form.description.value == ""){
+    if (the_form.description.value == "") {
         $(the_form.description).addClass('is-invalid');
         is_valid = false;
     } else {

@@ -95,6 +95,16 @@
         
     }
 
+    if ($_GET['type'] === 'delete_property' && isset($_GET['prop_id'])) {
+        $id = $_GET['prop_id'];
+        $result = deletePropertyById($id);
+        if($result){
+            echo json_encode(array('status' => "DELETED"));
+        } else {
+            echo 'Error while updating. Please try again.';
+        }
+    }
+
     if ($_GET['type'] === 'set_property_status_occupied' && isset($_GET['prop_id'])) {
         $id = $_GET['prop_id'];
         $updated_property = updateProperty($id,"propstat_id",OCCUPIED_ID);
@@ -334,5 +344,6 @@
         $properties = getPropertyByBounds($north,$south,$east,$west);
         echo json_encode($properties);
     }
+
 
 ?>

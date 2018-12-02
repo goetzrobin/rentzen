@@ -138,6 +138,8 @@ $(function () {
 
 var map;
 
+var my_location_marker = null;
+
 function initMap() {
   definePopupClass();
 
@@ -298,6 +300,20 @@ function initMap() {
   map.setCenter(pos);
   map.setZoom(16);
 
+  var icon = {
+    url: base_path + "images/rentzen_marker_person.svg",
+    scaledSize: new google.maps.Size(40, 40)
+  }
+
+  my_location_marker = new google.maps.Marker({
+    position: pos,
+    map: map,
+    title: "My Position",
+    icon: icon,
+    optimized: false
+  });;
+
+  setMyLocationMarker(pos);
   // if (navigator.geolocation) {
   //   navigator.geolocation.getCurrentPosition(function (position) {
   //     var pos = {
@@ -852,5 +868,23 @@ function toggleFavorite(id){
 }
 
 function getGeoData(){
-  console.log($("#search_address_input").val());
+  var address = $("#search_address_input").val();
+  var url = "https://maps.googleapis.com/maps/api/geocode/json?address="+encodeURI(address)+"&key=AIzaSyBkYy3QdqyYgHr8_jUiX8WEePPE5DGIQy8";
+  $.getJSON(url, function(response){
+    if(response.status == "OK"){
+      pos = getPosition(response);
+      map.setCenter(pos);
+      my_location_marker.setPosition(pos);
+    } else {
+      console.error("Cannot Locate Address");
+    }
+  });
+}
+
+function getPosition(response){
+  var data = response.results[0];
+  return {
+    lat: data.geometry.location.lat,
+    lng: data.geometry.location.lng
+  }
 }

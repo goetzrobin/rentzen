@@ -562,7 +562,6 @@ function updateProperty($id, $column, $value)
 function deletePropertyById($id)
 {
     global $db;
-    $placeholder = ':' . $column;
     $sql = 'DELETE FROM property WHERE property_id=:property_id';
     $statement = $db->prepare($sql);
     $statement->bindValue('property_id', $id);

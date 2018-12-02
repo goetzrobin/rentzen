@@ -12,8 +12,9 @@
                     <i id='refresh_props' class="prop__action__icon fas fa-sync"></i>
                     <i class="prop__action__icon fas fa-plus" data-toggle="modal" data-target="#addPropertyModal"></i>
                 </div>
-            </div>
+             </div>
                     <div id="prop_spinner" class="spinner"></div>
+                    <div id="prop_list_empty" class="h-100 w-100">No Properties to be displayed. Add one ASAP...</div>
                     <div id="prop_list" class="accordion w-100">
 
                     <div class='d-flex w-100'>
@@ -129,20 +130,21 @@
                             <div class='apps-empty rejected-apps-empty'><i class='fas fa-info icon_red_40'></i><div>No Applications to be displayed...</div></div>
                     </div>
                     </div>
+                </div>
             </div>
-        </div>
-        <div class="row justify-content-center mt-2">
+            <div class="row justify-content-center mt-2">
             <div class="col-sm-6 col-md-10 shadow-sm my-1 p-3 bg-white rounded">
                 <div class='db_heading mb-3'>APPLICATION PROGRESS</div>
+                <div id='myAppProgressText'></div>
                 <canvas id="myAppProgress" width="200" height="200"></canvas>
             </div>
 
             <div class="col-sm-6 col-md-10 shadow-sm my-1 p-3 bg-white rounded">
                 <div class='db_heading mb-3'>PROPERTY PROGRESS</div>
+                <div id='myPropProgressText'></div>
                 <canvas id="myPropProgress" width="200" height="200"></canvas>
             </div>
         </div>
-
     </div>
 
 <?php include '../view/footer.php' ?>
