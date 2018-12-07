@@ -869,7 +869,7 @@ function toggleFavorite(id){
 
 function getGeoData(){
   var address = $("#search_address_input").val();
-  var url = "https://maps.googleapis.com/maps/api/geocode/json?address="+encodeURI(address)+"&key=AIzaSyBkYy3QdqyYgHr8_jUiX8WEePPE5DGIQy8";
+  var url = "https://maps.googleapis.com/maps/api/geocode/json?address="+encodeURI(address)+"&key=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
   $.getJSON(url, function(response){
     if(response.status == "OK"){
       pos = getPosition(response);
