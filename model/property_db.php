@@ -621,7 +621,7 @@ function geoCode($property_id){
 function queryGoogleGeoCodeAPI($address_string){
     $query_string = urlencode($address_string);
 
-    $url = "https://maps.googleapis.com/maps/api/geocode/json?address=".$query_string."&key=AIzaSyBkYy3QdqyYgHr8_jUiX8WEePPE5DGIQy8";
+    $url = "https://maps.googleapis.com/maps/api/geocode/json?address=".$query_string."&key=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
 
     $json = file_get_contents($url);
     $obj = json_decode($json);
