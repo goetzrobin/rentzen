@@ -109,6 +109,6 @@ if ((int)$_SESSION['ROLE_ID'] !== ROLE_ID_RENTER) {
 </div>
 </div>
 <script src='./js/renter_map.js'></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBkYy3QdqyYgHr8_jUiX8WEePPE5DGIQy8&callback=initMap"
+<script src="https://maps.googleapis.com/maps/api/js?key=XXXXXXXXXXXXXXXXXXXXXXXXXXXX&callback=initMap"
   async defer></script>
 <?php include '../view/footer.php' ?>
